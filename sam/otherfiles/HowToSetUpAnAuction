@@ -1,0 +1,40 @@
+
+This is the way to set up a test or real auction.  There's a faster
+way to set up just a test database, but that's not what this file
+is for.
+
+
+Run the SetUpAuction program as as root:
+python SetUpAuction(gotta get these in order: '<PORT>', 'root', 'rootspw', 
+'localhost', '<AUCTIONDB>')
+
+At this point you have an auction database with empty tables: Donors, Items,
+Buyers, Auction.
+
+Login to MySql as root:
+mysql -u root -prootspw
+
+Create a user for the auction:
+mysql> use mysql;
+mysql> INSERT INTO user (Host,User,Password) VALUES('%','<username>',
+PASSWORD('password'));
+mysql> flush privileges; 
+
+Grant privileges on the auction database to the user:
+mysql> GRANT DELETE, INSERT, UPDATE ON '<AUCTIONDB>'.* 
+TO '<username>'@'localhost';
+mysql> flush privileges; 
+
+The database should be ready for an auction.  All the users will have the same 
+username and password.
+
+<><><><>
+
+On a new system use Synaptic to install
+
+libwxbase2.8-0
+libwxgtk2.8-0
+python-opengl
+python-wxgtk2.8
+python-wxversion
+wx2.8-examples
