@@ -16,8 +16,7 @@
 import wx
 import ManeFrame
 
-SPLASHFILEPATH = '/home/bob/src/workspace/SilentAuctionManager/' + \
-                'otherfiles/images/SAMsplash.jpg'
+SPLASHFILEPATH = '../otherfiles/images/SAMsplash.jpg'
 
 class MySplashScreen(wx.SplashScreen):
     """
