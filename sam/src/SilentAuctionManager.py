@@ -1,5 +1,7 @@
 ##
-## Adapted with minimal changes from Tian Xie as shown below.  The principal
+## Bob Cannon -- 15 October 2014
+##
+# Adapted with minimal changes from Tian Xie as shown below.  The principal
 ## is that this program assumed that the frame code was in this module, and
 ## my frame code is in a different module.
 ##
