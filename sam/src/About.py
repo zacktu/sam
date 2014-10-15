@@ -1,3 +1,7 @@
+## Bob Cannon
+## This file is still an old About file that I copied from
+## elsewhere.  I need to do my own graphics and content.
+
 import sys
 
 import wx            # This module uses the new wx namespace
