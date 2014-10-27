@@ -37,7 +37,7 @@ class Report(object):
                     '-'*10, '-'*12, '-'*12))
         for row in rows:
             print ("{0:3} {1:20} {2:20} {3:40} {4:15} {5:2} {6:10} {7:12} {8:12}" \
-                .format(row[0], row[1], row[2], row[3], row[4], row[5],\
+                   .format(row[0], row[1], row[2], row[3], row[4], row[5],\
                         row[6],row[7], row[8]))
 
     ''' Display all of the donors on the printerm '''

@@ -49,7 +49,7 @@ demo item so you can learn how to use the classes yourself.</p>
 </html>
 '''
     def __init__(self, parent):
-        wx.Dialog.__init__(self, parent, -1, 'About the wxPython demo',)
+        wx.Dialog.__init__(self, parent, -1, 'Beginning to adapt the wxPython demo',)
         html = wx.html.HtmlWindow(self, -1, size=(420, -1))
         if "gtk2" in wx.PlatformInfo:
             html.SetStandardFonts()
