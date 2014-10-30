@@ -60,7 +60,7 @@ class ManeFrame(wx.Frame):
         self.Close()
         
     def OnAboutDialog(self, event):
-        from About import MyAboutDialog
+        from about import MyAboutDialog
         about = MyAboutDialog(self)
         about.ShowModal()
         about.Destroy()

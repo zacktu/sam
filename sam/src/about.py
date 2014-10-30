@@ -1,4 +1,7 @@
+##
+## about.py
 ## Bob Cannon
+## 30 October 2014
 ## This file is still an old About file that I copied from
 ## elsewhere.  I need to do my own graphics and content.
 
