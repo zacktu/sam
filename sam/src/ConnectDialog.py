@@ -53,8 +53,7 @@ class ConnectDialog(wx.Dialog):
         data['port'] = '3306'
         data["user"] = "bob"
         data["passwd"] = 'bobspw'
-        data['dbname'] = 'test4'
-
+        data['dbname'] = 'test01'
         host_t  = wx.TextCtrl(self, validator=DataXferValidator(data, "host"))
         port_t  = wx.TextCtrl(self, validator=DataXferValidator(data, "port"))
         user_t = wx.TextCtrl(self, validator=DataXferValidator(data, "user"))
