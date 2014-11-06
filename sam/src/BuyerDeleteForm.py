@@ -34,7 +34,7 @@ class BuyerDeleteForm(wx.Panel):
                                       buyerNumber + '?'):
             try:
                 purchasedItems = self.buyers.GetBuyersItems \
-                                (buyerNumber, self.samdb)
+                                (self.samdb, buyerNumber)
                 if len(purchasedItems) > 0:
                     errorMessage = self.BuildErrorMessage(buyerNumber, \
                                                           purchasedItems)
