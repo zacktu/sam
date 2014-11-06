@@ -1,4 +1,6 @@
 '''
+testconnectandpopulate.py
+
 Created on Jan 3, 2010
 
 @author: bob
@@ -103,7 +105,7 @@ def Populate(samdb, da, dd, db, di, dp):
            
     try:
         db.AddBuyer(samdb, '000', 'Smith', 'Harold', '113 Stanford', \
-                    'Hollywood', 'CA', '23523', '923-123-3241', '')
+                    'Hollywood', 'CA', '23523', '923-123-3241')
         print 'ADDED BUYER SMITH'
     except MySQLdb.Error, e:
         print "Error %d: %s" % (e.args[0], e.args[1])
@@ -114,7 +116,7 @@ def Populate(samdb, da, dd, db, di, dp):
     try:
         db.AddBuyer(samdb, '001', 'Lewis', 'Margaret and Bill', \
                     '235 Williston', 'Kansas City', 'MO', '32594-3242', \
-                    '232-827-3294', '232-827-3295')
+                    '232-827-3294')
         print 'ADDED BUYER LEWIS'
     except MySQLdb.Error, e:
         print "Error %d: %s" % (e.args[0], e.args[1])
@@ -125,7 +127,7 @@ def Populate(samdb, da, dd, db, di, dp):
     try:
         db.AddBuyer(samdb, '002', 'Kneifel', 'Ernest and Helen', \
                     '123 Oak', 'Chicago', 'IL', '89694', \
-                    '892-325-2379', '892-694-9453')
+                    '892-325-2379')
         print 'ADDED BUYER KNEIFEL'
     except MySQLdb.Error, e:
         print "Error %d: %s" % (e.args[0], e.args[1])
@@ -136,7 +138,7 @@ def Populate(samdb, da, dd, db, di, dp):
     try:
         db.AddBuyer(samdb, '003', 'Summers', 'Maurice and Ethel', \
                     '2325 First St. Apt 24', 'Los Angeles', 'CA', \
-                    '97235-1279', '323-695-2353', '')
+                    '97235-1279', '323-695-2353')
         print 'ADDED BUYER SUMMERS'
     except MySQLdb.Error, e:
         print "Error %d: %s" % (e.args[0], e.args[1])
@@ -147,7 +149,7 @@ def Populate(samdb, da, dd, db, di, dp):
     try:
         db.AddBuyer(samdb, '004', 'Heath', 'Harold and Maude', \
                     '9372 Elm St.', 'Monroe', 'AL', '23542', \
-                    '694-325-5745', '')
+                    '694-325-5745')
         print 'ADDED BUYER HEATH'
     except MySQLdb.Error, e:
         print "Error %d: %s" % (e.args[0], e.args[1])

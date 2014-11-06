@@ -29,16 +29,16 @@ class Report(object):
     def printBuyers(self, samdb):
         query = "SELECT * FROM Buyers ORDER BY buyer_number"
         rows = self.GetRows(samdb, query)
-        print ("{0:3} {1:20} {2:20} {3:40} {4:15} {5:2} {6:10} {7:12} {8:12}"\
+        print ("{0:3} {1:20} {2:20} {3:40} {4:15} {5:2} {6:10} {7:12}"\
             .format("bno", "last", "first", "street", "city", "st", "zip",\
-                    "telno1", "telno2"))
-        print ("{0} {1} {2} {3} {4} {5} {6} {7} {8}" \
+                    "telno1"))
+        print ("{0} {1} {2} {3} {4} {5} {6} {7}" \
             .format('-'*3, '-'*20, '-'*20, '-'*40, '-'*15, '-'*2,\
-                    '-'*10, '-'*12, '-'*12))
+                    '-'*10, '-'*12))
         for row in rows:
             print ("{0:3} {1:20} {2:20} {3:40} {4:15} {5:2} {6:10} {7:12} {8:12}" \
                    .format(row[0], row[1], row[2], row[3], row[4], row[5],\
-                        row[6],row[7], row[8]))
+                        row[6],row[7]))
 
     ''' Display all of the donors on the printerm '''
     def DisplayDonors(self, samdb):
