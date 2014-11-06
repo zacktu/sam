@@ -38,8 +38,8 @@ class BuyerEntryForm(wx.Panel):
         self.stateTC = wx.TextCtrl(self, -1, "", size=(50, -1))
         self.zipTC   = wx.TextCtrl(self, -1, "", size=(70, -1))
         
-        telno1Label = wx.StaticText(self, -1, "Telephone 1:")
-        self.telno1TC   = wx.TextCtrl(self, -1, "", size=(110, -1))
+        telnoLabel = wx.StaticText(self, -1, "Telephone:")
+        self.telnoTC   = wx.TextCtrl(self, -1, "", size=(110, -1))
 
         cancelButton = wx.Button(self, -1, "Cancel")
         self.Bind(wx.EVT_BUTTON, self.OnCancelButton, cancelButton)
@@ -82,9 +82,9 @@ class BuyerEntryForm(wx.Panel):
         cityStateZipSizer.Add(self.zipTC)
         addrSizer.Add(cityStateZipSizer, 0, wx.EXPAND)
 
-        addrSizer.Add(telno1Label, 0,
+        addrSizer.Add(telnoLabel, 0,
                       wx.ALIGN_RIGHT, wx.ALIGN_CENTER_VERTICAL)
-        addrSizer.Add(self.telno1TC, 0)  
+        addrSizer.Add(self.telnoTC, 0)
 
         mainSizer.Add(addrSizer, 0, wx.EXPAND|wx.ALL, 10)
         
@@ -152,8 +152,8 @@ class BuyerEntryForm(wx.Panel):
                     "The zip code must be a five-digit decimal number.")
             return
         
-        telno1 = self.telno1TC.GetValue()
-        if len(telno1) != 12 or RegularExpression.CheckTelno(telno1) is None:
+        telno = self.telnoTC.GetValue()
+        if len(telno) != 12 or RegularExpression.CheckTelno(telno) is None:
             Dialogs.DisplayErrorDialog(
                     "The telephone number must be in the format XXX-XXX-XXXX.")
             return
@@ -162,7 +162,7 @@ class BuyerEntryForm(wx.Panel):
             try:
                 self.buyers.AddBuyer(self.samdb, buyerNumber, lastName, \
                             firstName, street, city, state, zip, \
-                            telno1)
+                            telno)
             except MySQLdb.Error, e:
                 Dialogs.DisplayErrorDialog(e.args[1])
                 return
@@ -172,7 +172,7 @@ class BuyerEntryForm(wx.Panel):
             try:
                 self.buyers.UpdateBuyer(self.samdb, buyerNumber, lastName, \
                             firstName, street, city, state, zip, \
-                            telno1)
+                            telno)
             except MySQLdb.Error, e:
                 Dialogs.DisplayErrorDialog(e.args[1])
                 return
@@ -200,7 +200,7 @@ class BuyerEntryForm(wx.Panel):
         self.cityTC.SetValue(row[3])
         self.stateTC.SetValue(row[4])
         self.zipTC.SetValue(row[5])
-        self.telno1TC.SetValue(row[6])
+        self.telnoTC.SetValue(row[6])
 
     def ClearAll(self):
         self.buyerNumberTC.Clear()
@@ -210,7 +210,7 @@ class BuyerEntryForm(wx.Panel):
         self.cityTC.Clear()
         self.stateTC.Clear()
         self.zipTC.Clear()
-        self.telno1TC.Clear()
+        self.telnoTC.Clear()
     
 
 

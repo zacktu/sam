@@ -30,7 +30,7 @@ class Console(object):
         rows = self.GetRows(samdb, query)
         print ("{0:3} {1:20} {2:20} {3:40} {4:15} {5:2} {6:10} {7:12}"\
             .format("bno", "last", "first", "street", "city", "st", "zip",\
-                    "telno1"))
+                    "telno"))
         print ("{0} {1} {2} {3} {4} {5} {6} {7}" \
             .format('-'*3, '-'*20, '-'*20, '-'*40, '-'*15, '-'*2,\
                     '-'*10, '-'*12))
@@ -87,7 +87,7 @@ class Console(object):
     ''' Display all purchases for all buyers on the console '''
     def DisplayAllPurchases(self, samdb):
         print ("PRINTING ALL PURCHASES")
-        query = "SELECT buyer_number, buyer_first, buyer_last, buyer_telno1 \
+        query = "SELECT buyer_number, buyer_first, buyer_last, buyer_telno \
         FROM Buyers;"
         rows = self.GetRows(samdb, query)
         if len(rows) > 0:

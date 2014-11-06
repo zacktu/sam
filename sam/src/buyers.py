@@ -23,14 +23,14 @@ class Buyers(object):
             buyer_city        char(15) NULL, \
             buyer_state       char(2)  NULL, \
             buyer_zip         char(10) NULL, \
-            buyer_telno1      char(12) NOT NULL \
+            buyer_telno       char(12) NOT NULL \
             )"
         samdb.CreateTable("Buyers", rows, "buyer_number")
 
     def AddBuyer(self, samdb, buyer_number, buyer_last, buyer_first,\
-            buyer_street, buyer_city, buyer_state, buyer_zip, buyer_telno1):
+            buyer_street, buyer_city, buyer_state, buyer_zip, buyer_telno):
         fields = "buyer_number, buyer_last, buyer_first, buyer_street, \
-                  buyer_city, buyer_state, buyer_zip, buyer_telno1"
+                  buyer_city, buyer_state, buyer_zip, buyer_telno"
         values = "'" + buyer_number + "'" + ',' \
                + "'" + buyer_last + "'" + ',' \
                + "'" + buyer_first + "'" + "," \
@@ -38,18 +38,18 @@ class Buyers(object):
                + "'" + buyer_city + "'" + ',' \
                + "'" + buyer_state + "'" + ',' \
                + "'" + buyer_zip + "'" + ',' \
-               + "'" + buyer_telno1 + "'"
+               + "'" + buyer_telno + "'"
         samdb.InsertRow("Buyers", fields, values)
         
     def FetchBuyer(self, samdb, buyerNumber):
         query = "SELECT buyer_last, buyer_first, \
                     buyer_street, buyer_city, buyer_state, buyer_zip, \
-                    buyer_telno1 \
+                    buyer_telno \
                 FROM Buyers WHERE buyer_number = " + buyerNumber + ";"
         return samdb.FetchRow(query)
                 
     def UpdateBuyer(self, samdb, buyerNumber, lastName, firstName, \
-                    street, city, state, zip, telno1):
+                    street, city, state, zip, telno):
         query = "UPDATE Buyers  \
                     SET buyer_last = '" + lastName + "' , \
                         buyer_first = '" + firstName + "' , \
@@ -57,7 +57,7 @@ class Buyers(object):
                         buyer_city = '" + city + "' , \
                         buyer_state = '" + state + "' , \
                         buyer_zip = '" + zip + "' , \
-                        buyer_telno1 = '" + telno1 + "' \
+                        buyer_telno = '" + telno + "' \
                     WHERE buyer_number = '" + buyerNumber + "' ; "
         samdb.ExecuteQuery(query)
 
