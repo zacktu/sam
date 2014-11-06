@@ -11,7 +11,7 @@ from the Buyers table.
 '''
 
 import Auction
-import Buyers
+import buyers
 import os
 import subprocess
 from random import sample
@@ -24,7 +24,7 @@ class PrintingServices():
         self.parent = parent
         self.samdb = samdb
         self.auction = Auction.Auction()
-        self.buyers = Buyers.Buyers()
+        self.buyers = buyers.Buyers()
         self.fname = self.rand_fname('xxx', 8)
         
     def PreviewOneInvoiceOrReceipt(self, buyerNum, whatToPrint):

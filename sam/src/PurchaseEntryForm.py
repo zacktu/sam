@@ -2,7 +2,7 @@ import wx
 import MySQLdb
 import Dialogs
 import RegularExpression
-import Buyers
+import buyers
 import Items
 import Purchases
 import Console
@@ -15,7 +15,7 @@ class PurchaseEntryForm(wx.Panel):
         self.samdb = samdb
         self.function = function
         self.items = Items.Items()
-        self.buyers = Buyers.Buyers()
+        self.buyers = buyers.Buyers()
         self.purchases = Purchases.Purchases()
         self.con = Console.Console()
         

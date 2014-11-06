@@ -2,7 +2,7 @@
 import wx
 import MySQLdb
 import Dialogs
-import Buyers
+import buyers
 import Console
 import ChooserLists
 
@@ -12,7 +12,7 @@ class BuyerDeleteForm(wx.Panel):
         
         self.samdb = samdb
         self.parent = parent
-        self.buyers = Buyers.Buyers()
+        self.buyers = buyers.Buyers()
         self.chooserLists = ChooserLists.ChooserLists()
         self.con = Console.Console()
         

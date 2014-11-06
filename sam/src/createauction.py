@@ -30,7 +30,7 @@ import sys
 import dbservices
 import Auction
 import Donors
-import Buyers
+import buyers
 import Items
 
 def CreateAuction(hname, pnumber, uname, pword, \
@@ -60,7 +60,7 @@ def DoEverything(samdb, dbnam, title, subtitle, date):
         dd = Donors.Donors()
         dd.CreateDonorsTable(samdb)
         print "Donors table created."
-        db = Buyers.Buyers()
+        db = buyers.Buyers()
         db.CreateBuyersTable(samdb)
         print "Buyers table created."
         di = Items.Items()
@@ -91,7 +91,7 @@ def DoEverything(samdb, dbnam, title, subtitle, date):
 
 if __name__ == '__main__':
     if not (len(sys.argv) == 2 or len(sys.argv) == 6):
-        print 'Usage: python CreateAuction.py dbname ' + \
+        print 'Usage: python createauction.py dbname ' + \
               '[hostname portnumber username password]'
     else:
         try:

@@ -5,7 +5,7 @@ A panel for
 '''
 
 import wx
-import Buyers
+import buyers
 import Console
 import PrintingServices
 
@@ -17,7 +17,7 @@ class PrintAllCartsOrReceiptsPanel(wx.Panel):
         self.samdb = samdb
         self.parent = parent
         self.con = Console.Console()
-        self.buyers = Buyers.Buyers()
+        self.buyers = buyers.Buyers()
         self.whatToPrint = whatToPrint
         
         # First create the controls

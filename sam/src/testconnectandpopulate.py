@@ -11,7 +11,7 @@ import MySQLdb
 import dbservices
 import Auction
 import Donors
-import Buyers
+import buyers
 import Items
 import Purchases
 import Console
@@ -25,7 +25,7 @@ import Printer
 
 def TestConnectAndPopulate():
     if not (len(sys.argv) == 2 or len(sys.argv) == 6):
-        print 'Usage: python TestConnectAndPopulate.py dbname ' + \
+        print 'Usage: python testconnectandpopulate.py dbname ' + \
               '[hostname portnumber username password]'
         exit()
     samdb = Connect(sys.argv)
@@ -33,7 +33,7 @@ def TestConnectAndPopulate():
     ## Create objects for Auction, Donors, Buyers, Items, and Purchases
     da = Auction.Auction()
     dd = Donors.Donors()
-    db = Buyers.Buyers()
+    db = buyers.Buyers()
     di = Items.Items()
     dp = Purchases.Purchases()
     Populate(samdb, da, dd, db, di, dp)
