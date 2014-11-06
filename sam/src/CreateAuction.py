@@ -7,11 +7,11 @@ line syntax is
     
 python CreateAuction dbname
 
-The program creates a SAMDB object.  When the object is created it connects
+The program creates a Samdb object.  When the object is created it connects
 to mysql and to the mysql database, which always exists.
 
-1.    Instantiate an SAMDB object that is connected to mysql.
-2.    Invoke SAMDB.CreateDatabase to create dbname.
+1.    Instantiate an Samdb object that is connected to mysql.
+2.    Invoke dbservices.CreateDatabase to create dbname.
 3.    Tell mysql to USE dbname.  After this all mysql commands apply to dbname.
       Create an Auction object and then the Auction table in dbname.
 4.    Create a Donors object and then the Donors table in dbname.
@@ -27,7 +27,7 @@ creates Auction, Donor, Buyer, and Item tables.
 
 import MySQLdb
 import sys
-import SAMDB
+import dbservices
 import Auction
 import Donors
 import Buyers
@@ -38,7 +38,7 @@ def CreateAuction(hname, pnumber, uname, pword, \
     print 'ENTERED CREATE AUCTION'
     print hname, pnumber, uname, pword, dbnam, title, subtitle, date
     try:
-        samdb = SAMDB.SAMDB(dbname='mysql',
+        samdb = dbservices.Samdb(dbname='mysql',
                     hostname=hname,
                     portnumber=int(pnumber),
                     username=uname,
@@ -96,15 +96,15 @@ if __name__ == '__main__':
     else:
         try:
             ''' 'mysql' is the database that's always there 
-                so connect to it when instantiating SAMDB '''
+                so connect to it when instantiating Samdb '''
             if len(sys.argv) == 6:
-                samdb = SAMDB.SAMDB(dbname='mysql',
+                samdb = dbservices.Samdb(dbname='mysql',
                                     hostname=sys.argv[2],
                                     portnumber=int(sys.argv[3]),
                                     username=sys.argv[4],
                                     password=sys.argv[5])
             else: 
-                samdb = SAMDB.SAMDB(dbname='mysql')
+                samdb = dbservices.Samdb(dbname='mysql')
 
             DoEverything(samdb, sys.argv[1], 
                          'WNC Returned Peace Corps Volunteers',

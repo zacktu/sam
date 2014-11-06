@@ -12,7 +12,7 @@ intended to describe their work.
 
 import warnings
 import MySQLdb
-import SAMDB
+import dbservices
 warnings.simplefilter("error", MySQLdb.Warning)
 
 class Items(object):
@@ -97,7 +97,7 @@ class Items(object):
         
 
 if __name__ == '__main__':
-    samdb = SAMDB.SAMDB()
+    samdb = dbservices.Samdb()
     samdb.CreateDatabase()
     dt = Items()
     dt.CreateItemsTable(samdb)

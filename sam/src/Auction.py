@@ -7,7 +7,7 @@ Created on August 3, 2011
 import sys
 import warnings
 import MySQLdb
-import SAMDB
+import dbservices
 warnings.simplefilter("error", MySQLdb.Warning)
 
 class Auction(object):
@@ -82,7 +82,7 @@ if __name__ == '__main__':
         print 'Usage: python Auction.py dbname'
     else:
         try:
-            samdb = SAMDB.SAMDB(dbname='mysql')
+            samdb = dbservices.Samdb(dbname='mysql')
             dbname = sys.argv[1]
             print('Now create ' + dbname + ';')
             samdb.CreateDatabase(dbname)

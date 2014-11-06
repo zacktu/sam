@@ -4,7 +4,7 @@ Created on Jan 3, 2010
 @author: bob
 '''
 
-import SAMDB
+import dbservices
 import Donors
 import Buyers
 import Items
@@ -12,7 +12,7 @@ import Console
 import Printer
 
 if __name__ == '__main__':
-    samdb = SAMDB.SAMDB(dbname='mysql')
+    samdb = dbservices.Samdb(dbname='mysql')
     samdb.CreateDatabase()
     dd = Donors.Donors()
     dd.CreateDonorsTable(samdb)

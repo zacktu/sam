@@ -4,7 +4,7 @@ Created on Jan 1, 2010
 This is the lowest level program with respect to mysql.  It can create, use,
 and drop databases, create tables, and insert and delete rows in a table.
 
-When the SAMDB object is instantiated, it connects to the database using
+When the Samdb object is instantiated, it connects to the database using
 the dbname 'mysql'.  That database always exists, so we will at least
 have a connection.  
 
@@ -14,7 +14,7 @@ The logic of the CreateDatabase is most essential:
 3) create dbname
 4) use dbname
 
-Step 4 is essential because the SAMDB object is passed around among all of
+Step 4 is essential because the Samdb object is passed around among all of
 the modules that do anything with the database.  All of the mysql commands
 will "use" the database that has been set at the time the database was
 created.
@@ -33,7 +33,7 @@ import MySQLdb
 warnings.simplefilter("error", MySQLdb.Warning)
 
 
-class SAMDB(object):
+class Samdb(object):
     '''
     classdocs
     '''
@@ -46,49 +46,49 @@ class SAMDB(object):
         self.db = MySQLdb.connect(host=hostname, port = portnumber, \
                 user=username, passwd=password, db=dbname)
 
-    # create the SAMDB database
+    # create the Samdb database
     def CreateDatabase(self, dbname):
         try:
             cursor = self.db.cursor()
         except MySQLdb.Error, e:
-            print "SAMDB.CreateDatabase: Error %d: %s" % \
+            print "Samdb.CreateDatabase: Error %d: %s" % \
                     (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("SAMDB.CreateDatabase: Warning: ", e)
+            print("Samdb.CreateDatabase: Warning: ", e)
         try:
             cursor.execute('DROP DATABASE IF EXISTS ' + dbname + ';')
         except MySQLdb.Error, e:
-            print "SAMDB.CreateDatabase: Error %d: %s" % \
+            print "Samdb.CreateDatabase: Error %d: %s" % \
                     (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("SAMDB.CreateDatabase: Warning: ", e)
+            print("Samdb.CreateDatabase: Warning: ", e)
         try:
             cursor.execute('CREATE DATABASE IF NOT EXISTS ' + \
                     dbname + ';')
         except MySQLdb.Error, e:
-            print "SAMDB.CreateDatabase: Error %d: %s" % \
+            print "Samdb.CreateDatabase: Error %d: %s" % \
                     (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("SAMDB.CreateDatabase: Warning: ", e)
+            print("Samdb.CreateDatabase: Warning: ", e)
         try:
             cursor.execute('USE ' + dbname + ';')
         except MySQLdb.Error, e:
-            print "SAMDB.CreateDatabase: Error %d: %s" % \
+            print "Samdb.CreateDatabase: Error %d: %s" % \
                     (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("SAMDB.CreateDatabase: Warning: ", e)
+            print("Samdb.CreateDatabase: Warning: ", e)
             
-    # drop the SAMDB database
+    # drop the Samdb database
     def DropDatabase(self, dbname):
         try:
             cursor = self.db.cursor()
             cursor.execute('DROP DATABASE ' + dbname + ';')
         except MySQLdb.Error, e:
-            print "SAMDB.DropDatabase: Error %d: %s" % (e.args[0], e.args[1])
+            print "Samdb.DropDatabase: Error %d: %s" % (e.args[0], e.args[1])
             sys.exit (1)
             
     # Use a database
@@ -97,10 +97,10 @@ class SAMDB(object):
             cursor = self.db.cursor()
             cursor.execute('USE ' + dbname + ';')
         except MySQLdb.Error, e:
-            print "SAMDB.DropDatabase: Error %d: %s" % (e.args[0], e.args[1])
+            print "Samdb.DropDatabase: Error %d: %s" % (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("SAMDB.DropDatabase: Warning: ", e)
+            print("Samdb.DropDatabase: Warning: ", e)
             
     # create a table
     def CreateTable(self, tableName, rows, primaryKey):
@@ -110,10 +110,10 @@ class SAMDB(object):
                                 rows + ";")
             self.db.commit()
         except MySQLdb.Error, e:
-            print "SAMDB.CreateTable: Error %d: %s" % (e.args[0], e.args[1])
+            print "Samdb.CreateTable: Error %d: %s" % (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("SAMDB.CreateTable: Warning: ", e)
+            print("Samdb.CreateTable: Warning: ", e)
         
     def FetchRows(self, query):
         # Exceptions are caught higher up
@@ -136,10 +136,10 @@ class SAMDB(object):
             cursor.execute(query)
             self.db.commit()
         except MySQLdb.Error, e:
-            print "SAMDB.ExecuteQuery: Error %d: %s" % (e.args[0], e.args[1])
+            print "Samdb.ExecuteQuery: Error %d: %s" % (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("SAMDB.ExecuteQuery: Warning: ", e) 
+            print("Samdb.ExecuteQuery: Warning: ", e)
             
         '''   
         try:
@@ -161,10 +161,10 @@ class SAMDB(object):
                             + foreignTable + " (" + foreignField + ");")
             self.db.commit()
         except MySQLdb.Error, e:
-            print "SAMDB.AddForeignKey: Error %d: %s" % (e.args[0], e.args[1])
+            print "Samdb.AddForeignKey: Error %d: %s" % (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("SAMDB.AddForeignKey: Warning: ", e)
+            print("Samdb.AddForeignKey: Warning: ", e)
       
     def InsertRow(self, tableName, fields, values):
         '''
@@ -186,19 +186,19 @@ class SAMDB(object):
 # Run the program
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print 'Usage: python SAMDB.py dbname'
+        print 'Usage: python dbservices.py dbname'
     else:
         try:
-            db = SAMDB(dbname='mysql')                       
+            db = Samdb(dbname='mysql')
             dbname = sys.argv[1]
             print('Now create ' + dbname + ';')
             samdb = db.CreateDatabase(dbname)
             print(dbname + ' created.')
         except MySQLdb.Error, e:
-            print "SAMDB.main: Error %d: %s" % (e.args[0], e.args[1])
+            print "Samdb.main: Error %d: %s" % (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("SAMDB.main: Warning: ", e)
+            print("Samdb.main: Warning: ", e)
     
 
 

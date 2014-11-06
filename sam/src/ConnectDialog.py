@@ -1,6 +1,6 @@
 '''
 Dialog to get user information for connecting to the mysql server and to
-the SAMDB database.  At the moment it defaults to bob@localhost with a null
+the Samdb database.  At the moment it defaults to bob@localhost with a null
 password.  This is adapted from validator2.py from chapter 9 of Rappin.  
 '''
 
@@ -8,7 +8,7 @@ import wx
 
 about_txt = """\
 Enter the hostname, username, and user
-password for connecting to SAMDB."""
+password for connecting to Samdb."""
 
 
 class DataXferValidator(wx.PyValidator):
@@ -39,7 +39,7 @@ class DataXferValidator(wx.PyValidator):
 class ConnectDialog(wx.Dialog):
     #def __init__(self, data):
     def __init__(self, data):
-        wx.Dialog.__init__(self, None, -1, "Connect to SAMDB")
+        wx.Dialog.__init__(self, None, -1, "Connect to Samdb")
 
         # Create the text controls
         about = wx.StaticText(self, -1, about_txt)
@@ -101,7 +101,7 @@ if __name__ == '__main__':
     app = wx.PySimpleApp()
 
     data = { "host" : "localhost" , "port" : '3306', "user" : "bob" , \
-                "passwd" : '', 'dbname' : 'SAMDB'}
+                "passwd" : '', 'dbname' : 'Samdb'}
     dlg = ConnectDialog(data)
     dlg.ShowModal()
     dlg.Destroy()

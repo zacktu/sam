@@ -6,7 +6,7 @@ Created on Jan 3, 2010
 
 import warnings
 import MySQLdb
-import SAMDB
+import dbservices
 warnings.simplefilter("error", MySQLdb.Warning)
 
 class Buyers(object):
@@ -101,7 +101,7 @@ class Buyers(object):
         return allBuyers
 
 if __name__ == '__main__':
-    samdb = SAMDB.SAMDB()
+    samdb = dbservices.Samdb()
     samdb.CreateDatabase()
     buyers = Buyers()
     buyers.CreateBuyersTable(samdb)

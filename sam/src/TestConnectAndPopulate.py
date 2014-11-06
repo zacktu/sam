@@ -6,7 +6,7 @@ Created on Jan 3, 2010
 
 import sys
 import MySQLdb
-import SAMDB
+import dbservices
 import Auction
 import Donors
 import Buyers
@@ -230,13 +230,13 @@ def Populate(samdb, da, dd, db, di, dp):
 def Connect(argv):
     try:
         if len(sys.argv) == 6:
-            samdb = SAMDB.SAMDB(dbname = argv[1],
+            samdb = dbservices.Samdb(dbname = argv[1],
                                 hostname = argv[2],
                                 portnumber = int(argv[3]),
                                 username = argv[4],
                                 password = argv[5])
         else: 
-            samdb = SAMDB.SAMDB(dbname = argv[1])
+            samdb = dbservices.Samdb(dbname = argv[1])
     except MySQLdb.Error, e:
         print "TestConnectAndPopulate.Connect: Error %d: %s" % \
                 (e.args[0], e.args[1])

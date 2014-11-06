@@ -1,7 +1,7 @@
 
 import wx
 import MySQLdb
-import SAMDB
+import dbservices
 import ConnectDialog
 import ManeToolbook
 import Dialogs
@@ -40,7 +40,7 @@ class ManeFrame(wx.Frame):
             dlg.Destroy()
             if result == wx.ID_OK:
                 try:
-                    samdb = SAMDB.SAMDB(dbname = data['dbname'], \
+                    samdb = dbservices.Samdb(dbname = data['dbname'], \
                                         hostname = data["host"], \
                                         portnumber = int(data['port']), \
                                         username = data["user"], \

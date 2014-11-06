@@ -6,7 +6,7 @@ Created on October 20, 2014
 
 import sys
 import MySQLdb
-import SAMDB
+import dbservices
 import Report
 import Printer
 
@@ -31,13 +31,13 @@ def ReportPrintBuyers():
 def Connect(argv):
     try:
         if len(sys.argv) == 6:
-            samdb = SAMDB.SAMDB(dbname = argv[1],
+            samdb = dbservices.Samdb(dbname = argv[1],
                                 hostname = argv[2],
                                 portnumber = int(argv[3]),
                                 username = argv[4],
                                 password = argv[5])
         else:
-            samdb = SAMDB.SAMDB(dbname = argv[1])
+            samdb = dbservices.Samdb(dbname = argv[1])
     except MySQLdb.Error, e:
         print "ReportPrintBuyers.Connect: Error %d: %s" % \
                 (e.args[0], e.args[1])

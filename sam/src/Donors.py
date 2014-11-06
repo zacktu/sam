@@ -6,7 +6,7 @@ Created on Jan 3, 2010
 
 import warnings
 import MySQLdb
-import SAMDB
+import dbservices
 warnings.simplefilter("error", MySQLdb.Warning)
 
 class Donors(object):
@@ -86,7 +86,7 @@ class Donors(object):
         return itemList
 
 if __name__ == '__main__':
-    samdb = SAMDB.SAMDB()
+    samdb = dbservices.Samdb()
     samdb.CreateDatabase()
     dt = Donors()
     dt.CreateDonorsTable(samdb)
