@@ -129,7 +129,8 @@ class BuyerDeleteForm(wx.Panel):
 
     def BuildErrorMessage(self, buyerNumber, purchasedItems):
         errorMessage = "Can't delete buyer " + buyerNumber + '.'
-        errorMessage += '\nThe following items must be deleted.'
+        errorMessage += \
+            "\nThe following items must be deleted from the buyer's cart."
         for item in purchasedItems:
             errorMessage += '\n     ' + item
         return errorMessage

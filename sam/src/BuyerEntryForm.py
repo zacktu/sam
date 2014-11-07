@@ -25,7 +25,7 @@ class BuyerEntryForm(wx.Panel):
                                     style = wx.TE_RIGHT | wx.TE_READONLY)
             
         lastNameLabel = wx.StaticText(self, -1, "Last Name:")
-        self.lastNameTC = wx.TextCtrl(self, -1, "");
+        self.lastNameTC = wx.TextCtrl(self, -1, "", size=(280, -1));
         
         firstNameLabel = wx.StaticText(self, -1, "FirstName:")
         self.firstNameTC = wx.TextCtrl(self, -1, "");
@@ -34,9 +34,7 @@ class BuyerEntryForm(wx.Panel):
         self.streetTC = wx.TextCtrl(self, -1, "");
         
         cityStateZipLabel = wx.StaticText(self, -1, "City, State, Zip:")
-        self.cityTC  = wx.TextCtrl(self, -1, "", size=(150, -1))
-        self.stateTC = wx.TextCtrl(self, -1, "", size=(50, -1))
-        self.zipTC   = wx.TextCtrl(self, -1, "", size=(70, -1))
+        self.cityStateZipTC  = wx.TextCtrl(self, -1, "")
         
         telnoLabel = wx.StaticText(self, -1, "Telephone:")
         self.telnoTC   = wx.TextCtrl(self, -1, "", size=(110, -1))
@@ -74,13 +72,7 @@ class BuyerEntryForm(wx.Panel):
 
         addrSizer.Add(cityStateZipLabel, 0,
                       wx.ALIGN_RIGHT, wx.ALIGN_CENTER_VERTICAL)
-        
-        # Now a subsizer for city, state, and zip
-        cityStateZipSizer = wx.BoxSizer(wx.HORIZONTAL)
-        cityStateZipSizer.Add(self.cityTC, 1)
-        cityStateZipSizer.Add(self.stateTC, 0, wx.LEFT|wx.RIGHT, 5)
-        cityStateZipSizer.Add(self.zipTC)
-        addrSizer.Add(cityStateZipSizer, 0, wx.EXPAND)
+        addrSizer.Add(self.cityStateZipTC, 0, wx.EXPAND)
 
         addrSizer.Add(telnoLabel, 0,
                       wx.ALIGN_RIGHT, wx.ALIGN_CENTER_VERTICAL)
@@ -135,21 +127,9 @@ class BuyerEntryForm(wx.Panel):
             Dialogs.DisplayErrorDialog("The street name must not be null.")
             return
         
-        city = self.cityTC.GetValue()
+        city = self.cityStateZipTC.GetValue()
         if not (len(city) > 0):
-            Dialogs.DisplayErrorDialog("The city name must not be null.")
-            return
-        
-        state = self.stateTC.GetValue().upper()
-        if len(state )!= 2 or not (state.isalpha()):
-            Dialogs.DisplayErrorDialog(
-                    "The state must be two alphabetic characters.")
-            return
-        
-        zip = self.zipTC.GetValue()
-        if len(zip) != 5 or RegularExpression.CheckZipCode(zip) is None:
-            Dialogs.DisplayErrorDialog(
-                    "The zip code must be a five-digit decimal number.")
+            Dialogs.DisplayErrorDialog("The city name and state must not be null.")
             return
         
         telno = self.telnoTC.GetValue()
@@ -161,8 +141,7 @@ class BuyerEntryForm(wx.Panel):
         if self.function == 'add':
             try:
                 self.buyers.AddBuyer(self.samdb, buyerNumber, lastName, \
-                            firstName, street, city, state, zip, \
-                            telno)
+                            firstName, street, city, telno)
             except MySQLdb.Error, e:
                 Dialogs.DisplayErrorDialog(e.args[1])
                 return
@@ -171,8 +150,7 @@ class BuyerEntryForm(wx.Panel):
         else:
             try:
                 self.buyers.UpdateBuyer(self.samdb, buyerNumber, lastName, \
-                            firstName, street, city, state, zip, \
-                            telno)
+                            firstName, street, city, telno)
             except MySQLdb.Error, e:
                 Dialogs.DisplayErrorDialog(e.args[1])
                 return
@@ -197,19 +175,15 @@ class BuyerEntryForm(wx.Panel):
         self.lastNameTC.SetValue(row[0])
         self.firstNameTC.SetValue(row[1])
         self.streetTC.SetValue(row[2])
-        self.cityTC.SetValue(row[3])
-        self.stateTC.SetValue(row[4])
-        self.zipTC.SetValue(row[5])
-        self.telnoTC.SetValue(row[6])
+        self.cityStateZipTC.SetValue(row[3])
+        self.telnoTC.SetValue(row[4])
 
     def ClearAll(self):
         self.buyerNumberTC.Clear()
         self.lastNameTC.Clear()
         self.firstNameTC.Clear()
         self.streetTC.Clear()
-        self.cityTC.Clear()
-        self.stateTC.Clear()
-        self.zipTC.Clear()
+        self.cityStateZipTC.Clear()
         self.telnoTC.Clear()
     
 
