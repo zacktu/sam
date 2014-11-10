@@ -16,7 +16,7 @@
 #----------------------------------------------------------------------#
 
 import wx
-import ManeFrame
+import maneframe
 
 SPLASHFILEPATH = '../otherfiles/images/SAMsplash.jpg'
 
@@ -40,7 +40,7 @@ class MySplashScreen(wx.SplashScreen):
 
     def OnExitSplash(self, evt):
         self.Hide()
-        MyFrame = ManeFrame.ManeFrame()
+        MyFrame = maneframe.ManeFrame()
         app.SetTopWindow(MyFrame)
         MyFrame.Show(True)
         # The program will freeze without this line.

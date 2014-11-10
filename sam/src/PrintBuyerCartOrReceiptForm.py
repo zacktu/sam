@@ -5,7 +5,7 @@ import Dialogs
 import buyers
 import Console
 import ChooserLists
-import PrintingServices
+import printingservices
 import PrintOrPreviewDialog
 
 ''' This is for printing an invoice form for a single buyer.  The init sets

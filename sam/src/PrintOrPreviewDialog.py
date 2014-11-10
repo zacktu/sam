@@ -1,7 +1,7 @@
 
 import wx
 import random
-import PrintingServices
+import printingservices
 
 APP_SIZE_X = 400
 APP_SIZE_Y = 150
@@ -40,12 +40,12 @@ class PrintOrPreviewDialog(wx.Dialog):
         self.Destroy()
 
     def OnPreview(self, event):
-        ps = PrintingServices.PrintingServices(self.parent, self.samdb)
+        ps = printingservices.PrintingServices(self.parent, self.samdb)
         ps.PreviewOneInvoiceOrReceipt(self.buyerNum, self.whatToPrint)
         self.Close(True)
 
     def OnPrint(self, event):
-        ps = PrintingServices.PrintingServices(self.parent, self.samdb)
+        ps = printingservices.PrintingServices(self.parent, self.samdb)
         ps.PrintOneInvoiceOrReceipt(self.buyerNum, self.whatToPrint)
         self.Close(True)
 

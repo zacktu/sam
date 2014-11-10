@@ -2,7 +2,7 @@
 import wx
 import MySQLdb
 import dbservices
-import ConnectDialog
+import connectdialog
 import ManeToolbook
 import Dialogs
 
@@ -35,7 +35,7 @@ class ManeFrame(wx.Frame):
         connected = False
         while not connected:
             data = {}
-            dlg = ConnectDialog.ConnectDialog(data)
+            dlg = connectdialog.ConnectDialog(data)
             result = dlg.ShowModal()
             dlg.Destroy()
             if result == wx.ID_OK:

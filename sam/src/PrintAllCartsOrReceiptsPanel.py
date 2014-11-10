@@ -7,7 +7,7 @@ A panel for
 import wx
 import buyers
 import Console
-import PrintingServices
+import printingservices
 
 
 class PrintAllCartsOrReceiptsPanel(wx.Panel):
@@ -60,12 +60,12 @@ class PrintAllCartsOrReceiptsPanel(wx.Panel):
         
     def OnPreviewButton(self, event):
         self.con.DisplayAllPurchases(self.samdb)
-        ps = PrintingServices.PrintingServices(self.parent, self.samdb)
+        ps = printingservices.PrintingServices(self.parent, self.samdb)
         ps.PreviewAllInvoicesOrReceipts(self.whatToPrint)
         
     def OnPrintButton(self, event):
         self.con.DisplayAllPurchases(self.samdb)
-        ps = PrintingServices.PrintingServices(self.parent, self.samdb)
+        ps = printingservices.PrintingServices(self.parent, self.samdb)
         ps.PrintAllInvoicesOrReceipts(self.whatToprint)
         
 
