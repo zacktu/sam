@@ -113,9 +113,10 @@ class PrintingServices():
         lines.append('.ft R\n')
         lines.append('.sp\n')
         return lines
-    
+
     def BuildInvoiceOrReceiptHeader(self, buyerNum, whatToPrint):
         buyerInfo = self.buyers.FetchBuyer(self.samdb, buyerNum)
+
         lines = []
         lines.append('.ps 15\n')
         lines.append('.ft B\n')
@@ -143,6 +144,13 @@ class PrintingServices():
             lines.append('INVOICE\n')
         else:
             lines.append('RECEIPT\n')
+        '''
+        buyerInfo[0] is buyer last name
+        buyerInfo[1] is buyer first name
+        buyerInfo[2] is buyer street
+        buyerInfo[3] is buyer city, state and zip (when preovided)
+        buyerInfo[4] is buyer telephone number
+    '''
         lines.append('.ps -2\n')
         lines.append('.ft R\n')
         lines.append('.sp 1.0i\n')
@@ -150,10 +158,9 @@ class PrintingServices():
         lines.append('.br\n')
         lines.append(buyerInfo[2] + '\n')
         lines.append('.br\n')
-        lines.append(buyerInfo[3] + ', ' + buyerInfo[4] +  \
-                     ' ' + buyerInfo[5] + '\n')
+        lines.append(buyerInfo[3]  + '\n')
         lines.append('.br\n')
-        lines.append(buyerInfo[6] + '\n')
+        lines.append(buyerInfo[4] + '\n')
         lines.append('.br\n')
         lines.append('Buyer number ' + buyerNum + '\n')
         lines.append('.sp 3\n')
