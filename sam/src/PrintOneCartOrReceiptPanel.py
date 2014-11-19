@@ -26,10 +26,8 @@ class PrintOneCartOrReceiptPanel(wx.Panel):
         mainSizer.Add(topLbl, 0, wx.ALL, 5)
         mainSizer.Add(wx.StaticLine(self), 0, wx.EXPAND|wx.TOP|wx.BOTTOM, 5)
 
-        print("PPPPP000 In PrintOneCartOrReceiptPanel about to invoke PrintBuyerCartOrReceiptForm")
         self.pbcorf = PrintBuyerCartOrReceiptForm.PrintBuyerCartOrReceiptForm(
             self, samdb, whatToPrint)
-        print("PPPPP111 returned from PrintBuyerCartOrReceiptForm")
 
         mainSizer.Add(self.pbcorf)
         
@@ -41,5 +39,3 @@ class PrintOneCartOrReceiptPanel(wx.Panel):
         mainSizer.Fit(parent)
         mainSizer.SetSizeHints(parent)
 
-    def tryThis(self, choice):
-        print("IN PRINTONECARTORRECEIPTPANEL: tryThis choice is ", choice)

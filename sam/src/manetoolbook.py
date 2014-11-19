@@ -1,4 +1,13 @@
 
+'''
+manetoolbook is the first page that is seen after the splash screen and
+the database selector.  It has choosers down the left for Donors, Items,
+Buyers, Purchases, Carts, and Receipts.
+
+Bob Cannon
+module dates from years ago -- header added 19 November 2014
+'''
+
 import wx
 import BuyersToolbook
 import DonorsToolbook
@@ -20,7 +29,7 @@ def getNextImageID(count):
             imID = 0
     
     
-class ManeToolbook(wx.Toolbook):
+class manetoolbook(wx.Toolbook):
     def __init__(self, parent, id, samdb):
         wx.Toolbook.__init__(self, parent, id, style=wx.BK_LEFT)
 
@@ -48,7 +57,6 @@ class ManeToolbook(wx.Toolbook):
         self.AddPage(putb, "", imageId=imageIdGenerator.next())
 
         self.prtbc = PrintingToolbook.PrintingToolbook(self, -1, self.samdb, 'carts')
-        #self.prtbc.trythis()
         self.AddPage(self.prtbc, '', imageId=imageIdGenerator.next())
         
         self.prtbr = PrintingToolbook.PrintingToolbook(self, -1, self.samdb, 'receipts')
@@ -62,17 +70,10 @@ class ManeToolbook(wx.Toolbook):
 
     def OnPageChanging(self, event):
         self.evtChanging = event.GetSelection()
-        print("evtChanging = ", self.evtChanging)
+        #update the appropriate buyer chooser list in case a buyer has been added
         if (self.evtChanging == 4):
-            print("Carts button pressed")
-            self.prtbc.tryThis("carts")
-            self.prtbc.pocorp.tryThis("carts")
-            self.prtbc.pocorp.pbcorf.tryThis("carts")
             self.prtbc.pocorp.pbcorf.BuildChooser(self.samdb)
         if (self.evtChanging == 5):
-            print("Receipts button pressed")
-            self.prtbr.tryThis("receipts")
-            self.prtbr.pocorp.tryThis("receipts")
             self.prtbr.pocorp.pbcorf.BuildChooser(self.samdb)
         event.Skip()
 

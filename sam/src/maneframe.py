@@ -3,7 +3,7 @@ import wx
 import MySQLdb
 import dbservices
 import connectdialog
-import ManeToolbook
+import manetoolbook
 import Dialogs
 
 labels = "one two three four".split()
@@ -46,7 +46,7 @@ class ManeFrame(wx.Frame):
                                         username = data["user"], \
                                         password = data["passwd"])
                     connected = True
-                    ManeToolbook.ManeToolbook(self, -1, samdb)
+                    manetoolbook.manetoolbook(self, -1, samdb)
                 except MySQLdb.Error, e:
                     connected = False
                     Dialogs.DisplayErrorDialog("Error %d: %s" % (e.args[0], \

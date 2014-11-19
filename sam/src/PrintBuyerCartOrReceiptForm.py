@@ -26,9 +26,7 @@ class PrintBuyerCartOrReceiptForm(wx.Panel):
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         
         self.chooserPanel = wx.Panel(self, -1)
-        print("BBBBBBB000 About to invoke BuildChooser")
         self.BuildChooser(samdb)
-        print("BBBBBBB111 Returned from BuildChooser")
 
         mainSizer.Add(self.chooserPanel)
         
@@ -80,10 +78,8 @@ class PrintBuyerCartOrReceiptForm(wx.Panel):
         
     def BuildChooser(self, samdb):
         try:
-            print("CCCCCCC000 Entering BuildChooser about to invoke BuildChooserNumberList")
             self.buyerNumberList = self.chooserLists.BuildChooserNumberList \
                             ('buyer', samdb)
-            print("CCCCCCC111 Returned from BuildChooserNumberList")
             wx.StaticText(self.chooserPanel, -1, \
                           "Select a buyer number:", (15,5))
             self.buyerNumberChoice = wx.Choice(self.chooserPanel, \
@@ -108,8 +104,6 @@ class PrintBuyerCartOrReceiptForm(wx.Panel):
             return
         except MySQLdb.Warning, e:
             print("Warning ", e)
-    
-    def tryThis(self, choice):
-        print("PRINTBUYERCARTORRECEIPTFORM  --  HERE IS WHERE WE BUILD THE CHOOSER  -- choice is ", choice)
+
 
 

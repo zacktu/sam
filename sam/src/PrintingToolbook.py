@@ -24,7 +24,6 @@ class PrintingToolbook(wx.Toolbook):
         self.AssignImageList(il)
         imageIdGenerator = getNextImageID(il.GetImageCount())
 
-        print("RRRRR000 about to instantiate PrintOneCartOrReceiptPanel class")
         self.pocorp = PrintOneCartOrReceiptPanel.PrintOneCartOrReceiptPanel( \
                     self, self.samdb, whatToPrint)
         self.AddPage(self.pocorp, "", imageId=imageIdGenerator.next())
@@ -41,15 +40,10 @@ class PrintingToolbook(wx.Toolbook):
         self.Bind(wx.EVT_TOOLBOOK_PAGE_CHANGING, self.OnPageChanging)
     
     def OnPageChanged(self, event):
-        print("XXXXXXXXX PrintingToolbook page changed")
         event.Skip()
 
     def OnPageChanging(self, event):
-        print("YYYYYYYY PrintingToolbook page changing")
         event.Skip()
-        
-    def tryThis(self, choice):
-        print ("ZZZZZZZ -- tryThis for choice ", choice)
 
 def getNextImageID(count):
     imID = 0
