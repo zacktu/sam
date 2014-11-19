@@ -13,6 +13,7 @@ class ChooserLists(object):
         return
         
     def BuildChooserNumberList(self, player, samdb):
+        print("AAAAAAA Entering BuildChooserNumberList with player = ", player)
         if player == 'donor':
             query = "SELECT donor_number FROM Donors ORDER BY donor_number;"
         elif player == 'item':

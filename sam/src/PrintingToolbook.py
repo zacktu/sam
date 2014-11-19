@@ -23,34 +23,33 @@ class PrintingToolbook(wx.Toolbook):
             il.Add(bmp)
         self.AssignImageList(il)
         imageIdGenerator = getNextImageID(il.GetImageCount())
-        
-        self.printOneCartOrReceiptPanel = \
-                    PrintOneCartOrReceiptPanel.PrintOneCartOrReceiptPanel( \
+
+        print("RRRRR000 about to instantiate PrintOneCartOrReceiptPanel class")
+        self.pocorp = PrintOneCartOrReceiptPanel.PrintOneCartOrReceiptPanel( \
                     self, self.samdb, whatToPrint)
-        self.AddPage(self.printOneCartOrReceiptPanel, "", \
-                     imageId=imageIdGenerator.next())
+        self.AddPage(self.pocorp, "", imageId=imageIdGenerator.next())
         
-        self.PrintAllCartsOrReceiptsPanel = \
-            PrintAllCartsOrReceiptsPanel.PrintAllCartsOrReceiptsPanel( \
+        self.pacorp = PrintAllCartsOrReceiptsPanel.PrintAllCartsOrReceiptsPanel( \
                     self, self.samdb, whatToPrint)
-        self.AddPage(self.PrintAllCartsOrReceiptsPanel, "", \
-                    imageId=imageIdGenerator.next())
+        self.AddPage(self.pacorp, "", imageId=imageIdGenerator.next())
         
-        self.PrintCartOrReceiptSummaryPanel = \
-            PrintCartOrReceiptSummaryPanel.PrintCartOrReceiptSummaryPanel( \
+        self.pcorsp = PrintCartOrReceiptSummaryPanel.PrintCartOrReceiptSummaryPanel( \
                     self, self.samdb, whatToPrint)
-        self.AddPage(self.PrintCartOrReceiptSummaryPanel, "", \
-                     imageId=imageIdGenerator.next())
+        self.AddPage(self.pcorsp, "", imageId=imageIdGenerator.next())
         
         self.Bind(wx.EVT_TOOLBOOK_PAGE_CHANGED, self.OnPageChanged)
         self.Bind(wx.EVT_TOOLBOOK_PAGE_CHANGING, self.OnPageChanging)
     
     def OnPageChanged(self, event):
+        print("XXXXXXXXX PrintingToolbook page changed")
         event.Skip()
 
     def OnPageChanging(self, event):
+        print("YYYYYYYY PrintingToolbook page changing")
         event.Skip()
         
+    def tryThis(self, choice):
+        print ("ZZZZZZZ -- tryThis for choice ", choice)
 
 def getNextImageID(count):
     imID = 0
