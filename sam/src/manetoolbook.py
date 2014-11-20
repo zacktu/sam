@@ -9,11 +9,11 @@ module dates from years ago -- header added 19 November 2014
 '''
 
 import wx
-import BuyersToolbook
-import DonorsToolbook
-import ItemsToolbook
-import PrintingToolbook
-import PurchasesToolbook
+import buyerstoolbook
+import donorstoolbook
+import itemstoolbook
+import printingtoolbook
+import purchasestoolbook
 
 players = ['donors', 'items', 'buyers', 'purchases', 'carts', 'receipts']
 
@@ -44,22 +44,22 @@ class manetoolbook(wx.Toolbook):
         self.AssignImageList(il)
         imageIdGenerator = getNextImageID(il.GetImageCount())
   
-        dtb = DonorsToolbook.DonorsToolbook(self, -1, self.samdb)
+        dtb = donorstoolbook.DonorsToolbook(self, -1, self.samdb)
         self.AddPage(dtb, "", imageId=imageIdGenerator.next())
 
-        itb = ItemsToolbook.ItemsToolbook(self, -1, self.samdb)
+        itb = itemstoolbook.ItemsToolbook(self, -1, self.samdb)
         self.AddPage(itb, "", imageId=imageIdGenerator.next())
         
-        btb = BuyersToolbook.BuyersToolbook(self, -1, self.samdb)
+        btb = buyerstoolbook.BuyersToolbook(self, -1, self.samdb)
         self.AddPage(btb, "", imageId=imageIdGenerator.next())
         
-        putb = PurchasesToolbook.PurchasesToolbook(self, -1, self.samdb)
+        putb = purchasestoolbook.PurchasesToolbook(self, -1, self.samdb)
         self.AddPage(putb, "", imageId=imageIdGenerator.next())
 
-        self.prtbc = PrintingToolbook.PrintingToolbook(self, -1, self.samdb, 'carts')
+        self.prtbc = printingtoolbook.PrintingToolbook(self, -1, self.samdb, 'carts')
         self.AddPage(self.prtbc, '', imageId=imageIdGenerator.next())
         
-        self.prtbr = PrintingToolbook.PrintingToolbook(self, -1, self.samdb, 'receipts')
+        self.prtbr = printingtoolbook.PrintingToolbook(self, -1, self.samdb, 'receipts')
         self.AddPage(self.prtbr, '', imageId=imageIdGenerator.next())
         
         self.Bind(wx.EVT_TOOLBOOK_PAGE_CHANGED, self.OnPageChanged)
