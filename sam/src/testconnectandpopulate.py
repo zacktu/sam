@@ -177,20 +177,20 @@ def Populate(samdb, da, dd, db, di, dp):
                '002', '100', '25', '1')
     
     print("DATABASE LOADED")
-    
-    console = console.Console()
-    
+
+    cnsole = console.Console()
+
     print ("\nNOW SHOW THE AUCTION INFORMATION ON THE CONSOLE")
-    console.DisplayAuctionData(samdb)
+    cnsole.DisplayAuctionData(samdb)
 
     print ("\nNOW SHOW THE BUYERS TABLE ON THE CONSOLE")
-    console.DisplayBuyers(samdb)
+    cnsole.DisplayBuyers(samdb)
     
     print ("\nNOW SHOW THE DONORS TABLE ON THE CONSOLE")
-    console.DisplayDonors(samdb)
+    cnsole.DisplayDonors(samdb)
     
     print ("\nNOW SHOW THE ITEMS TABLE ON THE CONSOLE")
-    console.DisplayItems(samdb)
+    cnsole.DisplayItems(samdb)
     
     print ("\nPURCHASE SOME ITEMS")
     dp.PurchaseItem(samdb, '000', '000', '1250')
@@ -203,23 +203,23 @@ def Populate(samdb, da, dd, db, di, dp):
     dp.PurchaseItem(samdb, '008', '003', '125')
     
     print ("\nNOW LOOK AT THE ITEMS TABLE AGAIN")
-    console.DisplayItems(samdb)
+    cnsole.DisplayItems(samdb)
     
     print ("\nNOW SHOW SOME PURCHASES ON THE CONSOLE")
     print ("\nPurchases for buyer 000:")
-    console.DisplayPurchases(samdb, '000')
+    cnsole.DisplayPurchases(samdb, '000')
     print ("\nPurchases for buyer 001:")    
-    console.DisplayPurchases(samdb, '001')
+    cnsole.DisplayPurchases(samdb, '001')
     print ("\nPurchases for buyer 002:")   
-    console.DisplayPurchases(samdb, '002')
+    cnsole.DisplayPurchases(samdb, '002')
     print ("\nPurchases for buyer 003:")    
-    console.DisplayPurchases(samdb, '003')
+    cnsole.DisplayPurchases(samdb, '003')
     print ("\nPurchases for buyer 004:")    
-    console.DisplayPurchases(samdb, '004')
+    cnsole.DisplayPurchases(samdb, '004')
     
     
     print ("\nDRIVER: NOW SHOW ALL PURCHASES BY ALL BUYERS ON THE CONSOLE")
-    console.DisplayAllPurchases(samdb)
+    cnsole.DisplayAllPurchases(samdb)
     
     print ("\nDRIVER: NOW SHOW ALL PURCHASES FOR ONE BUYER ON THE CONSOLE")
     pr = Printer.Printer()
