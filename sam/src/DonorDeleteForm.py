@@ -2,8 +2,8 @@
 import wx
 import MySQLdb
 import Dialogs
-import Donors
-import Console
+import donors
+import console
 import ChooserLists
 
 class DonorDeleteForm(wx.Panel):
@@ -12,9 +12,9 @@ class DonorDeleteForm(wx.Panel):
         
         self.samdb = samdb
         self.parent = parent
-        self.donors = Donors.Donors()
+        self.donors = donors.Donors()
         self.chooserLists = ChooserLists.ChooserLists()
-        self.con = Console.Console()
+        self.con = console.Console()
         
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         

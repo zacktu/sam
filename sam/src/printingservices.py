@@ -10,7 +10,7 @@ from the Buyers table.
 
 '''
 
-import Auction
+import auction
 import buyers
 import os
 import subprocess
@@ -23,7 +23,7 @@ class PrintingServices():
     def __init__(self, parent, samdb):
         self.parent = parent
         self.samdb = samdb
-        self.auction = Auction.Auction()
+        self.auction = auction.Auction()
         self.buyers = buyers.Buyers()
         self.fname = self.rand_fname('xxx', 8)
         

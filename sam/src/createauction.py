@@ -28,10 +28,10 @@ creates Auction, Donor, Buyer, and Item tables.
 import MySQLdb
 import sys
 import dbservices
-import Auction
-import Donors
+import auction
+import donors
 import buyers
-import Items
+import items
 
 def CreateAuction(hname, pnumber, uname, pword, \
                   dbnam, title, subtitle, date):
@@ -57,13 +57,13 @@ def DoEverything(samdb, dbnam, title, subtitle, date):
         ''' Now create the database. ''' 
         samdb.CreateDatabase(dbnam)
         print 'Database ' + dbnam + ' created.'
-        dd = Donors.Donors()
+        dd = donors.Donors()
         dd.CreateDonorsTable(samdb)
         print "Donors table created."
         db = buyers.Buyers()
         db.CreateBuyersTable(samdb)
         print "Buyers table created."
-        di = Items.Items()
+        di = items.Items()
         di.CreateItemsTable(samdb)
         print "Items table created."
         
@@ -72,7 +72,7 @@ def DoEverything(samdb, dbnam, title, subtitle, date):
             of the system.  Data for the table will come eventually
             from a GUI.  For the moment, default data are entered
             into the table.  '''
-        da = Auction.Auction()
+        da = auction.Auction()
         da.CreateAuctionTable(samdb)
         print "Auction table created."
         print 'ENTERING AUCTION DATA'

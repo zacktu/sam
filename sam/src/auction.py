@@ -79,7 +79,7 @@ class Auction(object):
 # Run the program
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print 'Usage: python Auction.py dbname'
+        print 'Usage: python auction.py dbname'
     else:
         try:
             samdb = dbservices.Samdb(dbname='mysql')

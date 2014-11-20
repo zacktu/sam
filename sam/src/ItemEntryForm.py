@@ -2,9 +2,9 @@ import wx
 import MySQLdb
 import Dialogs
 import RegularExpression
-import Donors
-import Items
-import Console
+import donors
+import items
+import console
 
 class ItemEntryForm(wx.Panel):
     def __init__(self, parent, samdb, function):
@@ -12,9 +12,9 @@ class ItemEntryForm(wx.Panel):
 
         self.samdb = samdb
         self.function = function
-        self.items = Items.Items()
-        self.donors = Donors.Donors()
-        self.con = Console.Console()
+        self.items = items.Items()
+        self.donors = donors.Donors()
+        self.con = console.Console()
         
         # First create the controls
 

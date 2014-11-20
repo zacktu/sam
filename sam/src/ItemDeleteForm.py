@@ -7,8 +7,8 @@ Created on Aug 9, 2010
 import wx
 import MySQLdb
 import Dialogs
-import Items
-import Console
+import items
+import console
 import ChooserLists
 
 class ItemDeleteForm(wx.Panel):
@@ -17,9 +17,9 @@ class ItemDeleteForm(wx.Panel):
         
         self.samdb = samdb
         self.parent = parent
-        self.items = Items.Items()
+        self.items = items.Items()
         self.chooserLists = ChooserLists.ChooserLists()
-        self.con = Console.Console()
+        self.con = console.Console()
         
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         

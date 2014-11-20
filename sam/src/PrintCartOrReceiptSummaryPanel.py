@@ -5,7 +5,7 @@ A panel for
 '''
 
 import wx
-import Console
+import console
 import buyers
 import printingservices
 
@@ -14,7 +14,7 @@ class PrintCartOrReceiptSummaryPanel(wx.Panel):
         super(PrintCartOrReceiptSummaryPanel, self).__init__(parent)
 
         self.samdb = samdb
-        self.con = Console.Console()
+        self.con = console.Console()
         self.buyers = buyers.Buyers()
         self.parent = parent
         

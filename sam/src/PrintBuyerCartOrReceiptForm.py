@@ -3,7 +3,7 @@ import wx
 import MySQLdb
 import Dialogs
 import buyers
-import Console
+import console
 import ChooserLists
 import printingservices
 import PrintOrPreviewDialog
@@ -21,7 +21,7 @@ class PrintBuyerCartOrReceiptForm(wx.Panel):
         self.buyers = buyers.Buyers()
         self.chooserLists = ChooserLists.ChooserLists()
         self.whatToPrint = whatToPrint
-        self.con = Console.Console()
+        self.con = console.Console()
         
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         

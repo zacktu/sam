@@ -7,7 +7,7 @@ Created on July 9, 2013
 import sys
 import MySQLdb
 import dbservices
-import Console
+import console
 import Printer
 
 
@@ -22,7 +22,7 @@ def ConsoleShowAllPurchases():
         exit()
     samdb = Connect(sys.argv)
     samdb.UseDatabase(sys.argv[1])
-    console = Console.Console()
+    console = console.Console()
     console.DisplayAllPurchases(samdb)
     
 ''' Connect to the mysql server.  If remote, then the database name, server

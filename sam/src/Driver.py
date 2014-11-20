@@ -5,20 +5,20 @@ Created on Jan 3, 2010
 '''
 
 import dbservices
-import Donors
+import donors
 import buyers
-import Items
-import Console
+import items
+import console
 import Printer
 
 if __name__ == '__main__':
     samdb = dbservices.Samdb(dbname='mysql')
     samdb.CreateDatabase()
-    dd = Donors.Donors()
+    dd = donors.Donors()
     dd.CreateDonorsTable(samdb)
     db = buyers.Buyers()
     db.CreateBuyersTable(samdb)
-    di = Items.Items()
+    di = items.Items()
     di.CreateItemsTable(samdb)
     
     dd.AddDonor(samdb, '000', 'Williams Jewelry Co.', '257 Main St.', 'Omaha', 'NE', \
@@ -55,7 +55,7 @@ if __name__ == '__main__':
     
     print("DATABASE LOADED")
     
-    console = Console.Console()
+    console = console.Console()
     
     print ("NOW SHOW THE BUYERS TABLE ON THE CONSOLE")
     console.DisplayBuyers(samdb)

@@ -9,12 +9,12 @@ Created on Jan 3, 2010
 import sys
 import MySQLdb
 import dbservices
-import Auction
-import Donors
+import auction
+import donors
 import buyers
-import Items
-import Purchases
-import Console
+import items
+import purchases
+import console
 import Printer
 
 
@@ -31,11 +31,11 @@ def TestConnectAndPopulate():
     samdb = Connect(sys.argv)
     samdb.UseDatabase(sys.argv[1])
     ## Create objects for Auction, Donors, Buyers, Items, and Purchases
-    da = Auction.Auction()
-    dd = Donors.Donors()
+    da = auction.Auction()
+    dd = donors.Donors()
     db = buyers.Buyers()
-    di = Items.Items()
-    dp = Purchases.Purchases()
+    di = items.Items()
+    dp = purchases.Purchases()
     Populate(samdb, da, dd, db, di, dp)
 
 
@@ -178,7 +178,7 @@ def Populate(samdb, da, dd, db, di, dp):
     
     print("DATABASE LOADED")
     
-    console = Console.Console()
+    console = console.Console()
     
     print ("\nNOW SHOW THE AUCTION INFORMATION ON THE CONSOLE")
     console.DisplayAuctionData(samdb)

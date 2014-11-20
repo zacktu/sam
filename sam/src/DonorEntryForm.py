@@ -2,8 +2,8 @@ import wx
 import MySQLdb
 import Dialogs
 import RegularExpression
-import Donors
-import Console
+import donors
+import console
 
 class DonorEntryForm(wx.Panel):
     def __init__(self, parent, samdb, function):
@@ -11,8 +11,8 @@ class DonorEntryForm(wx.Panel):
 
         self.samdb = samdb
         self.function = function
-        self.donors = Donors.Donors()
-        self.con = Console.Console()
+        self.donors = donors.Donors()
+        self.con = console.Console()
         
         # First create the controls
 

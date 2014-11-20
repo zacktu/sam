@@ -3,9 +3,9 @@ import MySQLdb
 import Dialogs
 import RegularExpression
 import buyers
-import Items
-import Purchases
-import Console
+import items
+import purchases
+import console
 
 class PurchaseEntryForm(wx.Panel):
     def __init__(self, parent, samdb, function):
@@ -14,10 +14,10 @@ class PurchaseEntryForm(wx.Panel):
         self.parent = parent
         self.samdb = samdb
         self.function = function
-        self.items = Items.Items()
+        self.items = items.Items()
         self.buyers = buyers.Buyers()
-        self.purchases = Purchases.Purchases()
-        self.con = Console.Console()
+        self.purchases = purchases.Purchases()
+        self.con = console.Console()
         
         # First create the controls
 
