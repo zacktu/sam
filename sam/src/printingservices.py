@@ -141,14 +141,14 @@ class PrintingServices():
         lines.append('.sp 0.5i\n')
         lines.append('.ce\n')
         if whatToPrint == 'carts':
-            lines.append('INVOICE\n')
+            lines.append('SHOPPING CART\n')
         else:
             lines.append('RECEIPT\n')
         '''
         buyerInfo[0] is buyer last name
         buyerInfo[1] is buyer first name
         buyerInfo[2] is buyer street
-        buyerInfo[3] is buyer city, state and zip (when preovided)
+        buyerInfo[3] is buyer city, state and zip (when provided)
         buyerInfo[4] is buyer telephone number
     '''
         lines.append('.ps -2\n')
