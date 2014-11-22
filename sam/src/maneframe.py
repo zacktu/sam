@@ -4,7 +4,7 @@ import MySQLdb
 import dbservices
 import connectdialog
 import manetoolbook
-import Dialogs
+import dialogs
 
 labels = "one two three four".split()
 
@@ -49,9 +49,9 @@ class ManeFrame(wx.Frame):
                     manetoolbook.manetoolbook(self, -1, samdb)
                 except MySQLdb.Error, e:
                     connected = False
-                    Dialogs.DisplayErrorDialog("Error %d: %s" % (e.args[0], \
+                    dialogs.DisplayErrorDialog("Error %d: %s" % (e.args[0], \
                                                                  e.args[1]))
-                    if not Dialogs.DisplayYesNoDialog("Want to try again?"):
+                    if not dialogs.DisplayYesNoDialog("Want to try again?"):
                         exit()    
             else:
                 exit()

@@ -10,7 +10,7 @@ import BuyerEntryForm
 import ItemEntryForm
 import PurchaseEntryForm
 import MySQLdb
-import Dialogs
+import dialogs
 
 class EditPanel(wx.Panel):
     def __init__(self, parent, samdb, player):
@@ -100,7 +100,7 @@ class EditPanel(wx.Panel):
         try:
             rows = samdb.FetchRows(query)
         except MySQLdb.Error, e:
-            Dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.DisplayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning: ", e)
@@ -126,7 +126,7 @@ class EditPanel(wx.Panel):
         try:
             rows = samdb.FetchRows(query)
         except MySQLdb.Error, e:
-            Dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.DisplayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning: ", e)
@@ -149,7 +149,7 @@ class EditPanel(wx.Panel):
         try:
             rows = samdb.FetchRows(query)
         except MySQLdb.Error, e:
-            Dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.DisplayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning: ", e)
@@ -178,7 +178,7 @@ class EditPanel(wx.Panel):
         try:
             rows = samdb.FetchRows(query)
         except MySQLdb.Error, e:
-            Dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.DisplayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning: ", e)

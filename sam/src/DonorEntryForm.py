@@ -1,6 +1,6 @@
 import wx
 import MySQLdb
-import Dialogs
+import dialogs
 import regularexpression
 import donors
 import console
@@ -122,38 +122,38 @@ class DonorEntryForm(wx.Panel):
         donorNumber = self.donorNumberTC.GetValue()
         if len(donorNumber) != 3 or \
                     regularexpression.CheckDonorNumber(donorNumber) is None:
-            Dialogs.DisplayErrorDialog(
+            dialogs.DisplayErrorDialog(
                     "The donor number must be a three-digit decimal number.")
             return
         name = self.nameTC.GetValue()
         if not (len(name) > 0):
-            Dialogs.DisplayErrorDialog("The donor name must not be null.")
+            dialogs.DisplayErrorDialog("The donor name must not be null.")
             return
         street = self.streetTC.GetValue()
         if not (len(street) > 0):
-            Dialogs.DisplayErrorDialog("The street name must not be null.")
+            dialogs.DisplayErrorDialog("The street name must not be null.")
             return
         city = self.cityTC.GetValue()
         if not (len(city) > 0):
-            Dialogs.DisplayErrorDialog("The city name must not be null.")
+            dialogs.DisplayErrorDialog("The city name must not be null.")
             return
         state = self.stateTC.GetValue().upper()
         if len(state )!= 2 or not (state.isalpha()):
-            Dialogs.DisplayErrorDialog(
+            dialogs.DisplayErrorDialog(
                     "The state must be two alphabetic characters.")
             return
         zip = self.zipTC.GetValue()
         if len(zip) != 5 or regularexpression.CheckZipCode(zip) is None:
-            Dialogs.DisplayErrorDialog(
+            dialogs.DisplayErrorDialog(
                     "The zip code must be a five-digit decimal number.")
             return
         contact = self.contactTC.GetValue()
         if not (len(contact) > 0):
-            Dialogs.DisplayErrorDialog("The contact name must not be null.")
+            dialogs.DisplayErrorDialog("The contact name must not be null.")
             return
         telno = self.telnoTC.GetValue()
         if len(telno) != 12 or regularexpression.CheckTelno(telno) is None:
-            Dialogs.DisplayErrorDialog(
+            dialogs.DisplayErrorDialog(
                     "The telephone number must be in the format XXX-XXX-XXXX.")
             return
         email = self.emailTC.GetValue()
@@ -163,7 +163,7 @@ class DonorEntryForm(wx.Panel):
                 self.donors.AddDonor(self.samdb, donorNumber, name, street, \
                             city, state, zip, contact, telno, email)
             except MySQLdb.Error, e:
-                Dialogs.DisplayErrorDialog(e.args[1])
+                dialogs.DisplayErrorDialog(e.args[1])
                 return
             except MySQLdb.Warning, e:
                 print("Warning: ", e)
@@ -172,7 +172,7 @@ class DonorEntryForm(wx.Panel):
                 self.donors.UpdateDonor(self.samdb, donorNumber, name, street, \
                                city, state, zip, contact, telno, email)
             except MySQLdb.Error, e:
-                Dialogs.DisplayErrorDialog(e.args[1])
+                dialogs.DisplayErrorDialog(e.args[1])
                 return
             except MySQLdb.Warning, e:
                 print("Warning: ", e)
@@ -185,7 +185,7 @@ class DonorEntryForm(wx.Panel):
         try:
             row = self.donors.FetchDonor(samdb, donorNumber)
         except MySQLdb.Error, e:
-            Dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.DisplayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning: ", e)

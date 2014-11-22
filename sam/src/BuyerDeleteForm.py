@@ -1,7 +1,7 @@
 
 import wx
 import MySQLdb
-import Dialogs
+import dialogs
 import buyers
 import console
 import ChooserLists
@@ -30,7 +30,7 @@ class BuyerDeleteForm(wx.Panel):
     def OnBuyerNumberChoice(self, event):
         indexToDelete = event.GetSelection()
         buyerNumber = event.GetString()
-        if Dialogs.DisplayYesNoDialog('Delete buyer number ' + \
+        if dialogs.DisplayYesNoDialog('Delete buyer number ' + \
                                       buyerNumber + '?'):
             try:
                 purchasedItems = self.buyers.GetBuyersItems \
@@ -38,7 +38,7 @@ class BuyerDeleteForm(wx.Panel):
                 if len(purchasedItems) > 0:
                     errorMessage = self.BuildErrorMessage(buyerNumber, \
                                                           purchasedItems)
-                    Dialogs.DisplayErrorDialog(errorMessage)
+                    dialogs.DisplayErrorDialog(errorMessage)
                     return
                 else:
                     self.buyers.DeleteBuyer(self.samdb, buyerNumber)
@@ -49,7 +49,7 @@ class BuyerDeleteForm(wx.Panel):
                     self.con.DisplayBuyers(self.samdb)
                     return
             except MySQLdb.Error, e:
-                Dialogs.DisplayErrorDialog(e.args[1])
+                dialogs.DisplayErrorDialog(e.args[1])
                 return
             except MySQLdb.Warning, e:
                 print("Warning ", e)
@@ -60,7 +60,7 @@ class BuyerDeleteForm(wx.Panel):
         indexToDelete = event.GetSelection()
         buyerString = event.GetString()
         buyerNumber = buyerString[:3]
-        if Dialogs.DisplayYesNoDialog('Delete buyer number ' + \
+        if dialogs.DisplayYesNoDialog('Delete buyer number ' + \
                                       buyerNumber + '?'):
             try:
                 purchasedItems = self.buyers.GetBuyersItems \
@@ -68,7 +68,7 @@ class BuyerDeleteForm(wx.Panel):
                 if len(purchasedItems) > 0:
                     errorMessage = self.BuildErrorMessage(buyerNumber,\
                                                           purchasedItems)
-                    Dialogs.DisplayErrorDialog(errorMessage)
+                    dialogs.DisplayErrorDialog(errorMessage)
                     return
                 else:
                     self.buyers.DeleteBuyer(self.samdb, buyerNumber)
@@ -79,7 +79,7 @@ class BuyerDeleteForm(wx.Panel):
                     self.buyerNumberChoice.SetItems(self.buyerNumberList)
                     self.con.DisplayBuyers(self.samdb)
             except MySQLdb.Error, e:
-                Dialogs.DisplayErrorDialog(e.args[1])
+                dialogs.DisplayErrorDialog(e.args[1])
                 return
             except MySQLdb.Warning, e:
                 print("Warning ", e)
@@ -110,7 +110,7 @@ class BuyerDeleteForm(wx.Panel):
             self.Bind(wx.EVT_CHOICE, self.OnBuyerNameChoice, \
                                      self.buyerNameChoice)
         except MySQLdb.Error, e:
-            Dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.DisplayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning ", e)

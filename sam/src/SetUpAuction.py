@@ -15,7 +15,7 @@ Author Bob Cannon
 '''
 
 import createauction
-import Dialogs
+import dialogs
 import sys
 import wx
 
@@ -147,21 +147,21 @@ class SetUpAuction(wx.Frame):
         
         hostName = self.hostNameTC.GetValue()
         if not (len(hostName) > 0):
-            Dialogs.DisplayErrorDialog("The host name must not be null.")
+            dialogs.DisplayErrorDialog("The host name must not be null.")
             return
         
         portNumber = self.portNumberTC.GetValue()
         
         userName = self.userNameTC.GetValue()
         if not (len(userName) > 0):
-            Dialogs.DisplayErrorDialog("The user name must not be null.")
+            dialogs.DisplayErrorDialog("The user name must not be null.")
             return
         
         password = self.passwordTC.GetValue()
         
         dbName = self.dbNameTC.GetValue()
         if not (len(dbName) > 0):
-            Dialogs.DisplayErrorDialog("The dataabase name must not be null.")
+            dialogs.DisplayErrorDialog("The dataabase name must not be null.")
             return
         
         title = self.titleTC.GetValue()
@@ -173,11 +173,11 @@ class SetUpAuction(wx.Frame):
         print hostName, portNumber, userName, password, dbName, title, subtitle, date
         createauction.CreateAuction(hostName, portNumber, userName, password, \
                                     dbName, title, subtitle, date)
-        Dialogs.DisplaySuccessDialog("The auction was created successfully.")
+        dialogs.DisplaySuccessDialog("The auction was created successfully.")
         sys.exit()
         
     def OnExitButton(self, event):
-        if Dialogs.DisplayYesNoDialog('Are you sure you want to exit?'):
+        if dialogs.DisplayYesNoDialog('Are you sure you want to exit?'):
             sys.exit()
         else:
             okayButton.SetDefault()

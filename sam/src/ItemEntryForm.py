@@ -1,6 +1,6 @@
 import wx
 import MySQLdb
-import Dialogs
+import dialogs
 import regularexpression
 import donors
 import items
@@ -114,49 +114,49 @@ class ItemEntryForm(wx.Panel):
         itemNumber = self.itemNumberTC.GetValue()
         if len(itemNumber) != 3 or \
                     regularexpression.CheckItemNumber(itemNumber) is None:
-            Dialogs.DisplayErrorDialog(
+            dialogs.DisplayErrorDialog(
                     "The Item number must be a three-digit decimal number.")
             return
         description = self.itemDescriptionTC.GetValue()
         if not (len(description) > 0):
-            Dialogs.DisplayErrorDialog \
+            dialogs.DisplayErrorDialog \
                         ("The item description must not be null.")
             return
         donorNumber = self.donorNumberTC.GetValue()
         if len(donorNumber) != 3 or \
                     regularexpression.CheckDonorNumber(donorNumber) \
                         is None:
-            Dialogs.DisplayErrorDialog \
+            dialogs.DisplayErrorDialog \
                     ("The Donor number must be a three-digit decimal number.")
             return
  
         # Can't change the donor number to a value thats not in the database.
         try:
             if not self.donors.IsValidDonorNumber(self.samdb, donorNumber):
-                Dialogs.DisplayErrorDialog ('Donor number ' + \
+                dialogs.DisplayErrorDialog ('Donor number ' + \
                                 donorNumber + ' is not registered.')
                 if self.function == 'edit':
                     self.donorNumberTC.SetValue(self.oldDonorNumber)
                 return
         except MySQLdb.Error, e:
-            Dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.DisplayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning: ", e)
             
         retailPrice = self.retailPriceTC.GetValue()
         if regularexpression.CheckMoney(retailPrice) == False:
-            Dialogs.DisplayErrorDialog \
+            dialogs.DisplayErrorDialog \
                     ("The retail price must be a decimal number.")
             return
         minimumBid = self.minimumBidTC.GetValue()
         if regularexpression.CheckMoney(minimumBid) == False:
-            Dialogs.DisplayErrorDialog \
+            dialogs.DisplayErrorDialog \
                 ("The minimum bid must be a decimal number.")
             return
         increment = self.incrementTC.GetValue()
         if regularexpression.CheckMoney(increment) == False:
-            Dialogs.DisplayErrorDialog \
+            dialogs.DisplayErrorDialog \
                 ("The increment must be a decimal number.")
             return
  
@@ -165,7 +165,7 @@ class ItemEntryForm(wx.Panel):
                 self.items.AddItem(self.samdb, itemNumber, description, \
                            donorNumber, retailPrice, minimumBid, increment)
             except MySQLdb.Error, e:
-                Dialogs.DisplayErrorDialog(e.args[1])
+                dialogs.DisplayErrorDialog(e.args[1])
                 return
             except MySQLdb.Warning, e:
                 print("Warning: ", e)
@@ -174,7 +174,7 @@ class ItemEntryForm(wx.Panel):
                 self.items.UpdateItem(self.samdb, itemNumber, description, \
                               donorNumber, retailPrice, minimumBid, increment)
             except MySQLdb.Error, e:
-                Dialogs.DisplayErrorDialog(e.args[1])
+                dialogs.DisplayErrorDialog(e.args[1])
                 return
             except MySQLdb.Warning, e:
                 print("Warning: ", e) 
@@ -189,7 +189,7 @@ class ItemEntryForm(wx.Panel):
         try:
             row = self.items.FetchItem(samdb, itemNumber)
         except MySQLdb.Error, e:
-            Dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.DisplayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning: ", e)

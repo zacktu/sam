@@ -6,7 +6,7 @@ Created on Aug 9, 2010
 
 import wx
 import MySQLdb
-import Dialogs
+import dialogs
 import items
 import purchases
 import console
@@ -44,7 +44,7 @@ class PurchaseDeleteForm(wx.Panel):
                         (self.samdb, purchasedItemNumber)
             buyerNumber = row[0]
             winningBid = str(row[1])
-            if not Dialogs.DisplayYesNoDialog('Delete purchase:'
+            if not dialogs.DisplayYesNoDialog('Delete purchase:'
                     + '\n   Item number  ' + purchasedItemNumber
                     + '\n   Buyer number ' + buyerNumber
                     + '\n   Winning bid  ' + '$' + winningBid):
@@ -61,7 +61,7 @@ class PurchaseDeleteForm(wx.Panel):
                         (self.purchasedItemDescriptionList)
             self.con.DisplayAllPurchases(self.samdb)
         except MySQLdb.Error, e:
-            Dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.DisplayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning ", e)
@@ -70,14 +70,14 @@ class PurchaseDeleteForm(wx.Panel):
         indexToDelete = event.GetSelection()
         purchasedItemString = event.GetString()
         purchasedItemNumber = purchasedItemString[:3]
-        if Dialogs.DisplayYesNoDialog('Delete purchase for item number ' + \
+        if dialogs.DisplayYesNoDialog('Delete purchase for item number ' + \
                                       purchasedItemNumber + '?'):
             # Positive buyer number implies that item has been purchased
             buyerNumber = self.items.CheckItemHasBuyer \
                             (purchasedItemNumber, self.samdb)
             print 'IN ONPURCHASEDITEMDESCRIPTIONLIST buyerNumber = ', buyerNumber
             if buyerNumber is None:
-                Dialogs.DisplayErrorDialog \
+                dialogs.DisplayErrorDialog \
                     ('This item has not been purchased.')
                 return
             else:
@@ -121,7 +121,7 @@ class PurchaseDeleteForm(wx.Panel):
             self.Bind(wx.EVT_CHOICE, self.OnPurchasedItemDescriptionChoice, \
                   self.purchasedItemDescriptionChoice)
         except MySQLdb.Error, e:
-            Dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.DisplayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning ", e)       
