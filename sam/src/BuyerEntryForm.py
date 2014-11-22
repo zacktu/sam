@@ -1,7 +1,7 @@
 import wx
 import MySQLdb
 import Dialogs
-import RegularExpression
+import regularexpression
 import buyers
 import console
 
@@ -105,7 +105,7 @@ class BuyerEntryForm(wx.Panel):
     def OnSaveButton(self, event):
         buyerNumber = self.buyerNumberTC.GetValue()
         if len(buyerNumber) != 3 or \
-                    RegularExpression.CheckBuyerNumber(buyerNumber) is None:
+                    regularexpression.CheckBuyerNumber(buyerNumber) is None:
             Dialogs.DisplayErrorDialog(
                     "The buyer number must be a three-digit decimal number.")
             return
@@ -133,7 +133,7 @@ class BuyerEntryForm(wx.Panel):
             return
         
         telno = self.telnoTC.GetValue()
-        if len(telno) != 12 or RegularExpression.CheckTelno(telno) is None:
+        if len(telno) != 12 or regularexpression.CheckTelno(telno) is None:
             Dialogs.DisplayErrorDialog(
                     "The telephone number must be in the format XXX-XXX-XXXX.")
             return

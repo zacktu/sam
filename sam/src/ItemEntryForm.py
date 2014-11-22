@@ -1,7 +1,7 @@
 import wx
 import MySQLdb
 import Dialogs
-import RegularExpression
+import regularexpression
 import donors
 import items
 import console
@@ -113,7 +113,7 @@ class ItemEntryForm(wx.Panel):
     def OnSaveButton(self, event):
         itemNumber = self.itemNumberTC.GetValue()
         if len(itemNumber) != 3 or \
-                    RegularExpression.CheckItemNumber(itemNumber) is None:
+                    regularexpression.CheckItemNumber(itemNumber) is None:
             Dialogs.DisplayErrorDialog(
                     "The Item number must be a three-digit decimal number.")
             return
@@ -124,7 +124,7 @@ class ItemEntryForm(wx.Panel):
             return
         donorNumber = self.donorNumberTC.GetValue()
         if len(donorNumber) != 3 or \
-                    RegularExpression.CheckDonorNumber(donorNumber) \
+                    regularexpression.CheckDonorNumber(donorNumber) \
                         is None:
             Dialogs.DisplayErrorDialog \
                     ("The Donor number must be a three-digit decimal number.")
@@ -145,17 +145,17 @@ class ItemEntryForm(wx.Panel):
             print("Warning: ", e)
             
         retailPrice = self.retailPriceTC.GetValue()
-        if RegularExpression.CheckMoney(retailPrice) == False:
+        if regularexpression.CheckMoney(retailPrice) == False:
             Dialogs.DisplayErrorDialog \
                     ("The retail price must be a decimal number.")
             return
         minimumBid = self.minimumBidTC.GetValue()
-        if RegularExpression.CheckMoney(minimumBid) == False:
+        if regularexpression.CheckMoney(minimumBid) == False:
             Dialogs.DisplayErrorDialog \
                 ("The minimum bid must be a decimal number.")
             return
         increment = self.incrementTC.GetValue()
-        if RegularExpression.CheckMoney(increment) == False:
+        if regularexpression.CheckMoney(increment) == False:
             Dialogs.DisplayErrorDialog \
                 ("The increment must be a decimal number.")
             return

@@ -1,7 +1,7 @@
 import wx
 import MySQLdb
 import Dialogs
-import RegularExpression
+import regularexpression
 import buyers
 import items
 import purchases
@@ -89,7 +89,7 @@ class PurchaseEntryForm(wx.Panel):
         try:
             itemNumber = self.itemNumberTC.GetValue()
             if len(itemNumber) != 3 or \
-                    RegularExpression.CheckItemNumber(itemNumber) is None:
+                    regularexpression.CheckItemNumber(itemNumber) is None:
                 Dialogs.DisplayErrorDialog(
                     "The Item number must be a three-digit decimal number.")
                 return
@@ -105,7 +105,7 @@ class PurchaseEntryForm(wx.Panel):
 
             buyerNumber = self.buyerNumberTC.GetValue()
             if len(buyerNumber) != 3 or \
-                        RegularExpression.CheckBuyerNumber(buyerNumber) \
+                        regularexpression.CheckBuyerNumber(buyerNumber) \
                             is None:
                 Dialogs.DisplayErrorDialog \
                     ("The buyer number must be a three-digit decimal number.")
@@ -136,7 +136,7 @@ class PurchaseEntryForm(wx.Panel):
              
             winningBid = self.winningBidTC.GetValue()
             if len(winningBid) == 0 or \
-                        RegularExpression.CheckMoney(winningBid) == False:
+                        regularexpression.CheckMoney(winningBid) == False:
                 Dialogs.DisplayErrorDialog \
                     ("The winning bid must be a decimal number "\
                      + "greater than zero.")

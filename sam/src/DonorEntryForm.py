@@ -1,7 +1,7 @@
 import wx
 import MySQLdb
 import Dialogs
-import RegularExpression
+import regularexpression
 import donors
 import console
 
@@ -121,7 +121,7 @@ class DonorEntryForm(wx.Panel):
     def OnSaveButton(self, event):
         donorNumber = self.donorNumberTC.GetValue()
         if len(donorNumber) != 3 or \
-                    RegularExpression.CheckDonorNumber(donorNumber) is None:
+                    regularexpression.CheckDonorNumber(donorNumber) is None:
             Dialogs.DisplayErrorDialog(
                     "The donor number must be a three-digit decimal number.")
             return
@@ -143,7 +143,7 @@ class DonorEntryForm(wx.Panel):
                     "The state must be two alphabetic characters.")
             return
         zip = self.zipTC.GetValue()
-        if len(zip) != 5 or RegularExpression.CheckZipCode(zip) is None:
+        if len(zip) != 5 or regularexpression.CheckZipCode(zip) is None:
             Dialogs.DisplayErrorDialog(
                     "The zip code must be a five-digit decimal number.")
             return
@@ -152,7 +152,7 @@ class DonorEntryForm(wx.Panel):
             Dialogs.DisplayErrorDialog("The contact name must not be null.")
             return
         telno = self.telnoTC.GetValue()
-        if len(telno) != 12 or RegularExpression.CheckTelno(telno) is None:
+        if len(telno) != 12 or regularexpression.CheckTelno(telno) is None:
             Dialogs.DisplayErrorDialog(
                     "The telephone number must be in the format XXX-XXX-XXXX.")
             return

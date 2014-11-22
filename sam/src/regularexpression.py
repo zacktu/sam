@@ -1,5 +1,7 @@
 '''
-Functions to check regular expressions.
+Functions to check regular expressions.  These are used
+for data entry to be certain that id numbers are numeric,
+phone numbers are in the XXX-XXX-XXXX format, etc.
 
 Author: bob
 Date: 2 June 2010
