@@ -25,15 +25,13 @@ class DonorEntryForm(wx.Panel):
                                     style = wx.TE_RIGHT | wx.TE_READONLY)
             
         nameLabel = wx.StaticText(self, -1, "Name:")
-        self.nameTC = wx.TextCtrl(self, -1, "");
+        self.nameTC = wx.TextCtrl(self, -1, "", size=(280, -1))
         
         streetLabel = wx.StaticText(self, -1, "Street:")
         self.streetTC = wx.TextCtrl(self, -1, "");
         
         cityStateZipLabel = wx.StaticText(self, -1, "City, State, Zip:")
-        self.cityTC  = wx.TextCtrl(self, -1, "", size=(150, -1))
-        self.stateTC = wx.TextCtrl(self, -1, "", size=(50, -1))
-        self.zipTC   = wx.TextCtrl(self, -1, "", size=(70, -1))
+        self.cityStateZipTC  = wx.TextCtrl(self, -1, "", size=(150, -1))
 
         contactLabel = wx.StaticText(self, -1, "Contact:")
         self.contactTC   = wx.TextCtrl(self, -1, "")
@@ -73,13 +71,7 @@ class DonorEntryForm(wx.Panel):
 
         addrSizer.Add(cityStateZipLabel, 0,
                       wx.ALIGN_RIGHT, wx.ALIGN_CENTER_VERTICAL)
-        
-        # Now a subsizer for city, state, and zip
-        cityStateZipSizer = wx.BoxSizer(wx.HORIZONTAL)
-        cityStateZipSizer.Add(self.cityTC, 1)
-        cityStateZipSizer.Add(self.stateTC, 0, wx.LEFT|wx.RIGHT, 5)
-        cityStateZipSizer.Add(self.zipTC)
-        addrSizer.Add(cityStateZipSizer, 0, wx.EXPAND)
+        addrSizer.Add(self.cityStateZipTC, 0, wx.EXPAND)
       
         addrSizer.Add(contactLabel, 0,
                       wx.ALIGN_RIGHT, wx.ALIGN_CENTER_VERTICAL)
@@ -133,19 +125,10 @@ class DonorEntryForm(wx.Panel):
         if not (len(street) > 0):
             dialogs.DisplayErrorDialog("The street name must not be null.")
             return
-        city = self.cityTC.GetValue()
+        city = self.cityStateZipTC.GetValue()
         if not (len(city) > 0):
-            dialogs.DisplayErrorDialog("The city name must not be null.")
-            return
-        state = self.stateTC.GetValue().upper()
-        if len(state )!= 2 or not (state.isalpha()):
             dialogs.DisplayErrorDialog(
-                    "The state must be two alphabetic characters.")
-            return
-        zip = self.zipTC.GetValue()
-        if len(zip) != 5 or regularexpression.CheckZipCode(zip) is None:
-            dialogs.DisplayErrorDialog(
-                    "The zip code must be a five-digit decimal number.")
+                "The city name and state must not be null.")
             return
         contact = self.contactTC.GetValue()
         if not (len(contact) > 0):
@@ -160,8 +143,8 @@ class DonorEntryForm(wx.Panel):
         
         if self.function == 'add':
             try:
-                self.donors.AddDonor(self.samdb, donorNumber, name, street, \
-                            city, state, zip, contact, telno, email)
+                self.donors.AddDonor(self.samdb, donorNumber, name, street,
+                            city, contact, telno, email)
             except MySQLdb.Error, e:
                 dialogs.DisplayErrorDialog(e.args[1])
                 return
@@ -169,8 +152,8 @@ class DonorEntryForm(wx.Panel):
                 print("Warning: ", e)
         else:
             try:
-                self.donors.UpdateDonor(self.samdb, donorNumber, name, street, \
-                               city, state, zip, contact, telno, email)
+                self.donors.UpdateDonor(self.samdb, donorNumber, name, street,
+                               city, contact, telno, email)
             except MySQLdb.Error, e:
                 dialogs.DisplayErrorDialog(e.args[1])
                 return
@@ -194,21 +177,17 @@ class DonorEntryForm(wx.Panel):
         self.donorNumberTC.SetValue(donorNumber)
         self.nameTC.SetValue(row[0])
         self.streetTC.SetValue(row[1])
-        self.cityTC.SetValue(row[2])
-        self.stateTC.SetValue(row[3])
-        self.zipTC.SetValue(row[4])
-        self.contactTC.SetValue(row[5])
-        self.telnoTC.SetValue(row[6])
-        self.emailTC.SetValue(row[7])
+        self.cityStateZipTC.SetValue(row[2])
+        self.contactTC.SetValue(row[3])
+        self.telnoTC.SetValue(row[4])
+        self.emailTC.SetValue(row[5])
     
 
     def ClearAll(self):
         self.donorNumberTC.Clear()
         self.nameTC.Clear()
         self.streetTC.Clear()
-        self.cityTC.Clear()
-        self.stateTC.Clear()
-        self.zipTC.Clear()
+        self.cityStateZipTC.Clear()
         self.contactTC.Clear()
         self.telnoTC.Clear()
         self.emailTC.Clear()

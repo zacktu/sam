@@ -25,7 +25,7 @@ class BuyerEntryForm(wx.Panel):
                                     style = wx.TE_RIGHT | wx.TE_READONLY)
             
         lastNameLabel = wx.StaticText(self, -1, "Last Name:")
-        self.lastNameTC = wx.TextCtrl(self, -1, "", size=(280, -1));
+        self.lastNameTC = wx.TextCtrl(self, -1, "", size=(280, -1))
         
         firstNameLabel = wx.StaticText(self, -1, "FirstName:")
         self.firstNameTC = wx.TextCtrl(self, -1, "");
