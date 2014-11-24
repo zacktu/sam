@@ -39,3 +39,5 @@ class PrintOneCartOrReceiptPanel(wx.Panel):
         mainSizer.Fit(parent)
         mainSizer.SetSizeHints(parent)
 
+    def updateBuyerChooser(self, samdb):
+        self.pbcorf.BuildChooser(samdb)

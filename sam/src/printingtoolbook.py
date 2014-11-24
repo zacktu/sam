@@ -39,6 +39,9 @@ class PrintingToolbook(wx.Toolbook):
         self.Bind(wx.EVT_TOOLBOOK_PAGE_CHANGED, self.OnPageChanged)
         self.Bind(wx.EVT_TOOLBOOK_PAGE_CHANGING, self.OnPageChanging)
     
+    def updateBuyerChooser(self, samdb):
+        self.pocorp.updateBuyerChooser(self.samdb)
+
     def OnPageChanged(self, event):
         event.Skip()
 

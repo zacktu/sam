@@ -72,9 +72,9 @@ class manetoolbook(wx.Toolbook):
         self.evtChanging = event.GetSelection()
         #update the appropriate buyer chooser list in case a buyer has been added
         if (self.evtChanging == 4):
-            self.prtbc.pocorp.pbcorf.BuildChooser(self.samdb)
+            self.prtbc.updateBuyerChooser(self.samdb)
         if (self.evtChanging == 5):
-            self.prtbr.pocorp.pbcorf.BuildChooser(self.samdb)
+            self.prtbr.updateBuyerChooser(self.samdb)
         event.Skip()
 
 

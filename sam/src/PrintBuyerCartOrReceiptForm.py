@@ -106,4 +106,3 @@ class PrintBuyerCartOrReceiptForm(wx.Panel):
             print("Warning ", e)
 
 
-
