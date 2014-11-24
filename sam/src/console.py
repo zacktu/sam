@@ -28,28 +28,27 @@ class Console(object):
     def DisplayBuyers(self, samdb):
         query = "SELECT * FROM Buyers ORDER BY buyer_number"
         rows = self.GetRows(samdb, query)
-        print ("{0:3} {1:20} {2:20} {3:30} {4:40} {5:12}"\
+        print ("{0:3} {1:20} {2:20} {3:30} {4:40} {5:12}"
             .format("bno", "last", "first", "street", "city", "telno"))
         print ("{0} {1} {2} {3} {4} {5}" \
             .format('-'*3, '-'*20, '-'*20, '-'*30, '-'*40, '-'*12))
         for row in rows:
-            print ("{0:3} {1:20} {2:20} {3:30} {4:40} {5:12}" \
+            print ("{0:3} {1:20} {2:20} {3:30} {4:40} {5:12}"
                 .format(row[0], row[1], row[2], row[3], row[4], row[5]))
 
     ''' Display all of the donors on the console '''
     def DisplayDonors(self, samdb):
         query = "SELECT * FROM Donors ORDER BY donor_number"
         rows = self.GetRows(samdb, query)
-        print ("{0:3} {1:30} {2:30} {3:20} {4:2} {5:5} {6:30} {7:12} {8:30}"\
-            .format("dno", "name", "street", "city", "st", "zip", "contact",\
+        print ("{0:3} {1:30} {2:30} {3:30} {4:30} {5:12} {6:30}"
+            .format("dno", "name", "street", "city", "contact",
                     "telno", "email"))
-        print ("{0} {1} {2} {3} {4} {5} {6} {7} {8}" \
-            .format('-'*3, '-'*30, '-'*30, '-'*20, '-'*2, '-'*5, '-'*30,\
-                    '-'*12, '-'*30))
+        print ("{0} {1} {2} {3} {4} {5} {6}"
+            .format('-'*3, '-'*30, '-'*30, '-'*30, '-'*30, '-'*12, '-'*30))
         for row in rows:
-            print ("{0:3} {1:30} {2:30} {3:20} {4:2} {5:5} {6:30} {7:12} {8:30}" \
-                .format(row[0], row[1], row[2], row[3], row[4], row[5],\
-                        row[6], row[7], row[8]))
+            print ("{0:3} {1:30} {2:30} {3:30} {4:30} {5:12} {6:30}"
+                .format(row[0], row[1], row[2], row[3],
+                        row[4], row[5], row[6]))
 
     ''' Display all the items on the console.'''    
     def DisplayItems(self, samdb):

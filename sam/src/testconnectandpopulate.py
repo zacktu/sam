@@ -49,8 +49,8 @@ def TestConnectAndPopulate():
 def Populate(samdb, da, dd, db, di, dp):
 
     try:
-        dd.AddDonor(samdb, '000', 'Williams Jewelry Co.', '257 Main St.', \
-                    'Omaha', 'NE', '87972', 'Marion Williams', \
+        dd.AddDonor(samdb, '000', 'Williams Jewelry Co.', '257 Main St.',
+                    'Omaha, NE  87972', 'Marion Williams',
                     '892-325-8643', 'williams@yahoo.com')
         print 'ADDED DONOR WILLIAMS'
     except MySQLdb.Error, e:
@@ -61,7 +61,7 @@ def Populate(samdb, da, dd, db, di, dp):
 
     try:
         dd.AddDonor(samdb, '001', 'Nice Guys Cleaning Co.', 'Myrtle Ave.', \
-                    'Petaluma', 'CA', '63257', 'Ernest Halverson', \
+                    'Petaluma, CA  63257', 'Ernest Halverson', \
                     '763-230-4527', 'ernest@aol.com')
         print 'ADDED DONOR HALVERSON'
     except MySQLdb.Error, e:
@@ -72,7 +72,7 @@ def Populate(samdb, da, dd, db, di, dp):
 
     try:
         dd.AddDonor(samdb, '002', 'The Stylist', '29 7th Ave.', \
-                    'Orange', 'NJ', '08762', 'Martha Grimes', \
+                    'Orange, NJ  08762', 'Martha Grimes', \
                     '762-325-1257', 'martha@thestylist.com')
         print 'ADDED DONOR GRIMES'
     except MySQLdb.Error, e:
@@ -83,7 +83,7 @@ def Populate(samdb, da, dd, db, di, dp):
  
     try:
         dd.AddDonor(samdb, '235', 'Ace Hardware', 'Greenville Highway', \
-                    'Hendersonville', 'NC', '28739', 'Martha Wilkinson', \
+                    'Hendersonville, NC  28739', 'Martha Wilkinson', \
                     '828-325-1257', 'martha@acehvl.com')
         print 'ADDED DONOR WILKINSON'
     except MySQLdb.Error, e:
@@ -94,7 +94,7 @@ def Populate(samdb, da, dd, db, di, dp):
         
     try:
         dd.AddDonor(samdb, '152', 'Flowers by Janine', '29 7th Ave.', \
-                    'Hendersonville', 'NC', '28739', 'Janine Watkins', \
+                    'Hendersonville, NC  28739', 'Janine Watkins', \
                     '828-325-7892', 'janine@janinesflowers.com')
         print 'ADDED DONOR JANINE'
     except MySQLdb.Error, e:

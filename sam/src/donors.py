@@ -17,11 +17,9 @@ class Donors(object):
     def CreateDonorsTable(self, samdb):
         rows = "( \
             donor_number      char(3)     NOT NULL PRIMARY KEY, \
-            donor_name        char(30)    NOT NULL, \
+            donor_name        char(40)    NOT NULL, \
             donor_street      char(30)    NOT NULL, \
-            donor_city        char(20)    NOT NULL, \
-            donor_state       char(2)     NOT NULL, \
-            donor_zip         char(5)     NOT NULL, \
+            donor_city        char(40)    NOT NULL, \
             donor_contact     char(30)    NOT NULL, \
             donor_telno       char(12)    NOT NULL, \
             donor_email       char(30)    NULL \
@@ -29,23 +27,21 @@ class Donors(object):
         samdb.CreateTable("Donors", rows, "donor_number")
 
     def AddDonor(self, samdb, donor_number, donor_name, donor_street, donor_city,
-                 donor_state, donor_zip, donor_contact, donor_telno, donor_email):
+                 donor_contact, donor_telno, donor_email):
         fields = "donor_number, donor_name, donor_street, donor_city, \
-                    donor_state, donor_zip, donor_contact, donor_telno, donor_email"
+                    donor_contact, donor_telno, donor_email"
         values = "'" + donor_number + "'" + ',' \
                + "'" + donor_name + "'" + ',' \
                + "'" + donor_street + "'" + ',' \
                + "'" + donor_city + "'" + ',' \
-               + "'" + donor_state + "'" + ',' \
-               + "'" + donor_zip + "'" + ',' \
                + "'" + donor_contact + "'" ',' \
                + "'" + donor_telno + "'" + ',' \
                + "'" + donor_email + "'"
         samdb.InsertRow("Donors", fields, values)
         
     def FetchDonor(self, samdb, donorNumber):
-        query = "SELECT donor_name, donor_street, donor_city, donor_state, \
-                donor_zip, donor_contact, donor_telno, donor_email \
+        query = "SELECT donor_name, donor_street, donor_city, \
+                donor_contact, donor_telno, donor_email \
                 FROM Donors WHERE donor_number = " + donorNumber + ";"
         return samdb.FetchRow(query)
         
@@ -55,8 +51,6 @@ class Donors(object):
                     SET donor_name = '" + name + "' , \
                         donor_street = '"  + street + "' , \
                         donor_city = '" + city + "' , \
-                        donor_state = '" + state + "' , \
-                        donor_zip = '" + zip + "' , \
                         donor_contact = '" + contact + "' , \
                         donor_telno = '" + telno + "' , \
                         donor_email = '" + email + "' \
