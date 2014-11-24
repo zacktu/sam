@@ -14,7 +14,7 @@ class Donors(object):
     classdocs
     '''
     
-    def CreateDonorsTable(self, samdb):
+    def createDonorsTable(self, samdb):
         rows = "( \
             donor_number      char(3)     NOT NULL PRIMARY KEY, \
             donor_name        char(40)    NOT NULL, \
@@ -24,9 +24,9 @@ class Donors(object):
             donor_telno       char(12)    NOT NULL, \
             donor_email       char(30)    NULL \
             )"
-        samdb.CreateTable("Donors", rows, "donor_number")
+        samdb.createTable("Donors", rows, "donor_number")
 
-    def AddDonor(self, samdb, donor_number, donor_name, donor_street, donor_city,
+    def addDonor(self, samdb, donor_number, donor_name, donor_street, donor_city,
                  donor_contact, donor_telno, donor_email):
         fields = "donor_number, donor_name, donor_street, donor_city, \
                     donor_contact, donor_telno, donor_email"
@@ -37,15 +37,15 @@ class Donors(object):
                + "'" + donor_contact + "'" ',' \
                + "'" + donor_telno + "'" + ',' \
                + "'" + donor_email + "'"
-        samdb.InsertRow("Donors", fields, values)
+        samdb.insertRow("Donors", fields, values)
         
-    def FetchDonor(self, samdb, donorNumber):
+    def fetchDonor(self, samdb, donorNumber):
         query = "SELECT donor_name, donor_street, donor_city, \
                 donor_contact, donor_telno, donor_email \
                 FROM Donors WHERE donor_number = " + donorNumber + ";"
-        return samdb.FetchRow(query)
+        return samdb.fetchRow(query)
         
-    def UpdateDonor(self, samdb, donorNumber, name, street, city, state, \
+    def updateDonor(self, samdb, donorNumber, name, street, city, state, \
                     zip, contact, telno, email):
         query = "UPDATE Donors  \
                     SET donor_name = '" + name + "' , \
@@ -55,25 +55,25 @@ class Donors(object):
                         donor_telno = '" + telno + "' , \
                         donor_email = '" + email + "' \
                     WHERE donor_number = '" + donorNumber + "' ; "
-        samdb.ExecuteQuery(query)
+        samdb.executeQuery(query)
         
-    def DeleteDonor(self, samdb, donorNumber):
-        samdb.DeleteRow("Donors", "donor_number", donorNumber)
+    def deleteDonor(self, samdb, donorNumber):
+        samdb.deleteRow("Donors", "donor_number", donorNumber)
         
     # Confirm whether a donor number is in the database.
-    def IsValidDonorNumber(self, samdb, donorNumber):
+    def isValidDonorNumber(self, samdb, donorNumber):
         query = "SELECT donor_name FROM Donors \
                 WHERE donor_number = '" + donorNumber + "' ; "
-        rows = samdb.FetchRows(query)
+        rows = samdb.fetchRows(query)
         if len(rows) > 0:
             return True
         else:
             return False
         
-    def GetDonorsItems(self, donorNumber, samdb):
+    def getDonorsItems(self, donorNumber, samdb):
         query = 'SELECT item_number FROM Items WHERE item_donatedby = ' \
                 + donorNumber + ';'
-        items = samdb.FetchRows(query)
+        items = samdb.fetchRows(query)
         itemList = []
         for item in items:
             itemList.append(item[0])
@@ -81,7 +81,7 @@ class Donors(object):
 
 if __name__ == '__main__':
     samdb = dbservices.Samdb()
-    samdb.CreateDatabase()
+    samdb.createDatabase()
     dt = Donors()
-    dt.CreateDonorsTable(samdb)
+    dt.createDonorsTable(samdb)
     print("CREATED THE DONORS TABLE")

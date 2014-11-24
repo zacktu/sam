@@ -96,7 +96,7 @@ class PurchaseEntryForm(wx.Panel):
                 
             ## Can't add or change the item number to a value 
             ## not in the database.
-            if not self.items.IsValidItemNumber(self.samdb, itemNumber):
+            if not self.items.isValidItemNumber(self.samdb, itemNumber):
                 dialogs.DisplayErrorDialog ('Item number ' + \
                                 itemNumber + ' is not registered.')
                 if self.function == 'edit':
@@ -112,7 +112,7 @@ class PurchaseEntryForm(wx.Panel):
                 return
      
             # Can't change buyer number to a value thats not in the database.
-            if not self.buyers.IsValidBuyerNumber(self.samdb, buyerNumber):
+            if not self.buyers.isValidBuyerNumber(self.samdb, buyerNumber):
                 dialogs.DisplayErrorDialog ('Buyer number ' + \
                                 buyerNumber + ' is not registered.')
                 if self.function == 'edit':
@@ -121,7 +121,7 @@ class PurchaseEntryForm(wx.Panel):
             
             ### ENSURE THAT THE SAME ITEM CANt BE PURCHASED BY TWO BUYERS!!!
             if self.function == 'add':
-                otherBuyerNumber = self.items.CheckItemHasBuyer \
+                otherBuyerNumber = self.items.checkItemHasBuyer \
                                 (itemNumber, self.samdb)
                 if otherBuyerNumber is not None:
                     dialogs.DisplayErrorDialog ('Item number ' + itemNumber + \

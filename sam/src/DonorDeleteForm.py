@@ -33,14 +33,14 @@ class DonorDeleteForm(wx.Panel):
         if dialogs.DisplayYesNoDialog('Delete donor number ' + \
                                       donorNumber + '?'):
             try:
-                donatedItems = self.donors.GetDonorsItems \
+                donatedItems = self.donors.getDonorsItems \
                                 (donorNumber, self.samdb)
                 if len(donatedItems) > 0:
                     errorMessage = self.BuildErrorMessage(donorNumber, donatedItems)
                     dialogs.DisplayErrorDialog(errorMessage)
                     return
                 else:
-                    self.donors.DeleteDonor(self.samdb, donorNumber)
+                    self.donors.deleteDonor(self.samdb, donorNumber)
                     self.donorNumberList.pop(indexToDelete)
                     self.donorNumberChoice.SetItems(self.donorNumberList)
                     self.DeleteDonorNumberInDonorNameList(donorNumber)
@@ -61,14 +61,14 @@ class DonorDeleteForm(wx.Panel):
         donorNumber = donorString[:3]
         if dialogs.DisplayYesNoDialog('Delete donor number ' + \
                                       donorNumber + '?'):
-            donatedItems = self.donors.GetDonorsItems \
+            donatedItems = self.donors.getDonorsItems \
                             (donorNumber, self.samdb)
             if len(donatedItems) > 0:
                 errorMessage = self.BuildErrorMessage(donorNumber, donatedItems)
                 dialogs.DisplayErrorDialog(errorMessage)
                 return
             else:
-                self.donors.DeleteDonor(self.samdb, donorNumber)
+                self.donors.deleteDonor(self.samdb, donorNumber)
                 self.donorNameList.pop(indexToDelete)
                 self.donorNameChoice.SetItems(self.donorNameList)
                 self.donorNumberList.remove(donorNumber)

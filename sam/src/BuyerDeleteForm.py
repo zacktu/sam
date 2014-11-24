@@ -33,7 +33,7 @@ class BuyerDeleteForm(wx.Panel):
         if dialogs.DisplayYesNoDialog('Delete buyer number ' + \
                                       buyerNumber + '?'):
             try:
-                purchasedItems = self.buyers.GetBuyersItems \
+                purchasedItems = self.buyers.getBuyersItems \
                                 (self.samdb, buyerNumber)
                 if len(purchasedItems) > 0:
                     errorMessage = self.BuildErrorMessage(buyerNumber, \
@@ -63,7 +63,7 @@ class BuyerDeleteForm(wx.Panel):
         if dialogs.DisplayYesNoDialog('Delete buyer number ' + \
                                       buyerNumber + '?'):
             try:
-                purchasedItems = self.buyers.GetBuyersItems \
+                purchasedItems = self.buyers.getBuyersItems \
                                 (self.samdb, buyerNumber)
                 if len(purchasedItems) > 0:
                     errorMessage = self.BuildErrorMessage(buyerNumber,\

@@ -98,7 +98,7 @@ class EditPanel(wx.Panel):
     def BuildDonorList(self, samdb):
         query = "SELECT donor_Number FROM Donors ORDER BY donor_number;"
         try:
-            rows = samdb.FetchRows(query)
+            rows = samdb.fetchRows(query)
         except MySQLdb.Error, e:
             dialogs.DisplayErrorDialog(e.args[1])
             return
@@ -124,7 +124,7 @@ class EditPanel(wx.Panel):
     def BuildItemList(self, samdb):
         query = "SELECT item_Number FROM Items ORDER BY item_number;"
         try:
-            rows = samdb.FetchRows(query)
+            rows = samdb.fetchRows(query)
         except MySQLdb.Error, e:
             dialogs.DisplayErrorDialog(e.args[1])
             return
@@ -147,7 +147,7 @@ class EditPanel(wx.Panel):
     def BuildBuyerList(self, samdb):
         query = "SELECT buyer_Number FROM Buyers ORDER BY buyer_number;"
         try:
-            rows = samdb.FetchRows(query)
+            rows = samdb.fetchRows(query)
         except MySQLdb.Error, e:
             dialogs.DisplayErrorDialog(e.args[1])
             return
@@ -176,7 +176,7 @@ class EditPanel(wx.Panel):
             AND item_salesprice IS NOT NULL \
             ORDER BY item_number;"
         try:
-            rows = samdb.FetchRows(query)
+            rows = samdb.fetchRows(query)
         except MySQLdb.Error, e:
             dialogs.DisplayErrorDialog(e.args[1])
             return

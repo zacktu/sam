@@ -143,7 +143,7 @@ class DonorEntryForm(wx.Panel):
         
         if self.function == 'add':
             try:
-                self.donors.AddDonor(self.samdb, donorNumber, name, street,
+                self.donors.addDonor(self.samdb, donorNumber, name, street,
                             city, contact, telno, email)
             except MySQLdb.Error, e:
                 dialogs.DisplayErrorDialog(e.args[1])
@@ -152,7 +152,7 @@ class DonorEntryForm(wx.Panel):
                 print("Warning: ", e)
         else:
             try:
-                self.donors.UpdateDonor(self.samdb, donorNumber, name, street,
+                self.donors.updateDonor(self.samdb, donorNumber, name, street,
                                city, contact, telno, email)
             except MySQLdb.Error, e:
                 dialogs.DisplayErrorDialog(e.args[1])
@@ -166,7 +166,7 @@ class DonorEntryForm(wx.Panel):
     def PopulateForm(self, samdb, donorNumber):
         self.donorNumber = donorNumber
         try:
-            row = self.donors.FetchDonor(samdb, donorNumber)
+            row = self.donors.fetchDonor(samdb, donorNumber)
         except MySQLdb.Error, e:
             dialogs.DisplayErrorDialog(e.args[1])
             return

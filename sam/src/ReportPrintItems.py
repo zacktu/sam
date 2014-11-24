@@ -22,7 +22,7 @@ def ReportPrintItems():
               '[hostname portnumber username password]'
         exit()
     samdb = Connect(sys.argv)
-    samdb.UseDatabase(sys.argv[1])
+    samdb.useDatabase(sys.argv[1])
     report = Report.Report()
     report.DisplayItems(samdb)
 

@@ -132,7 +132,7 @@ class ItemEntryForm(wx.Panel):
  
         # Can't change the donor number to a value thats not in the database.
         try:
-            if not self.donors.IsValidDonorNumber(self.samdb, donorNumber):
+            if not self.donors.isValidDonorNumber(self.samdb, donorNumber):
                 dialogs.DisplayErrorDialog ('Donor number ' + \
                                 donorNumber + ' is not registered.')
                 if self.function == 'edit':
@@ -162,7 +162,7 @@ class ItemEntryForm(wx.Panel):
  
         if self.function == 'add':
             try:
-                self.items.AddItem(self.samdb, itemNumber, description, \
+                self.items.addItem(self.samdb, itemNumber, description, \
                            donorNumber, retailPrice, minimumBid, increment)
             except MySQLdb.Error, e:
                 dialogs.DisplayErrorDialog(e.args[1])
@@ -171,7 +171,7 @@ class ItemEntryForm(wx.Panel):
                 print("Warning: ", e)
         elif self.function == 'edit':
             try:
-                self.items.UpdateItem(self.samdb, itemNumber, description, \
+                self.items.updateItem(self.samdb, itemNumber, description, \
                               donorNumber, retailPrice, minimumBid, increment)
             except MySQLdb.Error, e:
                 dialogs.DisplayErrorDialog(e.args[1])
@@ -187,7 +187,7 @@ class ItemEntryForm(wx.Panel):
        
     def PopulateForm(self, samdb, itemNumber):
         try:
-            row = self.items.FetchItem(samdb, itemNumber)
+            row = self.items.fetchItem(samdb, itemNumber)
         except MySQLdb.Error, e:
             dialogs.DisplayErrorDialog(e.args[1])
             return

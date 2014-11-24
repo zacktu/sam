@@ -27,7 +27,7 @@ class ChooserLists(object):
         else:
             print "Chooser.BuildChooserNumberList received bad player name"
             return
-        rows = samdb.FetchRows(query)
+        rows = samdb.fetchRows(query)
         listToReturn = []
         for row in rows:
             listToReturn.append(row[0])
@@ -51,7 +51,7 @@ class ChooserLists(object):
         else:
             print "Choosers.BuildChooserNumberList received bad player name"
             return
-        rows = samdb.FetchRows(query)
+        rows = samdb.fetchRows(query)
         listToReturn = []
         for row in rows:
             listToReturn.append(row[0] + ' ' + row[1])

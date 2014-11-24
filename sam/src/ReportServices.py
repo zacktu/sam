@@ -59,7 +59,7 @@ class ReportServices():
 
     def BuildAllInvoicesOrReceipts(self, whatToPrint):
         firstTime = True
-        allBuyers = self.buyers.GetAllBuyers(self.samdb)
+        allBuyers = self.buyers.getAllBuyers(self.samdb)
         for buyer in allBuyers:
             moreLines = self.BuildOneInvoiceOrReceipt(buyer[0], whatToPrint)
             if firstTime:
@@ -81,7 +81,7 @@ class ReportServices():
 
     def BuildSummaryOfPurchases(self):
         lines = self.BuildSummaryHeader()
-        allBuyers = self.buyers.GetAllBuyers(self.samdb)
+        allBuyers = self.buyers.getAllBuyers(self.samdb)
         for buyer in allBuyers:
             lines = lines + self.BuildSummaryBuyer(buyer[0])
             lines = lines + self.BuildInvoiceOrReceiptTable(buyer[0])
@@ -106,7 +106,7 @@ class ReportServices():
         return lines
 
     def BuildSummaryBuyer(self, buyerNum):
-        buyerInfo = self.buyers.FetchBuyer(self.samdb, buyerNum)
+        buyerInfo = self.buyers.fetchBuyer(self.samdb, buyerNum)
         lines = []
         lines.append('.sp 2\n')
         lines.append('.ft B\n')
@@ -118,7 +118,7 @@ class ReportServices():
         return lines
 
     def BuildInvoiceOrReceiptHeader(self, buyerNum, whatToPrint):
-        buyerInfo = self.buyers.FetchBuyer(self.samdb, buyerNum)
+        buyerInfo = self.buyers.fetchBuyer(self.samdb, buyerNum)
         lines = []
         lines.append('.ps 15\n')
         lines.append('.ft B\n')
@@ -163,7 +163,7 @@ class ReportServices():
         return lines
 
     def BuildInvoiceOrReceiptTable(self, buyerNum):
-        buyerInfo = self.buyers.FetchBuyer(self.samdb, buyerNum)
+        buyerInfo = self.buyers.fetchBuyer(self.samdb, buyerNum)
         lines = []
         lines.append('.TS\n')
         lines.append('box, expand, tab(`);\n')
@@ -172,7 +172,7 @@ class ReportServices():
         lines.append('_\n')
         lines.append('.T&\n')
         lines.append('n l n.\n')
-        rows = self.buyers.GetBuyersPurchases(self.samdb, buyerNum)
+        rows = self.buyers.getBuyersPurchases(self.samdb, buyerNum)
         totalPurchase = 0
         for row in rows:
             lines.append(row[0] + '`' + row[1] + '`' + str(row[2]) + '\n')

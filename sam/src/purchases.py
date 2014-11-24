@@ -10,15 +10,15 @@ class Purchases(object):
         query = "UPDATE Items SET item_purchasedby = '" + buyerNumber + \
                 "', item_salesprice = '" + salesPrice + \
                 "' WHERE item_number = '" + itemNumber + "';"
-        samdb.ExecuteQuery(query)
+        samdb.executeQuery(query)
               
     def FetchPurchase(self, samdb, itemNumber):
         query = 'SELECT item_purchasedby, item_salesprice FROM Items \
                 WHERE item_number = ' + itemNumber + ';'
         ## temporary
-        row = samdb.FetchRow(query)
+        row = samdb.fetchRow(query)
         return row
-        ### return samdb.FetchRow(query)S
+        ### return samdb.fetchRow(query)S
         
     def HasBeenPurchased(self, samdb, itemNumber):
         row = self.FetchPurchase(samdb, itemNumber)
@@ -31,5 +31,5 @@ class Purchases(object):
         query = 'UPDATE Items SET item_purchasedby = NULL, \
                 item_salesprice = NULL \
                 WHERE item_number = ' + itemNumber + ';'
-        samdb.ExecuteQuery(query)
+        samdb.executeQuery(query)
 

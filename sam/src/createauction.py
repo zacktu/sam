@@ -55,16 +55,16 @@ def DoEverything(samdb, dbnam, title, subtitle, date):
     print 'ENTERED DOEVERYTHING'
     try:
         ''' Now create the database. ''' 
-        samdb.CreateDatabase(dbnam)
+        samdb.createDatabase(dbnam)
         print 'Database ' + dbnam + ' created.'
         dd = donors.Donors()
-        dd.CreateDonorsTable(samdb)
+        dd.createDonorsTable(samdb)
         print "Donors table created."
         db = buyers.Buyers()
-        db.CreateBuyersTable(samdb)
+        db.createBuyersTable(samdb)
         print "Buyers table created."
         di = items.Items()
-        di.CreateItemsTable(samdb)
+        di.createItemsTable(samdb)
         print "Items table created."
         
         ''' The Auction table is special because the data in it are

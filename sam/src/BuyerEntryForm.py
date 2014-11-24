@@ -140,7 +140,7 @@ class BuyerEntryForm(wx.Panel):
         
         if self.function == 'add':
             try:
-                self.buyers.AddBuyer(self.samdb, buyerNumber, lastName, \
+                self.buyers.addBuyer(self.samdb, buyerNumber, lastName, \
                             firstName, street, city, telno)
             except MySQLdb.Error, e:
                 dialogs.DisplayErrorDialog(e.args[1])
@@ -149,7 +149,7 @@ class BuyerEntryForm(wx.Panel):
                 print("Warning: ", e)
         else:
             try:
-                self.buyers.UpdateBuyer(self.samdb, buyerNumber, lastName, \
+                self.buyers.updateBuyer(self.samdb, buyerNumber, lastName, \
                             firstName, street, city, telno)
             except MySQLdb.Error, e:
                 dialogs.DisplayErrorDialog(e.args[1])
@@ -163,7 +163,7 @@ class BuyerEntryForm(wx.Panel):
     def PopulateForm(self, samdb, buyerNumber):
         self.buyerNumber = buyerNumber
         try:
-            row = self.buyers.FetchBuyer(samdb, buyerNumber)
+            row = self.buyers.fetchBuyer(samdb, buyerNumber)
         except MySQLdb.Error, e:
             dialogs.DisplayErrorDialog(e.args[1])
             return

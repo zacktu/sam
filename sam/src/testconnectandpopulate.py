@@ -29,7 +29,7 @@ def TestConnectAndPopulate():
               '[hostname portnumber username password]'
         exit()
     samdb = Connect(sys.argv)
-    samdb.UseDatabase(sys.argv[1])
+    samdb.useDatabase(sys.argv[1])
     ## Create objects for Auction, Donors, Buyers, Items, and Purchases
     da = auction.Auction()
     dd = donors.Donors()
@@ -49,7 +49,7 @@ def TestConnectAndPopulate():
 def Populate(samdb, da, dd, db, di, dp):
 
     try:
-        dd.AddDonor(samdb, '000', 'Williams Jewelry Co.', '257 Main St.',
+        dd.addDonor(samdb, '000', 'Williams Jewelry Co.', '257 Main St.',
                     'Omaha, NE  87972', 'Marion Williams',
                     '892-325-8643', 'williams@yahoo.com')
         print 'ADDED DONOR WILLIAMS'
@@ -60,7 +60,7 @@ def Populate(samdb, da, dd, db, di, dp):
         print("Warning: ", e)
 
     try:
-        dd.AddDonor(samdb, '001', 'Nice Guys Cleaning Co.', 'Myrtle Ave.', \
+        dd.addDonor(samdb, '001', 'Nice Guys Cleaning Co.', 'Myrtle Ave.', \
                     'Petaluma, CA  63257', 'Ernest Halverson', \
                     '763-230-4527', 'ernest@aol.com')
         print 'ADDED DONOR HALVERSON'
@@ -71,7 +71,7 @@ def Populate(samdb, da, dd, db, di, dp):
         print("Warning: ", e)
 
     try:
-        dd.AddDonor(samdb, '002', 'The Stylist', '29 7th Ave.', \
+        dd.addDonor(samdb, '002', 'The Stylist', '29 7th Ave.', \
                     'Orange, NJ  08762', 'Martha Grimes', \
                     '762-325-1257', 'martha@thestylist.com')
         print 'ADDED DONOR GRIMES'
@@ -82,7 +82,7 @@ def Populate(samdb, da, dd, db, di, dp):
         print("Warning: ", e)
  
     try:
-        dd.AddDonor(samdb, '235', 'Ace Hardware', 'Greenville Highway', \
+        dd.addDonor(samdb, '235', 'Ace Hardware', 'Greenville Highway', \
                     'Hendersonville, NC  28739', 'Martha Wilkinson', \
                     '828-325-1257', 'martha@acehvl.com')
         print 'ADDED DONOR WILKINSON'
@@ -93,7 +93,7 @@ def Populate(samdb, da, dd, db, di, dp):
         print("Warning: ", e)
         
     try:
-        dd.AddDonor(samdb, '152', 'Flowers by Janine', '29 7th Ave.', \
+        dd.addDonor(samdb, '152', 'Flowers by Janine', '29 7th Ave.', \
                     'Hendersonville, NC  28739', 'Janine Watkins', \
                     '828-325-7892', 'janine@janinesflowers.com')
         print 'ADDED DONOR JANINE'
@@ -104,7 +104,7 @@ def Populate(samdb, da, dd, db, di, dp):
         print("Warning: ", e)
            
     try:
-        db.AddBuyer(samdb, '000', 'Smith', 'Harold', '113 Stanford', \
+        db.addBuyer(samdb, '000', 'Smith', 'Harold', '113 Stanford', \
                     'Hollywood, CA 23523', '923-123-3241')
         print 'ADDED BUYER SMITH'
     except MySQLdb.Error, e:
@@ -114,7 +114,7 @@ def Populate(samdb, da, dd, db, di, dp):
         print("Warning: ", e)
         
     try:
-        db.AddBuyer(samdb, '001', 'Lewis', 'Margaret and Bill', \
+        db.addBuyer(samdb, '001', 'Lewis', 'Margaret and Bill', \
                     '235 Williston', 'Kansas City, MO 32594-3242', \
                     '232-827-3294')
         print 'ADDED BUYER LEWIS'
@@ -125,7 +125,7 @@ def Populate(samdb, da, dd, db, di, dp):
         print("Warning: ", e)
 
     try:
-        db.AddBuyer(samdb, '002', 'Kneifel', 'Ernest and Helen', \
+        db.addBuyer(samdb, '002', 'Kneifel', 'Ernest and Helen', \
                     '123 Oak', 'Chicago, IL 89694', \
                     '892-325-2379')
         print 'ADDED BUYER KNEIFEL'
@@ -136,7 +136,7 @@ def Populate(samdb, da, dd, db, di, dp):
         print("Warning: ", e)
 
     try:
-        db.AddBuyer(samdb, '003', 'Summers', 'Maurice and Ethel', \
+        db.addBuyer(samdb, '003', 'Summers', 'Maurice and Ethel', \
                     '2325 First St. Apt 24', 'Los Angeles, CA 9725-1279', \
                     '323-695-2353')
         print 'ADDED BUYER SUMMERS'
@@ -147,7 +147,7 @@ def Populate(samdb, da, dd, db, di, dp):
         print("Warning: ", e)
 
     try:
-        db.AddBuyer(samdb, '004', 'Heath', 'Harold and Maude', \
+        db.addBuyer(samdb, '004', 'Heath', 'Harold and Maude', \
                     '9372 Elm St.', 'Monroe, AL 23542', \
                     '694-325-5745')
         print 'ADDED BUYER HEATH'
@@ -157,23 +157,23 @@ def Populate(samdb, da, dd, db, di, dp):
     except MySQLdb.Warning, e:
         print("Warning: ", e)
    
-    di.AddItem(samdb, '000', 'Condo at Myrtle Beach for a week', \
+    di.addItem(samdb, '000', 'Condo at Myrtle Beach for a week', \
                '002', '1000', '400', '50')
-    di.AddItem(samdb, '001', 'Book: Travel Guide to Europe', 
+    di.addItem(samdb, '001', 'Book: Travel Guide to Europe',
                '001', '25', '5', '1')
-    di.AddItem(samdb, '002', 'Book: Gullivers Travels', \
+    di.addItem(samdb, '002', 'Book: Gullivers Travels', \
                '001', '25', '5', '1')
-    di.AddItem(samdb, '003', 'Air fare to Hawaii', \
+    di.addItem(samdb, '003', 'Air fare to Hawaii', \
                '002', '1000', '500', '50')
-    di.AddItem(samdb, '004', 'Chiropractic consult', \
+    di.addItem(samdb, '004', 'Chiropractic consult', \
                '000', '100', '40', '5')
-    di.AddItem(samdb, '005', 'Ten dance lessons', \
+    di.addItem(samdb, '005', 'Ten dance lessons', \
                '001', '250', '50', '5')
-    di.AddItem(samdb, '006', 'South America Travel Book', \
+    di.addItem(samdb, '006', 'South America Travel Book', \
                '002', '25', '5', '1')
-    di.AddItem(samdb, '007', 'Beauty Consultation', \
+    di.addItem(samdb, '007', 'Beauty Consultation', \
                '000', '100', '25', '1')
-    di.AddItem(samdb, '008', 'Dog Training Lessons', \
+    di.addItem(samdb, '008', 'Dog Training Lessons', \
                '002', '100', '25', '1')
     
     print("DATABASE LOADED")

@@ -73,7 +73,7 @@ class PurchaseDeleteForm(wx.Panel):
         if dialogs.DisplayYesNoDialog('Delete purchase for item number ' + \
                                       purchasedItemNumber + '?'):
             # Positive buyer number implies that item has been purchased
-            buyerNumber = self.items.CheckItemHasBuyer \
+            buyerNumber = self.items.checkItemHasBuyer \
                             (purchasedItemNumber, self.samdb)
             print 'IN ONPURCHASEDITEMDESCRIPTIONLIST buyerNumber = ', buyerNumber
             if buyerNumber is None:

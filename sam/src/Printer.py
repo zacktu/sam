@@ -22,7 +22,7 @@ class Printer(object):
         query = "SELECT item_description, item_salesprice FROM Items " \
                 + "WHERE item_purchasedby = '" + buyerno + "';"
         try:
-            rows = samdb.FetchRows(query)
+            rows = samdb.fetchRows(query)
         except MySQLdb.Error, e:
             print "Error %d: %s" % (e.args[0], e.args[1])
             return
@@ -38,7 +38,7 @@ class Printer(object):
             print ("{0:50} {1:>6}".format('TOTAL PURCHASE', str(sum)))
             
         try:
-            rows = samdb.FetchRows(query)
+            rows = samdb.fetchRows(query)
         except MySQLdb.Error, e:
             print "Error %d: %s" % (e.args[0], e.args[1])
             return

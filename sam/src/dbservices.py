@@ -47,75 +47,75 @@ class Samdb(object):
                 user=username, passwd=password, db=dbname)
 
     # create the Samdb database
-    def CreateDatabase(self, dbname):
+    def createDatabase(self, dbname):
         try:
             cursor = self.db.cursor()
         except MySQLdb.Error, e:
-            print "Samdb.CreateDatabase: Error %d: %s" % \
+            print "Samdb.createDatabase: Error %d: %s" % \
                     (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("Samdb.CreateDatabase: Warning: ", e)
+            print("Samdb.createDatabase: Warning: ", e)
         try:
             cursor.execute('DROP DATABASE IF EXISTS ' + dbname + ';')
         except MySQLdb.Error, e:
-            print "Samdb.CreateDatabase: Error %d: %s" % \
+            print "Samdb.createDatabase: Error %d: %s" % \
                     (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("Samdb.CreateDatabase: Warning: ", e)
+            print("Samdb.createDatabase: Warning: ", e)
         try:
             cursor.execute('CREATE DATABASE IF NOT EXISTS ' + \
                     dbname + ';')
         except MySQLdb.Error, e:
-            print "Samdb.CreateDatabase: Error %d: %s" % \
+            print "Samdb.createDatabase: Error %d: %s" % \
                     (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("Samdb.CreateDatabase: Warning: ", e)
+            print("Samdb.createDatabase: Warning: ", e)
         try:
             cursor.execute('USE ' + dbname + ';')
         except MySQLdb.Error, e:
-            print "Samdb.CreateDatabase: Error %d: %s" % \
+            print "Samdb.createDatabase: Error %d: %s" % \
                     (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("Samdb.CreateDatabase: Warning: ", e)
+            print("Samdb.createDatabase: Warning: ", e)
             
     # drop the Samdb database
-    def DropDatabase(self, dbname):
+    def dropDatabase(self, dbname):
         try:
             cursor = self.db.cursor()
             cursor.execute('DROP DATABASE ' + dbname + ';')
         except MySQLdb.Error, e:
-            print "Samdb.DropDatabase: Error %d: %s" % (e.args[0], e.args[1])
+            print "Samdb.dropDatabase: Error %d: %s" % (e.args[0], e.args[1])
             sys.exit (1)
             
     # Use a database
-    def UseDatabase(self, dbname):
+    def useDatabase(self, dbname):
         try:
             cursor = self.db.cursor()
             cursor.execute('USE ' + dbname + ';')
         except MySQLdb.Error, e:
-            print "Samdb.DropDatabase: Error %d: %s" % (e.args[0], e.args[1])
+            print "Samdb.dropDatabase: Error %d: %s" % (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("Samdb.DropDatabase: Warning: ", e)
+            print("Samdb.dropDatabase: Warning: ", e)
             
     # create a table
-    def CreateTable(self, tableName, rows, primaryKey):
+    def createTable(self, tableName, rows, primaryKey):
         try:
             cursor = self.db.cursor()
             cursor.execute("CREATE TABLE IF NOT EXISTS " + tableName +
                                 rows + ";")
             self.db.commit()
         except MySQLdb.Error, e:
-            print "Samdb.CreateTable: Error %d: %s" % (e.args[0], e.args[1])
+            print "Samdb.createTable: Error %d: %s" % (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("Samdb.CreateTable: Warning: ", e)
+            print("Samdb.createTable: Warning: ", e)
         
-    def FetchRows(self, query):
+    def fetchRows(self, query):
         # Exceptions are caught higher up
         cursor = self.db.cursor()
         cursor.execute(query)
@@ -123,23 +123,23 @@ class Samdb(object):
         self.db.commit()
         return rows
 
-    def FetchRow(self, query):
+    def fetchRow(self, query):
         cursor = self.db.cursor()
         cursor.execute(query)
         row = cursor.fetchone()
         self.db.commit()
         return row
                       
-    def ExecuteQuery(self, query):
+    def executeQuery(self, query):
         try:
             cursor = self.db.cursor()
             cursor.execute(query)
             self.db.commit()
         except MySQLdb.Error, e:
-            print "Samdb.ExecuteQuery: Error %d: %s" % (e.args[0], e.args[1])
+            print "Samdb.executeQuery: Error %d: %s" % (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("Samdb.ExecuteQuery: Warning: ", e)
+            print("Samdb.executeQuery: Warning: ", e)
             
         '''   
         try:
@@ -152,7 +152,7 @@ class Samdb(object):
             print("Warning: ", e)
         '''
         
-    def AddForeignKey(self, localTable, localField, foreignTable, foreignField):
+    def addForeignKey(self, localTable, localField, foreignTable, foreignField):
         try:
             cursor = self.db.cursor()
             cursor.execute("ALTER TABLE " + localTable \
@@ -161,12 +161,12 @@ class Samdb(object):
                             + foreignTable + " (" + foreignField + ");")
             self.db.commit()
         except MySQLdb.Error, e:
-            print "Samdb.AddForeignKey: Error %d: %s" % (e.args[0], e.args[1])
+            print "Samdb.addForeignKey: Error %d: %s" % (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("Samdb.AddForeignKey: Warning: ", e)
+            print("Samdb.addForeignKey: Warning: ", e)
       
-    def InsertRow(self, tableName, fields, values):
+    def insertRow(self, tableName, fields, values):
         '''
         cursor = self.db.cursor()
         cursor.execute("INSERT INTO " + tableName + "(" + fields + ")" + \
@@ -177,7 +177,7 @@ class Samdb(object):
                             " VALUES (" + values + " );")
         self.db.commit()
         
-    def DeleteRow(self, tableName, fieldName, value):
+    def deleteRow(self, tableName, fieldName, value):
         cursor = self.db.cursor()
         cursor.execute("DELETE FROM " + tableName + " WHERE " + \
                        fieldName  + " = " + value)
@@ -192,7 +192,7 @@ if __name__ == '__main__':
             db = Samdb(dbname='mysql')
             dbname = sys.argv[1]
             print('Now create ' + dbname + ';')
-            samdb = db.CreateDatabase(dbname)
+            samdb = db.createDatabase(dbname)
             print(dbname + ' created.')
         except MySQLdb.Error, e:
             print "Samdb.main: Error %d: %s" % (e.args[0], e.args[1])

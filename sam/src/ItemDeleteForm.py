@@ -39,7 +39,7 @@ class ItemDeleteForm(wx.Panel):
         if dialogs.DisplayYesNoDialog('Delete item number ' + \
                                       itemNumber + '?'):
             try:
-                buyerNumber = self.items.CheckItemHasBuyer \
+                buyerNumber = self.items.checkItemHasBuyer \
                                 (itemNumber, self.samdb)
                 # If the item hasn't been purchased,
                 # then the buyerNumber is None
@@ -49,7 +49,7 @@ class ItemDeleteForm(wx.Panel):
                         + 'buyer number ' + buyerNumber + '.')
                     return
                 else:
-                    self.items.DeleteItem(self.samdb, itemNumber)
+                    self.items.deleteItem(self.samdb, itemNumber)
                     self.itemNumberList.pop(indexToDelete)
                     self.itemNumberChoice.SetItems(self.itemNumberList)
                     indexToDelete = \
@@ -74,7 +74,7 @@ class ItemDeleteForm(wx.Panel):
         if dialogs.DisplayYesNoDialog('Delete item number ' + \
                                       itemNumber + '?'):
             # Positive buyer number implies that item has been purchased
-            buyerNumber = self.items.CheckItemHasBuyer \
+            buyerNumber = self.items.checkItemHasBuyer \
                             (itemNumber, self.samdb)
             if buyerNumber is not None:
                 dialogs.DisplayErrorDialog \
@@ -82,7 +82,7 @@ class ItemDeleteForm(wx.Panel):
                     + 'buyer number ' + buyerNumber + '.')
                 return
             else:
-                self.items.DeleteItem(self.samdb, itemNumber)
+                self.items.deleteItem(self.samdb, itemNumber)
                 self.itemDescriptionList.pop(indexToDelete)
                 self.itemDescriptionChoice.SetItems(self.itemDescriptionList)
                 self.itemNumberList.remove(itemNumber)

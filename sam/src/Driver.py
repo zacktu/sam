@@ -13,45 +13,45 @@ import Printer
 
 if __name__ == '__main__':
     samdb = dbservices.Samdb(dbname='mysql')
-    samdb.CreateDatabase()
+    samdb.createDatabase()
     dd = donors.Donors()
-    dd.CreateDonorsTable(samdb)
+    dd.createDonorsTable(samdb)
     db = buyers.Buyers()
-    db.CreateBuyersTable(samdb)
+    db.createBuyersTable(samdb)
     di = items.Items()
-    di.CreateItemsTable(samdb)
+    di.createItemsTable(samdb)
     
-    dd.AddDonor(samdb, '000', 'Williams Jewelry Co.', '257 Main St.', 'Omaha', 'NE', \
+    dd.addDonor(samdb, '000', 'Williams Jewelry Co.', '257 Main St.', 'Omaha', 'NE', \
                 '87972', '892-325-8643', '828-696-2684', 'Marion Williams')
-    dd.AddDonor(samdb, '001', 'Nice Guys Cleaning Co.', 'Myrtle Ave.', 'Petaluma', \
+    dd.addDonor(samdb, '001', 'Nice Guys Cleaning Co.', 'Myrtle Ave.', 'Petaluma', \
                 'CA', '63527-2357', '763-230-4527', '', 'Ernest Halverson')
-    dd.AddDonor(samdb, '002', 'The Stylist', '29 7th Ave.', 'Orange', 'NJ', \
+    dd.addDonor(samdb, '002', 'The Stylist', '29 7th Ave.', 'Orange', 'NJ', \
                 '08762-8256', '762-325-1257', '562-325-8907', 'Martha Grimes')
     
-    db.AddBuyer(samdb, '000', 'Smith', 'Harold', '113 Stanford', 'Hollywood', 'CA', \
+    db.addBuyer(samdb, '000', 'Smith', 'Harold', '113 Stanford', 'Hollywood', 'CA', \
                 '23523', '923-123-3241', '')
-    db.AddBuyer(samdb, '001', 'Lewis', 'Margaret and Bill', '235 Williston', \
+    db.addBuyer(samdb, '001', 'Lewis', 'Margaret and Bill', '235 Williston', \
                 'Kansas City', 'MO', '32594-3242', '232-827-3294', '232-827-3295')
-    db.AddBuyer(samdb, '002', 'Kneifel', 'Ernest and Helen', '123 Oak', 'Chicago', \
+    db.addBuyer(samdb, '002', 'Kneifel', 'Ernest and Helen', '123 Oak', 'Chicago', \
                 'IL', '89694', '892-325-2379', '892-694-9453')
-    db.AddBuyer(samdb, '003', 'Summers', 'Maurice and Ethel', '2325 First St. Apt 24', \
+    db.addBuyer(samdb, '003', 'Summers', 'Maurice and Ethel', '2325 First St. Apt 24', \
                 'Los Angeles', 'CA', '97235-1279', '323-695-2353', '')
-    db.AddBuyer(samdb, '004', 'Heath', 'Harold and Maude', '9372 Elm St.', \
+    db.addBuyer(samdb, '004', 'Heath', 'Harold and Maude', '9372 Elm St.', \
                 'Monroe', 'AL', '23542', '694-325-5745', '')
     
-    di.AddItem(samdb, '0000', '002', 'Condo at Myrtle Beach for a week', \
+    di.addItem(samdb, '0000', '002', 'Condo at Myrtle Beach for a week', \
                 '1000', '400', '50', '', '')
-    di.AddItem(samdb, '0001', '001', 'Book: Travel Guide to Europe', 
+    di.addItem(samdb, '0001', '001', 'Book: Travel Guide to Europe',
                 '25', '5', '1','', '')
-    di.AddItem(samdb, '0002', '001', 'Book: Gullivers Travels', '25', '5', '1',
+    di.addItem(samdb, '0002', '001', 'Book: Gullivers Travels', '25', '5', '1',
                 '', '')
-    di.AddItem(samdb, '0003', '002', 'Air fare to Hawaii', '1000', '500', '50',
+    di.addItem(samdb, '0003', '002', 'Air fare to Hawaii', '1000', '500', '50',
                 '', '')
-    di.AddItem(samdb, '0004', '000', 'Chiropractic consult', '100', '40', '5', '', '')
-    di.AddItem(samdb, '0005', '001', 'Ten dance lessons', '250', '50', '5', '', '')
-    di.AddItem(samdb, '0006', '002', 'South America Travel Book', '25', '5', '1', '', '')
-    di.AddItem(samdb, '0007', '000', 'Beauty Consultation', '100', '25', '1', '', '')
-    di.AddItem(samdb, '0008', '002', 'Dog Training Lessons', '100', '25', '1', '', '')
+    di.addItem(samdb, '0004', '000', 'Chiropractic consult', '100', '40', '5', '', '')
+    di.addItem(samdb, '0005', '001', 'Ten dance lessons', '250', '50', '5', '', '')
+    di.addItem(samdb, '0006', '002', 'South America Travel Book', '25', '5', '1', '', '')
+    di.addItem(samdb, '0007', '000', 'Beauty Consultation', '100', '25', '1', '', '')
+    di.addItem(samdb, '0008', '002', 'Dog Training Lessons', '100', '25', '1', '', '')
     
     print("DATABASE LOADED")
     

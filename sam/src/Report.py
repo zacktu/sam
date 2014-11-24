@@ -99,7 +99,7 @@ class Report(object):
 
     def GetRows(self, samdb, query):
         try:
-            rows = samdb.FetchRows(query)
+            rows = samdb.fetchRows(query)
             return rows
         except MySQLdb.Error, e:
             print "Error %d: %s" % (e.args[0], e.args[1])

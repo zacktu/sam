@@ -21,7 +21,7 @@ def ConsoleShowItems():
               '[hostname portnumber username password]'
         exit()
     samdb = Connect(sys.argv)
-    samdb.UseDatabase(sys.argv[1])
+    samdb.useDatabase(sys.argv[1])
     console = console.Console()
     console.DisplayItems(samdb)
     

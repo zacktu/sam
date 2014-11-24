@@ -20,7 +20,7 @@ class Items(object):
     classdocs
     '''
     
-    def CreateItemsTable(self, samdb):
+    def createItemsTable(self, samdb):
         rows = "( \
             item_number       char(4)     NOT NULL PRIMARY KEY, \
             item_description  char(50)    NOT NULL, \
@@ -33,13 +33,13 @@ class Items(object):
                                             Buyers(buyer_number), \
             item_salesprice   decimal(6)  NULL \
             )"
-        samdb.CreateTable("Items", rows, "item_number")
+        samdb.createTable("Items", rows, "item_number")
         '''  I couldn't determine whether these two lines of code worked.
-        samdb.AddForeignKey("Items", "item_donatedby", "Donors", "donor_num")
-        samdb.AddForeignKey("Items", "item_purchasedby", "Buyers", "buyer_num")
+        samdb.addForeignKey("Items", "item_donatedby", "Donors", "donor_num")
+        samdb.addForeignKey("Items", "item_purchasedby", "Buyers", "buyer_num")
         '''
 
-    def AddItem(self, samdb, item_number, item_description, item_donatedby, 
+    def addItem(self, samdb, item_number, item_description, item_donatedby,
                  item_retail, item_minimumbid, item_bidincrement):
         fields = "item_number, item_description, item_donatedby, \
                   item_retail, item_minimumbid, item_bidincrement, \
@@ -51,29 +51,29 @@ class Items(object):
                + "'" + item_minimumbid + "'" + ',' \
                + "'" + item_bidincrement + "'" + ',' \
                + ' NULL, NULL'
-        samdb.InsertRow("Items", fields, values)
+        samdb.insertRow("Items", fields, values)
         
-    def FetchItem(self, samdb, itemNumber):
+    def fetchItem(self, samdb, itemNumber):
         query = "SELECT item_description, item_donatedby, item_retail, \
                 item_minimumbid, item_bidincrement \
                 FROM Items WHERE item_number = " + itemNumber + ";"
-        return samdb.FetchRow(query)
+        return samdb.fetchRow(query)
         
-    def DeleteItem(self, samdb, itemNumber):
-        samdb.DeleteRow("Items", "item_number", itemNumber)
+    def deleteItem(self, samdb, itemNumber):
+        samdb.deleteRow("Items", "item_number", itemNumber)
         
     # Confirm whether a donor number is in the database.
-    def IsValidItemNumber(self, samdb, itemNumber):
+    def isValidItemNumber(self, samdb, itemNumber):
         query = "SELECT item_description FROM Items \
                 WHERE item_number = '" + itemNumber + "' ; "
-        rows = samdb.FetchRows(query)
+        rows = samdb.fetchRows(query)
         if len(rows) > 0:
             return True
         else:
             return False
      
     # Use the MySQL update function to modify a row in the table.   
-    def UpdateItem(self, samdb, itemNumber, description, donorNumber,
+    def updateItem(self, samdb, itemNumber, description, donorNumber,
                    retailPrice, minimumBid, increment):
         query = "UPDATE Items  \
                     SET item_number = '" + itemNumber + "' , \
@@ -83,21 +83,21 @@ class Items(object):
                         item_minimumbid = '" + minimumBid + "' , \
                         item_bidincrement = '" + increment + "' \
                     WHERE item_number = '" + itemNumber + "' ; "
-        samdb.ExecuteQuery(query)
+        samdb.executeQuery(query)
 
     ''' Determine whether an item has been purchased.  Fetch the 
     item_purchasedby column for a row.  This vaoue will be either
     a buyer number (has been purchased) or None (hasn't been
     purchased '''
-    def CheckItemHasBuyer(self, itemNumber, samdb):
+    def checkItemHasBuyer(self, itemNumber, samdb):
         query = 'SELECT item_purchasedby FROM Items WHERE item_number = ' \
                 + itemNumber + ';' 
-        row = samdb.FetchRow(query)
+        row = samdb.fetchRow(query)
         return row[0]   # returns either a buyer number or None
         
 
 if __name__ == '__main__':
     samdb = dbservices.Samdb()
-    samdb.CreateDatabase()
+    samdb.createDatabase()
     dt = Items()
-    dt.CreateItemsTable(samdb)
+    dt.createItemsTable(samdb)
