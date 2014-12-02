@@ -107,5 +107,6 @@ class Report(object):
         except MySQLdb.Warning, e:
             print("Warning: ", e)
 
-
+if __name__ == '__main__':
+    testConnectAndPopulate()
 

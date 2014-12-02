@@ -15,7 +15,6 @@ import buyers
 import items
 import purchases
 import console
-import Printer
 
 
 ''' Connect to the database and then populate it --- This program assumes
@@ -23,12 +22,12 @@ import Printer
     either by the batch program CreateAuction or the GUI program
     SetUpAuction. '''
 
-def TestConnectAndPopulate():
+def testConnectAndPopulate():
     if not (len(sys.argv) == 2 or len(sys.argv) == 6):
         print 'Usage: python testconnectandpopulate.py dbname ' + \
               '[hostname portnumber username password]'
         exit()
-    samdb = Connect(sys.argv)
+    samdb = connect(sys.argv)
     samdb.useDatabase(sys.argv[1])
     ## Create objects for Auction, Donors, Buyers, Items, and Purchases
     da = auction.Auction()
@@ -36,7 +35,7 @@ def TestConnectAndPopulate():
     db = buyers.Buyers()
     di = items.Items()
     dp = purchases.Purchases()
-    Populate(samdb, da, dd, db, di, dp)
+    populate(samdb, da, dd, db, di, dp)
 
 
 ''' Set the details of the auction needed for printing an invoice and then
@@ -46,7 +45,7 @@ def TestConnectAndPopulate():
     code that I wrote, so it has lots of redundant try -- except stuff.
     It needs a rewrite.
 '''
-def Populate(samdb, da, dd, db, di, dp):
+def populate(samdb, da, dd, db, di, dp):
 
     try:
         dd.addDonor(samdb, '000', 'Williams Jewelry Co.', '257 Main St.',
@@ -205,6 +204,7 @@ def Populate(samdb, da, dd, db, di, dp):
     print ("\nNOW LOOK AT THE ITEMS TABLE AGAIN")
     cnsole.DisplayItems(samdb)
     
+    '''
     print ("\nNOW SHOW SOME PURCHASES ON THE CONSOLE")
     print ("\nPurchases for buyer 000:")
     cnsole.DisplayPurchases(samdb, '000')
@@ -216,20 +216,15 @@ def Populate(samdb, da, dd, db, di, dp):
     cnsole.DisplayPurchases(samdb, '003')
     print ("\nPurchases for buyer 004:")    
     cnsole.DisplayPurchases(samdb, '004')
-    
-    
+    '''
+
     print ("\nDRIVER: NOW SHOW ALL PURCHASES BY ALL BUYERS ON THE CONSOLE")
     cnsole.DisplayAllPurchases(samdb)
-    
-    print ("\nDRIVER: NOW SHOW ALL PURCHASES FOR ONE BUYER ON THE CONSOLE")
-    pr = Printer.Printer()
-    pr.PrintInvoice(samdb, '000')
-
     
 ''' Connect to the mysql server.  If remote, then the database name, server
     name, user name, and password are needed.  If the server is on localhost,
     only the name of the database is needed.' '''
-def Connect(argv):
+def connect(argv):
     try:
         if len(sys.argv) == 6:
             samdb = dbservices.Samdb(dbname = argv[1],
@@ -240,12 +235,12 @@ def Connect(argv):
         else: 
             samdb = dbservices.Samdb(dbname = argv[1])
     except MySQLdb.Error, e:
-        print "TestConnectAndPopulate.Connect: Error %d: %s" % \
+        print "testConnectAndPopulate.Connect: Error %d: %s" % \
                 (e.args[0], e.args[1])
         exit (1)
     except MySQLdb.Warning, e:
-        print("TestConnectAndPopulate.Connect: Warning: ", e)
+        print("testConnectAndPopulate.Connect: Warning: ", e)
     return samdb
 
 if __name__ == '__main__':
-    TestConnectAndPopulate()
+    testConnectAndPopulate()

@@ -9,7 +9,6 @@ import sys
 import MySQLdb
 import dbservices
 import Report
-import Printer
 
 
 ''' Print all items in the database to the printer.  This program

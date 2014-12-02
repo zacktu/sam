@@ -8,7 +8,6 @@ import sys
 import MySQLdb
 import dbservices
 import Report
-import Printer
 
 
 ''' Print all buyers in the database on a laser printer.  This program
