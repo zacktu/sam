@@ -27,38 +27,38 @@ class PrintingServices():
         self.buyers = buyers.Buyers()
         self.fname = self.rand_fname('xxx', 8)
         
-    def PreviewOneInvoiceOrReceipt(self, buyerNum, whatToPrint):
-        lines = self.BuildOneInvoiceOrReceipt(buyerNum, whatToPrint)
-        self.WriteFile(self.fname, lines)
-        self.PreviewFile(self.fname)
+    def previewOneCartOrReceipt(self, buyerNum, whatToPrint):
+        lines = self.buildOneCartOrReceipt(buyerNum, whatToPrint)
+        self.writeFile(self.fname, lines)
+        self.previewFile(self.fname)
         
-    def PrintOneInvoiceOrReceipt(self, buyerNum, whatToPrint):
-        lines = self.BuildOneInvoiceOrReceipt(buyerNum, whatToPrint)
-        self.WriteFile(self.fname, lines)
-        self.PrintFile(self.fname)
+    def printOneCartOrReceipt(self, buyerNum, whatToPrint):
+        lines = self.buildOneCartOrReceipt(buyerNum, whatToPrint)
+        self.writeFile(self.fname, lines)
+        self.printFile(self.fname)
         
-    def PreviewAllInvoicesOrReceipts(self, whatToPrint):
-        lines = self.BuildAllInvoicesOrReceipts(whatToPrint)
-        self.WriteFile(self.fname, lines)
-        self.PreviewFile(self.fname)
+    def previewAllCartsOrReceipts(self, whatToPrint):
+        lines = self.buildAllCartsOrReceipts(whatToPrint)
+        self.writeFile(self.fname, lines)
+        self.previewFile(self.fname)
         
-    def PrintAllInvoicesOrReceipts(self, whatToprint):
-        lines = self.BuildAllInvoicesOrReceipts(whatToPrint)
-        self.WriteFile(self.fname, lines)
-        self.PrintFile(self.fname)
+    def printAllCartsOrReceipts(self, whatToprint):
+        lines = self.buildAllCartsOrReceipts(whatToPrint)
+        self.writeFile(self.fname, lines)
+        self.printFile(self.fname)
         
-    def BuildOneInvoiceOrReceipt(self, buyerNum, whatToPrint):
-        lines = self.BuildInvoiceOrReceiptHeader(buyerNum, whatToPrint)
-        lines = lines + self.BuildInvoiceOrReceiptTable(buyerNum)
+    def buildOneCartOrReceipt(self, buyerNum, whatToPrint):
+        lines = self.buildCartOrReceiptHeader(buyerNum, whatToPrint)
+        lines = lines + self.buildCartOrReceiptTable(buyerNum)
         lines.append('.sp 2\n')
         lines.append('Thank you for your participation.\n')
         return lines
     
-    def BuildAllInvoicesOrReceipts(self, whatToPrint):
+    def buildAllCartsOrReceipts(self, whatToPrint):
         firstTime = True
         allBuyers = self.buyers.getAllBuyers(self.samdb)
         for buyer in allBuyers:
-            moreLines = self.BuildOneInvoiceOrReceipt(buyer[0], whatToPrint)
+            moreLines = self.buildOneCartOrReceipt(buyer[0], whatToPrint)
             if firstTime:
                 lines = moreLines
                 firstTime = False
@@ -66,25 +66,25 @@ class PrintingServices():
                 lines = lines + ['.pn 1\n'] + ['.bp\n'] + moreLines
         return lines
         
-    def PreviewSummaryOfPurchases(self):
-        lines = self.BuildSummaryOfPurchases()
-        self.WriteFile(self.fname, lines)
-        self.PreviewFile(self.fname)
+    def previewSummaryOfPurchases(self):
+        lines = self.buildSummaryOfPurchases()
+        self.writeFile(self.fname, lines)
+        self.previewFile(self.fname)
         
-    def PrintSummaryOfPurchases(self):
-        lines = self.BuildSummaryOfPurchases()
-        self.WriteFile(self.fname, lines)
-        self.PrintFile(self.fname)
+    def printSummaryOfPurchases(self):
+        lines = self.buildSummaryOfPurchases()
+        self.writeFile(self.fname, lines)
+        self.printFile(self.fname)
 
-    def BuildSummaryOfPurchases(self):
-        lines = self.BuildSummaryHeader()
+    def buildSummaryOfPurchases(self):
+        lines = self.buildSummaryHeader()
         allBuyers = self.buyers.getAllBuyers(self.samdb)
         for buyer in allBuyers:
-            lines = lines + self.BuildSummaryBuyer(buyer[0])
-            lines = lines + self.BuildInvoiceOrReceiptTable(buyer[0])
+            lines = lines + self.buildSummaryOfBuyers(buyer[0])
+            lines = lines + self.buildCartOrReceiptTable(buyer[0])
         return lines
     
-    def BuildSummaryHeader(self):
+    def buildSummaryHeader(self):
         lines = []
         lines.append('.sp 0.5i\n')
         lines.append('.ft B\n')
@@ -94,15 +94,15 @@ class PrintingServices():
             lines.append(self.auction.GetAuctionSubtitle(self.samdb) + '\n')
             lines.append(self.auction.GetAuctionDate(self.samdb) + '\n')
         except MySQLdb.Error, e:
-            print "PrintingServices.BuildSummaryHeader: Error %d: %s" \
+            print "PrintingServices.buildSummaryHeader: Error %d: %s" \
                     % (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("PrintingServices.BuildSummaryHeader: Warning: ", e)
+            print("PrintingServices.buildSummaryHeader: Warning: ", e)
         lines.append('.ft R\n')
         return lines
     
-    def BuildSummaryBuyer(self, buyerNum):
+    def buildSummaryOfBuyers(self, buyerNum):
         buyerInfo = self.buyers.fetchBuyer(self.samdb, buyerNum)
         lines = []
         lines.append('.sp 2\n')
@@ -114,7 +114,7 @@ class PrintingServices():
         lines.append('.sp\n')
         return lines
 
-    def BuildInvoiceOrReceiptHeader(self, buyerNum, whatToPrint):
+    def buildCartOrReceiptHeader(self, buyerNum, whatToPrint):
         buyerInfo = self.buyers.fetchBuyer(self.samdb, buyerNum)
 
         lines = []
@@ -133,11 +133,11 @@ class PrintingServices():
             lines.append('.ce\n')
             lines.append(self.auction.GetAuctionDate(self.samdb) + '\n')
         except MySQLdb.Error, e:
-            print "PrintingServices.BuildInvoiceOrReceiptHeader: Error %d: %s" \
+            print "PrintingServices.buildCartOrReceiptHeader: Error %d: %s" \
                     % (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("PrintingServices.BuildInvoiceOrReceiptHeader: Warning: ", e)
+            print("PrintingServices.buildCartOrReceiptHeader: Warning: ", e)
         lines.append('.sp 0.5i\n')
         lines.append('.ce\n')
         if whatToPrint == 'carts':
@@ -166,7 +166,7 @@ class PrintingServices():
         lines.append('.sp 3\n')
         return lines
     
-    def BuildInvoiceOrReceiptTable(self, buyerNum):
+    def buildCartOrReceiptTable(self, buyerNum):
         buyerInfo = self.buyers.fetchBuyer(self.samdb, buyerNum)
         lines = []
         lines.append('.TS\n')
@@ -187,7 +187,7 @@ class PrintingServices():
         lines.append('.TE\n')
         return lines
     
-    def WriteFile(self, fname, lines):
+    def writeFile(self, fname, lines):
         try:
             #fout = None
             fout = open(fname, 'w')
@@ -198,11 +198,11 @@ class PrintingServices():
             Dialogs.DisplayErrorDialog(e.args[1])
             return
 
-    def PreviewFile(self, fname):
+    def previewFile(self, fname):
         command = 'groff -ms -t -f H -Tps -X ' + fname + ' 2> /dev/null; rm ' +fname
         subprocess.Popen(command, shell=True)
                
-    def PrintFile(self, fname):
+    def printFile(self, fname):
         command = 'groff -ms -t -f H -Tps -l ' + fname + ' 2> /dev/null; rm ' +fname
         subprocess.Popen(command, shell=True)
 

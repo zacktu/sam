@@ -41,12 +41,12 @@ class PrintOrPreviewDialog(wx.Dialog):
 
     def OnPreview(self, event):
         ps = printingservices.PrintingServices(self.parent, self.samdb)
-        ps.PreviewOneInvoiceOrReceipt(self.buyerNum, self.whatToPrint)
+        ps.previewOneCartOrReceipt(self.buyerNum, self.whatToPrint)
         self.Close(True)
 
     def OnPrint(self, event):
         ps = printingservices.PrintingServices(self.parent, self.samdb)
-        ps.PrintOneInvoiceOrReceipt(self.buyerNum, self.whatToPrint)
+        ps.printOneCartOrReceipt(self.buyerNum, self.whatToPrint)
         self.Close(True)
 
     def OnClose(self, event):

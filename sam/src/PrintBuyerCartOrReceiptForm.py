@@ -8,7 +8,7 @@ import ChooserLists
 import printingservices
 import PrintOrPreviewDialog
 
-''' This is for printing an invoice form for a single buyer.  The init sets
+''' This is for printing the shopping cart for a single buyer.  The init sets
     up PrintingServices and a chooser.  Two other methods in this class
     allow choice of the buyer by either buyer number or buyer name. '''
 
@@ -35,7 +35,7 @@ class PrintBuyerCartOrReceiptForm(wx.Panel):
         mainSizer.SetSizeHints(parent)
 
         if self.whatToPrint == 'carts':
-            self.message = 'Preview or print invoice for buyer '
+            self.message = 'Preview or print shopping cart for buyer '
         else:
             self.message = 'Preview or print receipt for buyer '
             
@@ -67,7 +67,7 @@ class PrintBuyerCartOrReceiptForm(wx.Panel):
             self.con.DisplayPurchases(self.samdb, self.buyerNumber)
             PrintOrPreviewDialog.PrintOrPreviewDialog(self, -1, \
                                 'Preview or Print?',
-                                'Preview or print invoice for buyer ' + \
+                                'Preview or print cart for buyer ' + \
                                 buyerString + '?',
                                 self.buyerNumber, self.samdb, self.whatToPrint)
         except MySQLdb.Error, e:

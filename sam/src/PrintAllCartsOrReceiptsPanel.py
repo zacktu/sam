@@ -23,7 +23,7 @@ class PrintAllCartsOrReceiptsPanel(wx.Panel):
         # First create the controls
         if whatToPrint == 'carts':
             topLbl = wx.StaticText(self, -1, "Print All Carts")
-            message = 'Print all invoices.  ' \
+            message = 'Print all shopping carts.  ' \
                       'This is usually\ndone only by the Auction Manager.'
         else:
             topLbl = wx.StaticText(self, -1, "Print All Receipts")
@@ -61,12 +61,12 @@ class PrintAllCartsOrReceiptsPanel(wx.Panel):
     def OnPreviewButton(self, event):
         self.con.DisplayAllPurchases(self.samdb)
         ps = printingservices.PrintingServices(self.parent, self.samdb)
-        ps.PreviewAllInvoicesOrReceipts(self.whatToPrint)
+        ps.previewAllCartsOrReceipts(self.whatToPrint)
         
     def OnPrintButton(self, event):
         self.con.DisplayAllPurchases(self.samdb)
         ps = printingservices.PrintingServices(self.parent, self.samdb)
-        ps.PrintAllInvoicesOrReceipts(self.whatToprint)
+        ps.printAllCartsOrReceipts(self.whatToprint)
         
 
 

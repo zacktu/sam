@@ -97,11 +97,11 @@ class ReportServices():
             lines.append(self.auction.GetAuctionSubtitle(self.samdb) + '\n')
             lines.append(self.auction.GetAuctionDate(self.samdb) + '\n')
         except MySQLdb.Error, e:
-            print "ReportServices.BuildSummaryHeader: Error %d: %s" \
+            print "ReportServices.buildSummaryHeader: Error %d: %s" \
                     % (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("ReportServices.BuildSummaryHeader: Warning: ", e)
+            print("ReportServices.buildSummaryHeader: Warning: ", e)
         lines.append('.ft R\n')
         return lines
 
@@ -135,11 +135,11 @@ class ReportServices():
             lines.append('.ce\n')
             lines.append(self.auction.GetAuctionDate(self.samdb) + '\n')
         except MySQLdb.Error, e:
-            print "ReportServices.BuildInvoiceOrReceiptHeader: Error %d: %s" \
+            print "ReportServices.buildCartOrReceiptHeader: Error %d: %s" \
                     % (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("ReportServices.BuildInvoiceOrReceiptHeader: Warning: ", e)
+            print("ReportServices.buildCartOrReceiptHeader: Warning: ", e)
         lines.append('.sp 0.5i\n')
         lines.append('.ce\n')
         if whatToPrint == 'carts':

@@ -20,12 +20,12 @@ class PrintCartOrReceiptSummaryPanel(wx.Panel):
         
         # First create the controls
         if whatToPrint == 'carts':
-            topLbl = wx.StaticText(self, -1, "Print Cart Summary")
-            message = 'Print a summary of the invoices.  ' \
+            topLbl = wx.StaticText(self, -1, "Print Shopping Cart Summary")
+            message = 'Print summary of all shopping carts.  ' \
                       'This is\nusually done only by the Auction Manager.'
         else:
             topLbl = wx.StaticText(self, -1, "Print Receipt Summary")
-            message = 'Print a summary of the receipts.  ' \
+            message = 'Print a summary of all receipts.  ' \
                       'This is\nusually done only by the Auction Manager.'
         topLbl.SetFont(wx.Font(18, wx.SWISS, wx.NORMAL, wx.BOLD))
 
@@ -60,10 +60,10 @@ class PrintCartOrReceiptSummaryPanel(wx.Panel):
         print 'Time to preview the invoice summary.'
         self.con.DisplayAllPurchases(self.samdb)
         ps = printingservices.PrintingServices(self.parent, self.samdb)
-        ps.PreviewSummaryOfPurchases()
+        ps.previewSummaryOfPurchases()
         
     def OnPrintButton(self, event):
         print 'Time to print the invoice summary.'
         self.con.DisplayAllPurchases(self.samdb)
         ps = printingservices.PrintingServices(self.parent, self.samdb)
-        ps.PrintSummaryOfPurchases()
+        ps.printSummaryOfPurchases()
