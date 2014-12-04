@@ -17,6 +17,7 @@ class PrintCartOrReceiptSummaryPanel(wx.Panel):
         self.con = console.Console()
         self.buyers = buyers.Buyers()
         self.parent = parent
+        self.whatToPrint = whatToPrint
         
         # First create the controls
         if whatToPrint == 'carts':
@@ -60,10 +61,10 @@ class PrintCartOrReceiptSummaryPanel(wx.Panel):
         print 'Time to preview the invoice summary.'
         self.con.DisplayAllPurchases(self.samdb)
         ps = printingservices.PrintingServices(self.parent, self.samdb)
-        ps.previewSummaryOfPurchases()
+        ps.previewSummaryOfPurchases(self.whatToPrint)
         
     def OnPrintButton(self, event):
         print 'Time to print the invoice summary.'
         self.con.DisplayAllPurchases(self.samdb)
         ps = printingservices.PrintingServices(self.parent, self.samdb)
-        ps.printSummaryOfPurchases()
+        ps.printSummaryOfPurchases(self.whatToPrint)

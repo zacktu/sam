@@ -17,15 +17,22 @@ import subprocess
 from random import sample
 from string import digits, ascii_uppercase, ascii_lowercase
 from tempfile import gettempdir
+##### the next four imports are for TEST SCAFFOLDING
+import sys
+import MySQLdb
+import dbservices
+import buyers
+###### END OF SPECIAL IMPORTS
 
 class PrintingServices():
-    
+
     def __init__(self, parent, samdb):
         self.parent = parent
         self.samdb = samdb
         self.auction = auction.Auction()
         self.buyers = buyers.Buyers()
         self.fname = self.rand_fname('xxx', 8)
+        lines = []
         
     def previewOneCartOrReceipt(self, buyerNum, whatToPrint):
         lines = self.buildOneCartOrReceipt(buyerNum, whatToPrint)
@@ -66,33 +73,39 @@ class PrintingServices():
                 lines = lines + ['.pn 1\n'] + ['.bp\n'] + moreLines
         return lines
         
-    def previewSummaryOfPurchases(self):
-        lines = self.buildSummaryOfPurchases()
+    def previewSummaryOfPurchases(self, whatToPrint):
+        lines = self.buildSummaryOfPurchases(whatToPrint)
         self.writeFile(self.fname, lines)
         self.previewFile(self.fname)
         
-    def printSummaryOfPurchases(self):
-        lines = self.buildSummaryOfPurchases()
+    def printSummaryOfPurchases(self, whatToPrint):
+        lines = self.buildSummaryOfPurchases(whatToPrint)
         self.writeFile(self.fname, lines)
         self.printFile(self.fname)
 
-    def buildSummaryOfPurchases(self):
-        lines = self.buildSummaryHeader()
+    def buildSummaryOfPurchases(self, whatToPrint):
+        lines = self.buildSummaryHeader(whatToPrint)
         allBuyers = self.buyers.getAllBuyers(self.samdb)
         for buyer in allBuyers:
             lines = lines + self.buildSummaryOfBuyers(buyer[0])
             lines = lines + self.buildCartOrReceiptTable(buyer[0])
         return lines
     
-    def buildSummaryHeader(self):
+    def buildSummaryHeader(self, whatToPrint):
         lines = []
         lines.append('.sp 0.5i\n')
         lines.append('.ft B\n')
-        lines.append('.ce 3\n')
+        lines.append('.ce 4\n')
         try:
             lines.append(self.auction.GetAuctionTitle(self.samdb) + '\n')
             lines.append(self.auction.GetAuctionSubtitle(self.samdb) + '\n')
             lines.append(self.auction.GetAuctionDate(self.samdb) + '\n')
+            if whatToPrint == 'carts':
+                lines.append('\nShopping Cart Summary\n')
+            elif whatToPrint == 'receipts':
+                lines.append('\nReceipt Summary\n')
+            elif whatToPrint == 'buyers':
+                lines.append('\nBuyers Report')
         except MySQLdb.Error, e:
             print "PrintingServices.buildSummaryHeader: Error %d: %s" \
                     % (e.args[0], e.args[1])
@@ -102,6 +115,10 @@ class PrintingServices():
         lines.append('.ft R\n')
         return lines
     
+    '''
+        This is the set of buyers needed for showing a summary of
+        shopping carts or receipts
+    '''
     def buildSummaryOfBuyers(self, buyerNum):
         buyerInfo = self.buyers.fetchBuyer(self.samdb, buyerNum)
         lines = []
@@ -142,7 +159,7 @@ class PrintingServices():
         lines.append('.ce\n')
         if whatToPrint == 'carts':
             lines.append('SHOPPING CART\n')
-        else:
+        elif whatToPrint == 'receipts':
             lines.append('RECEIPT\n')
         '''
         buyerInfo[0] is buyer last name
@@ -187,6 +204,18 @@ class PrintingServices():
         lines.append('.TE\n')
         return lines
     
+    def buildBuyerReport(self, samdb):
+        print ("ENTERING buildBuyerReport")
+        lines = self.buildSummaryHeader('buyers')
+        print ('IN BUILDBUYEREPORT OF BUYER REPORT =')
+        for line in lines:
+            print line
+        return lines
+
+    def printBuyerReport(self, samdb):
+        print ("ENTERING printBuyerReport")
+        lines = self.buildBuyerReport(samdb)
+
     def writeFile(self, fname, lines):
         try:
             #fout = None
@@ -224,3 +253,33 @@ class PrintingServices():
 
         return fname if not os.path.exists(fname) \
             else rand_fname(suffix, length)
+
+''' EVERYTHING BELOW IS ONLY FOR COMMAND LINE SCAFFOLDING & TESTING
+    Connect to the mysql server.  If remote, then the database name, server
+    name, user name, and password are needed.  If the server is on localhost,
+    only the name of the database is needed.' '''
+def connect(argv):
+    try:
+        if len(sys.argv) == 6:
+            samdb = dbservices.Samdb(dbname = argv[1],
+                                hostname = argv[2],
+                                portnumber = int(argv[3]),
+                                username = argv[4],
+                                password = argv[5])
+        else:
+            samdb = dbservices.Samdb(dbname = argv[1])
+    except MySQLdb.Error, e:
+        print "testConnectAndPopulate.Connect: Error %d: %s" % \
+                (e.args[0], e.args[1])
+        exit (1)
+    except MySQLdb.Warning, e:
+        print("testConnectAndPopulate.Connect: Warning: ", e)
+    return samdb
+
+if __name__ == '__main__':
+    print ("HI BOB")
+    dummy = buyers.Buyers()
+    samdb = connect(sys.argv)
+    pr = PrintingServices(dummy, samdb)
+    pr.printBuyerReport(samdb)
+    print("BYE BOB")
