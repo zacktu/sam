@@ -93,6 +93,7 @@ class PrintingServices():
     
     def buildSummaryHeader(self, whatToPrint):
         lines = []
+        ###lines.append('.ll 120\n')  #IS THIS OKAY?
         lines.append('.sp 0.5i\n')
         lines.append('.ft B\n')
         lines.append('.ce 4\n')
@@ -105,7 +106,7 @@ class PrintingServices():
             elif whatToPrint == 'receipts':
                 lines.append('\nReceipt Summary\n')
             elif whatToPrint == 'buyers':
-                lines.append('\nBuyers Report')
+                lines.append('\nBuyers Report\n')
         except MySQLdb.Error, e:
             print "PrintingServices.buildSummaryHeader: Error %d: %s" \
                     % (e.args[0], e.args[1])
@@ -205,16 +206,50 @@ class PrintingServices():
         return lines
     
     def buildBuyerReport(self, samdb):
-        print ("ENTERING buildBuyerReport")
         lines = self.buildSummaryHeader('buyers')
-        print ('IN BUILDBUYEREPORT OF BUYER REPORT =')
-        for line in lines:
-            print line
+        lines.append('.TS\n')
+        lines.append('box, expand, tab(`);\n')
+        lines.append('cI cI cI cI cI cI.\n')
+        lines.append('Buyer`Last`First`Street`City`Telephone\n')
+        lines.append('_\n')
+        lines.append('.T&\n')
+        lines.append('n l l l l c.\n')
+        allBuyers = self.buyers.getAllBuyers(self.samdb)
+        for buyer in allBuyers:
+            buyerInfo = self.buyers.fetchBuyer(self.samdb, buyer[0])
+            lines.append(buyer[0] + '`' + buyerInfo[0] + '`' + buyerInfo[1]
+                         + '`' + buyerInfo[2] + '`' + buyerInfo[3] + '`'
+                         + buyerInfo[4] + '\n')
+        lines.append('.TE\n')
         return lines
 
-    def printBuyerReport(self, samdb):
-        print ("ENTERING printBuyerReport")
+    def printBuyerReport(self, samdb, printOrPreview):
         lines = self.buildBuyerReport(samdb)
+        #landscape lines are 9i wide
+        lines.insert(0, '.ll 9i\n')
+        if (printOrPreview == 'print'):
+            #page offset determined by experimentation
+            lines.insert(1, '.po 1.75i\n')  #needed for centering printed file
+            self.writeFile(self.fname, lines)
+            #self.printFile(self.fname)
+            command = 'groffer -P-l -l ' + self.fname + ' 2>/dev/null '
+        elif (printOrPreview == 'preview'):
+            self.writeFile(self.fname, lines)
+            #self.previewFile(self.fname)
+            command = 'groff -t -P-l -t ' + self.fname \
+                      + ' | ps2pdf - bob.pdf ; ' + 'evince bob.pdf'
+        else:
+            print('printingservices.printBuyerReport: invalid parameter '
+                  + 'printOrPreview = ' + printOrPreview)
+            print('Bugout!')
+            sys.exit()
+
+        try:
+            subprocess.Popen(command, shell=True)
+        except (IOError, OSError) as e:
+            print("^^^^^^^ error is ", e)
+            print("WILL EXIT")
+            sys.exit()
 
     def writeFile(self, fname, lines):
         try:
@@ -228,11 +263,13 @@ class PrintingServices():
             return
 
     def previewFile(self, fname):
-        command = 'groff -ms -t -f H -Tps -X ' + fname + ' 2> /dev/null; rm ' +fname
+        command = 'groff -t -P-l -t ' + fname \
+                      + ' | ps2pdf - bob.pdf ; ' + 'evince bob.pdf'
+        #command = 'groffer -Tps -X ' + fname
         subprocess.Popen(command, shell=True)
                
     def printFile(self, fname):
-        command = 'groff -ms -t -f H -Tps -l ' + fname + ' 2> /dev/null; rm ' +fname
+        command = 'groffer -l ' + fname + ' 2>/dev/null'
         subprocess.Popen(command, shell=True)
 
 
@@ -254,32 +291,8 @@ class PrintingServices():
         return fname if not os.path.exists(fname) \
             else rand_fname(suffix, length)
 
-''' EVERYTHING BELOW IS ONLY FOR COMMAND LINE SCAFFOLDING & TESTING
-    Connect to the mysql server.  If remote, then the database name, server
-    name, user name, and password are needed.  If the server is on localhost,
-    only the name of the database is needed.' '''
-def connect(argv):
-    try:
-        if len(sys.argv) == 6:
-            samdb = dbservices.Samdb(dbname = argv[1],
-                                hostname = argv[2],
-                                portnumber = int(argv[3]),
-                                username = argv[4],
-                                password = argv[5])
-        else:
-            samdb = dbservices.Samdb(dbname = argv[1])
-    except MySQLdb.Error, e:
-        print "testConnectAndPopulate.Connect: Error %d: %s" % \
-                (e.args[0], e.args[1])
-        exit (1)
-    except MySQLdb.Warning, e:
-        print("testConnectAndPopulate.Connect: Warning: ", e)
-    return samdb
-
 if __name__ == '__main__':
-    print ("HI BOB")
     dummy = buyers.Buyers()
-    samdb = connect(sys.argv)
+    samdb = dbservices.connect(sys.argv)
     pr = PrintingServices(dummy, samdb)
-    pr.printBuyerReport(samdb)
-    print("BYE BOB")
+    pr.printBuyerReport(samdb, 'preview')

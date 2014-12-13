@@ -33,7 +33,7 @@ import donors
 import buyers
 import items
 
-def CreateAuction(hname, pnumber, uname, pword, \
+def createAuction(hname, pnumber, uname, pword, \
                   dbnam, title, subtitle, date):
     print 'ENTERED CREATE AUCTION'
     print hname, pnumber, uname, pword, dbnam, title, subtitle, date
@@ -43,15 +43,15 @@ def CreateAuction(hname, pnumber, uname, pword, \
                     portnumber=int(pnumber),
                     username=uname,
                     password=pword)
-        DoEverything(samdb, dbnam, title, subtitle, date)
+        doEverything(samdb, dbnam, title, subtitle, date)
     except MySQLdb.Error, e:
-        print "CreateAuction.CreateAuction: Error %d: %s" % \
+        print "createAuction.createAuction: Error %d: %s" % \
                 (e.args[0], e.args[1])
         sys.exit (1)
     except MySQLdb.Warning, e:
-        print("CreateAuction.CreateAuction: Warning: ", e)
+        print("createAuction.createAuction: Warning: ", e)
 
-def DoEverything(samdb, dbnam, title, subtitle, date):
+def doEverything(samdb, dbnam, title, subtitle, date):
     print 'ENTERED DOEVERYTHING'
     try:
         ''' Now create the database. ''' 
@@ -81,11 +81,11 @@ def DoEverything(samdb, dbnam, title, subtitle, date):
         da.AddAuctionDate(samdb, date)
         print 'ADDED AUCTION DATA'
     except MySQLdb.Error, e:
-        print "CreateAuction.DoEverything: Error %d: %s" % \
+        print "createAuction.doEverything: Error %d: %s" % \
                 (e.args[0], e.args[1])
         sys.exit (1)
     except MySQLdb.Warning, e:
-        print("CreateAuction.DoEverything: Warning: ", e)
+        print("createAuction.doEverything: Warning: ", e)
     
     return
 
@@ -106,13 +106,13 @@ if __name__ == '__main__':
             else: 
                 samdb = dbservices.Samdb(dbname='mysql')
 
-            DoEverything(samdb, sys.argv[1], 
+            doEverything(samdb, sys.argv[1],
                          'WNC Returned Peace Corps Volunteers',
                          'Working to improve the world community',
                          'September 14, 2011')
         except MySQLdb.Error, e:
-            print "CreateAuction.CreateAuction: Error %d: %s" % \
+            print "createAuction.createAuction: Error %d: %s" % \
                     (e.args[0], e.args[1])
             sys.exit (1)
         except MySQLdb.Warning, e:
-            print("CreateAuction.CreateAuction: Warning: ", e)
+            print("createAuction.createAuction: Warning: ", e)

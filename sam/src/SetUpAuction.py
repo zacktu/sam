@@ -171,7 +171,7 @@ class SetUpAuction(wx.Frame):
         date = self.dateTC.GetValue()
         
         print hostName, portNumber, userName, password, dbName, title, subtitle, date
-        createauction.CreateAuction(hostName, portNumber, userName, password, \
+        createauction.createAuction(hostName, portNumber, userName, password, \
                                     dbName, title, subtitle, date)
         dialogs.DisplaySuccessDialog("The auction was created successfully.")
         sys.exit()

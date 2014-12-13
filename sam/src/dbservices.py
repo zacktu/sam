@@ -182,7 +182,33 @@ class Samdb(object):
         cursor.execute("DELETE FROM " + tableName + " WHERE " + \
                        fieldName  + " = " + value)
         self.db.commit()
-    
+
+'''
+    Create a Samdb object and connect to the database.
+    For the complete program this is done when the ManeFrame
+    class is instantiated.  The Samdb object may be
+    created by another module for testing that module.
+    This code is for test scaffolding only.
+'''
+def connect(argv):
+    try:
+        if len(sys.argv) == 6:
+            samdb = Samdb(dbname = argv[1],
+                                hostname = argv[2],
+                                portnumber = int(argv[3]),
+                                username = argv[4],
+                                password = argv[5])
+        else:
+            samdb = dbservices.Samdb(dbname = argv[1])
+    except MySQLdb.Error, e:
+        print "testConnectAndPopulate.Connect: Error %d: %s" % \
+                (e.args[0], e.args[1])
+        exit (1)
+    except MySQLdb.Warning, e:
+        print("testConnectAndPopulate.Connect: Warning: ", e)
+    return samdb
+
+
 # Run the program
 if __name__ == '__main__':
     if len(sys.argv) < 2:

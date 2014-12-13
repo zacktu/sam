@@ -19,7 +19,7 @@ import console
 
 ''' Connect to the database and then populate it --- This program assumes
     that a database already exists.  That database has been created
-    either by the batch program CreateAuction or the GUI program
+    either by the batch program createAuction or the GUI program
     SetUpAuction. '''
 
 def testConnectAndPopulate():
@@ -27,7 +27,8 @@ def testConnectAndPopulate():
         print 'Usage: python testconnectandpopulate.py dbname ' + \
               '[hostname portnumber username password]'
         exit()
-    samdb = connect(sys.argv)
+    ##samdb = connect(sys.argv)
+    samdb = dbservices.connect(sys.argv)
     samdb.useDatabase(sys.argv[1])
     ## Create objects for Auction, Donors, Buyers, Items, and Purchases
     da = auction.Auction()
@@ -220,27 +221,6 @@ def populate(samdb, da, dd, db, di, dp):
 
     print ("\nDRIVER: NOW SHOW ALL PURCHASES BY ALL BUYERS ON THE CONSOLE")
     cnsole.DisplayAllPurchases(samdb)
-    
-''' Connect to the mysql server.  If remote, then the database name, server
-    name, user name, and password are needed.  If the server is on localhost,
-    only the name of the database is needed.' '''
-def connect(argv):
-    try:
-        if len(sys.argv) == 6:
-            samdb = dbservices.Samdb(dbname = argv[1],
-                                hostname = argv[2],
-                                portnumber = int(argv[3]),
-                                username = argv[4],
-                                password = argv[5])
-        else: 
-            samdb = dbservices.Samdb(dbname = argv[1])
-    except MySQLdb.Error, e:
-        print "testConnectAndPopulate.Connect: Error %d: %s" % \
-                (e.args[0], e.args[1])
-        exit (1)
-    except MySQLdb.Warning, e:
-        print("testConnectAndPopulate.Connect: Warning: ", e)
-    return samdb
 
 if __name__ == '__main__':
     testConnectAndPopulate()
