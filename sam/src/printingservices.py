@@ -253,7 +253,6 @@ class PrintingServices():
 
     def writeFile(self, fname, lines):
         try:
-            #fout = None
             fout = open(fname, 'w')
             for line in lines:
                 fout.write(line)
@@ -263,9 +262,10 @@ class PrintingServices():
             return
 
     def previewFile(self, fname):
+        pdfname = fname +'.pdf'
         command = 'groff -t -P-l -t ' + fname \
-                      + ' | ps2pdf - bob.pdf ; ' + 'evince bob.pdf'
-        #command = 'groffer -Tps -X ' + fname
+                      + ' | ps2pdf - ' + pdfname + ' ; ' \
+                      + 'evince ' + pdfname
         subprocess.Popen(command, shell=True)
                
     def printFile(self, fname):
