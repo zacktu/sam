@@ -37,22 +37,22 @@ class PrintingServices():
     def previewOneCartOrReceipt(self, buyerNum, whatToPrint):
         lines = self.buildOneCartOrReceipt(buyerNum, whatToPrint)
         self.writeFile(self.fname, lines)
-        self.previewFile(self.fname)
+        self.previewPortrait(self.fname)
         
     def printOneCartOrReceipt(self, buyerNum, whatToPrint):
         lines = self.buildOneCartOrReceipt(buyerNum, whatToPrint)
         self.writeFile(self.fname, lines)
-        self.printFile(self.fname)
+        self.printPortrait(self.fname)
         
     def previewAllCartsOrReceipts(self, whatToPrint):
         lines = self.buildAllCartsOrReceipts(whatToPrint)
         self.writeFile(self.fname, lines)
-        self.previewFile(self.fname)
+        self.previewPortrait(self.fname)
         
     def printAllCartsOrReceipts(self, whatToprint):
         lines = self.buildAllCartsOrReceipts(whatToPrint)
         self.writeFile(self.fname, lines)
-        self.printFile(self.fname)
+        self.printPortrait(self.fname)
         
     def buildOneCartOrReceipt(self, buyerNum, whatToPrint):
         lines = self.buildCartOrReceiptHeader(buyerNum, whatToPrint)
@@ -76,12 +76,12 @@ class PrintingServices():
     def previewSummaryOfPurchases(self, whatToPrint):
         lines = self.buildSummaryOfPurchases(whatToPrint)
         self.writeFile(self.fname, lines)
-        self.previewFile(self.fname)
+        self.previewPortrait(self.fname)
         
     def printSummaryOfPurchases(self, whatToPrint):
         lines = self.buildSummaryOfPurchases(whatToPrint)
         self.writeFile(self.fname, lines)
-        self.printFile(self.fname)
+        self.printPortrait(self.fname)
 
     def buildSummaryOfPurchases(self, whatToPrint):
         lines = self.buildSummaryHeader(whatToPrint)
@@ -231,24 +231,14 @@ class PrintingServices():
             #page offset determined by experimentation
             lines.insert(1, '.po 1.75i\n')  #needed for centering printed file
             self.writeFile(self.fname, lines)
-            #self.printFile(self.fname)
-            command = 'groffer -P-l -l ' + self.fname + ' 2>/dev/null '
+            self.printLandscape(self.fname)
         elif (printOrPreview == 'preview'):
             self.writeFile(self.fname, lines)
-            #self.previewFile(self.fname)
-            command = 'groff -t -P-l -t ' + self.fname \
-                      + ' | ps2pdf - bob.pdf ; ' + 'evince bob.pdf'
+            self.previewLandscape(self.fname)
         else:
             print('printingservices.printBuyerReport: invalid parameter '
                   + 'printOrPreview = ' + printOrPreview)
             print('Bugout!')
-            sys.exit()
-
-        try:
-            subprocess.Popen(command, shell=True)
-        except (IOError, OSError) as e:
-            print("^^^^^^^ error is ", e)
-            print("WILL EXIT")
             sys.exit()
 
     def writeFile(self, fname, lines):
@@ -261,21 +251,28 @@ class PrintingServices():
             Dialogs.DisplayErrorDialog(e.args[1])
             return
 
-    def previewFile(self, fname):
+    def previewPortrait(self, fname):
         pdfname = fname +'.pdf'
-        command = 'groff -t -P-l -t ' + fname \
+        command = 'groff -t -t ' + fname \
                       + ' | ps2pdf - ' + pdfname + ' ; ' \
                       + 'evince ' + pdfname
         subprocess.Popen(command, shell=True)
                
-    def printFile(self, fname):
+    def printPortrait(self, fname):
         command = 'groffer -l ' + fname + ' 2>/dev/null'
         subprocess.Popen(command, shell=True)
 
+    def previewLandscape(self, fname):
+        command = 'groff -t -P-l -t ' + self.fname \
+                      + ' | ps2pdf - bob.pdf ; ' + 'evince bob.pdf'
+        subprocess.Popen(command, shell=True)
+
+    def printLandscape(self, fname):
+        command = 'groffer -P-l -l ' + self.fname + ' 2>/dev/null '
+        subprocess.Popen(command, shell=True)
 
     def OnExit(self, evt):
         self.Close()
-
 
     def OnClearSelection(self, evt):
         evt.Skip()
@@ -295,4 +292,4 @@ if __name__ == '__main__':
     dummy = buyers.Buyers()
     samdb = dbservices.connect(sys.argv)
     pr = PrintingServices(dummy, samdb)
-    pr.printBuyerReport(samdb, 'preview')
+    pr.printBuyerReport(samdb, 'print')
