@@ -79,6 +79,11 @@ class Donors(object):
             itemList.append(item[0])
         return itemList
 
+    def getAllDonors(self, samdb):
+        query = 'SELECT donor_number FROM Donors ORDER BY donor_number'
+        allDonors = samdb.fetchRows(query)
+        return allDonors
+
 if __name__ == '__main__':
     samdb = dbservices.Samdb()
     samdb.createDatabase()

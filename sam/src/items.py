@@ -55,7 +55,8 @@ class Items(object):
         
     def fetchItem(self, samdb, itemNumber):
         query = "SELECT item_description, item_donatedby, item_retail, \
-                item_minimumbid, item_bidincrement \
+                item_minimumbid, item_bidincrement, item_purchasedby, \
+                item_salesprice \
                 FROM Items WHERE item_number = " + itemNumber + ";"
         return samdb.fetchRow(query)
         
@@ -94,7 +95,11 @@ class Items(object):
                 + itemNumber + ';' 
         row = samdb.fetchRow(query)
         return row[0]   # returns either a buyer number or None
-        
+
+    def getAllItems(self, samdb):
+        query = 'SELECT item_number FROM Items ORDER BY item_number'
+        allItems = samdb.fetchRows(query)
+        return allItems
 
 if __name__ == '__main__':
     samdb = dbservices.Samdb()

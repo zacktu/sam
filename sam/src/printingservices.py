@@ -12,6 +12,8 @@ from the Buyers table.
 
 import auction
 import buyers
+import donors
+import items
 import os
 import subprocess
 from random import sample
@@ -31,6 +33,8 @@ class PrintingServices():
         self.samdb = samdb
         self.auction = auction.Auction()
         self.buyers = buyers.Buyers()
+        self.donors = donors.Donors()
+        self.items = items.Items()
         self.fname = self.rand_fname('xxx', 8)
         lines = []
         
@@ -105,8 +109,12 @@ class PrintingServices():
                 lines.append('\nShopping Cart Summary\n')
             elif whatToPrint == 'receipts':
                 lines.append('\nReceipt Summary\n')
+            elif whatToPrint == 'donors':
+                lines.append('\nDonors Report\n\n')
             elif whatToPrint == 'buyers':
-                lines.append('\nBuyers Report\n')
+                lines.append('\nBuyers Report\n\n')
+            elif whatToPrint == 'items':
+                lines.append('\nItems Report\n\n')
         except MySQLdb.Error, e:
             print "PrintingServices.buildSummaryHeader: Error %d: %s" \
                     % (e.args[0], e.args[1])
@@ -162,13 +170,6 @@ class PrintingServices():
             lines.append('SHOPPING CART\n')
         elif whatToPrint == 'receipts':
             lines.append('RECEIPT\n')
-        '''
-        buyerInfo[0] is buyer last name
-        buyerInfo[1] is buyer first name
-        buyerInfo[2] is buyer street
-        buyerInfo[3] is buyer city, state and zip (when provided)
-        buyerInfo[4] is buyer telephone number
-    '''
         lines.append('.ps -2\n')
         lines.append('.ft R\n')
         lines.append('.sp 1.0i\n')
@@ -204,7 +205,25 @@ class PrintingServices():
         lines.append('`TOTAL`$' + str(totalPurchase) + '\n')
         lines.append('.TE\n')
         return lines
-    
+
+    def buildDonorReport(self, samdb):
+        lines = self.buildSummaryHeader('donors')
+        lines.append('.TS\n')
+        lines.append('box, expand, tab(`);\n')
+        lines.append('cI cI cI cI cI cI cI.\n')
+        lines.append('Donor`Name`Street`City`Contact`Telephone`Email\n')
+        lines.append('_\n')
+        lines.append('.T&\n')
+        lines.append('n l l l l c l.\n')
+        allDonors = self.donors.getAllDonors(self.samdb)
+        for donor in allDonors:
+            donorInfo = self.donors.fetchDonor(self.samdb, donor[0])
+            lines.append(donor[0] + '`' + donorInfo[0] + '`' + donorInfo[1]
+                         + '`' + donorInfo[2] + '`' + donorInfo[3]
+                         + '`' + donorInfo[4] + '`' + donorInfo[5] + '\n')
+        lines.append('.TE\n')
+        return lines
+
     def buildBuyerReport(self, samdb):
         lines = self.buildSummaryHeader('buyers')
         lines.append('.TS\n')
@@ -223,6 +242,44 @@ class PrintingServices():
         lines.append('.TE\n')
         return lines
 
+    def buildItemReport(self, samdb):
+        lines = self.buildSummaryHeader('items')
+        lines.append('.TS\n')
+        lines.append('box, expand, tab(`);\n')
+        lines.append('cI cI cI cI cI cI cI cI.\n')
+        lines.append(
+            'Item`Description`Donor`Retail`Min Bid`Increment`Buyer`Price\n')
+        lines.append('_\n')
+        lines.append('.T&\n')
+        lines.append('n l n n n n n n.\n')
+        allItems = self.items.getAllItems(self.samdb)
+        for item in allItems:
+            itemInfo = self.items.fetchItem(self.samdb, item[0])
+            lines.append(item[0] + '`' + itemInfo[0] + '`' + itemInfo[1] \
+                           + '`' + str(itemInfo[2]) + '`' + str(itemInfo[3]) \
+                           + '`' + str(itemInfo[4]) + '`' + str(itemInfo[5]) \
+                           + '`' + str(itemInfo[6]) + '\n')
+        lines.append('.TE\n')
+        return lines
+
+    def printDonorReport(self, samdb, printOrPreview):
+        lines = self.buildDonorReport(samdb)
+        #landscape lines are 9i wide
+        lines.insert(0, '.ll 9i\n')
+        if (printOrPreview == 'print'):
+            #page offset determined by experimentation
+            lines.insert(1, '.po 1.75i\n')  #needed for centering printed file
+            self.writeFile(self.fname, lines)
+            self.printLandscape(self.fname)
+        elif (printOrPreview == 'preview'):
+            self.writeFile(self.fname, lines)
+            self.previewLandscape(self.fname)
+        else:
+            print('printingservices.printDonorReport: invalid parameter '
+                  + 'printOrPreview = ' + printOrPreview)
+            print('Bugout!')
+            sys.exit()
+
     def printBuyerReport(self, samdb, printOrPreview):
         lines = self.buildBuyerReport(samdb)
         #landscape lines are 9i wide
@@ -240,6 +297,24 @@ class PrintingServices():
                   + 'printOrPreview = ' + printOrPreview)
             print('Bugout!')
             sys.exit()
+
+    def printItemReport(self, samdb, printOrPreview):
+            lines = self.buildItemReport(samdb)
+            #landscape lines are 9i wide
+            lines.insert(0, '.ll 9i\n')
+            if (printOrPreview == 'print'):
+                #page offset determined by experimentation
+                lines.insert(1, '.po 1.75i\n')  #needed for centering printed file
+                self.writeFile(self.fname, lines)
+                self.printLandscape(self.fname)
+            elif (printOrPreview == 'preview'):
+                self.writeFile(self.fname, lines)
+                self.previewLandscape(self.fname)
+            else:
+                print('printingservices.printItemReport: invalid parameter '
+                      + 'printOrPreview = ' + printOrPreview)
+                print('Bugout!')
+                sys.exit()
 
     def writeFile(self, fname, lines):
         try:
@@ -263,12 +338,14 @@ class PrintingServices():
         subprocess.Popen(command, shell=True)
 
     def previewLandscape(self, fname):
-        command = 'groff -t -P-l -t ' + self.fname \
-                      + ' | ps2pdf - bob.pdf ; ' + 'evince bob.pdf'
+        pdfname = fname +'.pdf'
+        command = 'groff -t -P-l -t ' + fname \
+                      + ' | ps2pdf - ' + pdfname + ' ; ' \
+                      + 'evince ' + pdfname
         subprocess.Popen(command, shell=True)
 
     def printLandscape(self, fname):
-        command = 'groffer -P-l -l ' + self.fname + ' 2>/dev/null '
+        command = 'groffer -P-l -l ' + fname + ' 2>/dev/null '
         subprocess.Popen(command, shell=True)
 
     def OnExit(self, evt):
@@ -292,4 +369,6 @@ if __name__ == '__main__':
     dummy = buyers.Buyers()
     samdb = dbservices.connect(sys.argv)
     pr = PrintingServices(dummy, samdb)
-    pr.printBuyerReport(samdb, 'print')
+    #pr.printBuyerReport(samdb, 'preview')
+    #pr.printDonorReport(samdb, 'preview')
+    pr.printItemReport(samdb, 'preview')
