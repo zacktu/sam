@@ -10,20 +10,20 @@ from the Buyers table.
 
 '''
 
-import auction
-import buyers
-import donors
-import items
 import os
 import subprocess
 from random import sample
 from string import digits, ascii_uppercase, ascii_lowercase
 from tempfile import gettempdir
-##### the next four imports are for TEST SCAFFOLDING
+import buyers
+import auction
+import donors
+import items
+
+##### the next imports are for TEST SCAFFOLDING
 import sys
 import MySQLdb
 import dbservices
-import buyers
 ###### END OF SPECIAL IMPORTS
 
 class PrintingServices():

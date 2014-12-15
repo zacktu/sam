@@ -57,7 +57,7 @@ class Items(object):
         query = "SELECT item_description, item_donatedby, item_retail, \
                 item_minimumbid, item_bidincrement, item_purchasedby, \
                 item_salesprice \
-                FROM Items WHERE item_number = " + itemNumber + ";"
+                FROM Items WHERE item_number = '" + itemNumber + "';"
         return samdb.fetchRow(query)
         
     def deleteItem(self, samdb, itemNumber):

@@ -39,7 +39,7 @@ class Samdb(object):
     '''
     
     def __init__(self, dbname, hostname='localhost',  portnumber='3306', \
-                username='bob', password=''):
+                username='bob', password='bobspw'):
         '''
         Connect to a database.  The exception will be caught higher up.
         '''
@@ -199,7 +199,7 @@ def connect(argv):
                                 username = argv[4],
                                 password = argv[5])
         else:
-            samdb = dbservices.Samdb(dbname = argv[1])
+            samdb = Samdb(dbname = argv[1])
     except MySQLdb.Error, e:
         print "testConnectAndPopulate.Connect: Error %d: %s" % \
                 (e.args[0], e.args[1])
