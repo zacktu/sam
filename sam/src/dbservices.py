@@ -38,11 +38,14 @@ class Samdb(object):
     classdocs
     '''
     
-    def __init__(self, dbname, hostname='localhost',  portnumber='3306', \
+    def __init__(self, dbname, hostname='localhost',  portnumber=3306, \
                 username='bob', password='bobspw'):
-        '''
-        Connect to a database.  The exception will be caught higher up.
-        '''
+        print('SAMINIT dbname = ', dbname)
+        print('SAMINIT hostname = ', hostname)
+        print('SAMINIT portnumber = ', portnumber)
+        print('SAMINIT username = ', username)
+        print('SAMINIT password = ', password)
+        #Connect to a database.  The exception will be caught higher up.
         self.db = MySQLdb.connect(host=hostname, port = portnumber, \
                 user=username, passwd=password, db=dbname)
 
