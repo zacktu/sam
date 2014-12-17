@@ -14,6 +14,7 @@ import os
 import subprocess
 from random import sample
 from string import digits, ascii_uppercase, ascii_lowercase
+import csv
 from tempfile import gettempdir
 import buyers
 import auction
@@ -348,6 +349,17 @@ class PrintingServices():
         command = 'groffer -P-l -l ' + fname + ' 2>/dev/null '
         subprocess.Popen(command, shell=True)
 
+    def doCSV(self, samdb, tableName):
+        columnHeaders = samdb.getColumnHeaders(tableName)
+        csvFile = csv.writer(open('/home/bob/Desktop/csv/buyers.csv', "wb"))
+        csvFile.writerow(columnHeaders)
+        allBuyers = self.buyers.getAllBuyers(self.samdb)
+        for buyer in allBuyers:
+            buyerRow = self.buyers.fetchBuyer(self.samdb, buyer[0])
+            fullRow = list(buyerRow)
+            fullRow.insert(0, buyer[0])
+            csvFile.writerow(fullRow)
+
     def OnExit(self, evt):
         self.Close()
 
@@ -371,4 +383,5 @@ if __name__ == '__main__':
     pr = PrintingServices(dummy, samdb)
     #pr.printBuyerReport(samdb, 'preview')
     #pr.printDonorReport(samdb, 'preview')
-    pr.printItemReport(samdb, 'preview')
+    #pr.printItemReport(samdb, 'preview')
+    pr.doCSV(samdb, 'Buyers')

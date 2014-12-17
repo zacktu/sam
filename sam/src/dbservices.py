@@ -127,7 +127,15 @@ class Samdb(object):
         row = cursor.fetchone()
         self.db.commit()
         return row
-                      
+
+    def getColumnHeaders(self, tableName):
+        cursor = self.db.cursor()
+        query = 'select * from ' + tableName
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        columnHeaders = [i[0] for i in cursor.description]
+        return columnHeaders
+
     def executeQuery(self, query):
         try:
             cursor = self.db.cursor()

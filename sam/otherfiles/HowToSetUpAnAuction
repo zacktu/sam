@@ -38,3 +38,23 @@ python-opengl
 python-wxgtk2.8
 python-wxversion
 wx2.8-examples
+
+<><><><><><>  
+
+How to create a csv file from command line using ! to replace tab.
+The character following \t in the sed command replaces tab.
+Note that you can't replace tab with comma because the addresses 
+contain commas.  Maybe semicolon would be a better separator.
+
+mysql -u bob -pbobspw test05 -e "select * from Donors" | sed 's/\t/!/g' > fname.csv
+
+Can read the resulting file with Libre Office if you set it to use ! as
+the separation character.
+
+<><><><><>
+
+Here is how to get the column names from a table:
+
+select column_name, column_type from information_schema.columns where table_schema = DATABASE() and table_name = "Buyers";
+
+
