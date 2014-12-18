@@ -384,6 +384,7 @@ class PrintingServices():
         wx.CallAfter(self.tc.SetInsertionPoint,
                      self.tc.GetInsertionPoint())
 
+    ### Generate unique name for a temporary file
     def rand_fname(self, suffix, length=8):
         chars = ascii_lowercase + ascii_uppercase + digits
 
