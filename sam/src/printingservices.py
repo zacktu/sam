@@ -349,16 +349,32 @@ class PrintingServices():
         command = 'groffer -P-l -l ' + fname + ' 2>/dev/null '
         subprocess.Popen(command, shell=True)
 
-    def doCSV(self, samdb, tableName):
-        columnHeaders = samdb.getColumnHeaders(tableName)
-        csvFile = csv.writer(open('/home/bob/Desktop/csv/buyers.csv', "wb"))
+    def doCSV(self, samdb, whichTable):
+        columnHeaders = samdb.getColumnHeaders(whichTable)
+        csvFile = csv.writer(
+            open('/home/bob/Desktop/csv/' + whichTable + '.csv', "wb"))
         csvFile.writerow(columnHeaders)
-        allBuyers = self.buyers.getAllBuyers(self.samdb)
-        for buyer in allBuyers:
-            buyerRow = self.buyers.fetchBuyer(self.samdb, buyer[0])
-            fullRow = list(buyerRow)
-            fullRow.insert(0, buyer[0])
-            csvFile.writerow(fullRow)
+        if whichTable == 'Buyers':
+            allBuyers = self.buyers.getAllBuyers(self.samdb)
+            for buyer in allBuyers:
+                buyerRow = self.buyers.fetchBuyer(self.samdb, buyer[0])
+                fullRow = list(buyerRow)
+                fullRow.insert(0, buyer[0])
+                csvFile.writerow(fullRow)
+        elif whichTable == 'Donors':
+            allDonors = self.donors.getAllDonors(self.samdb)
+            for donor in allDonors:
+                donorRow = self.donors.fetchDonor(self.samdb, donor[0])
+                fullRow = list(donorRow)
+                fullRow.insert(0, donor[0])
+                csvFile.writerow(fullRow)
+        elif whichTable == 'Items':
+            allItems = self.items.getAllItems(self.samdb)
+            for item in allItems:
+                itemRow = self.items.fetchItem(self.samdb, item[0])
+                fullRow = list(itemRow)
+                fullRow.insert(0, item[0])
+                csvFile.writerow(fullRow)
 
     def OnExit(self, evt):
         self.Close()
@@ -384,4 +400,8 @@ if __name__ == '__main__':
     #pr.printBuyerReport(samdb, 'preview')
     #pr.printDonorReport(samdb, 'preview')
     #pr.printItemReport(samdb, 'preview')
-    pr.doCSV(samdb, 'Buyers')
+    #pr.doCSV(samdb, 'Buyers')
+    #pr.doCSV(samdb, 'Donors')
+    pr.doCSV(samdb, 'Items')
+
+
