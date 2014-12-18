@@ -209,6 +209,7 @@ class PrintingServices():
 
     def buildDonorReport(self, samdb):
         lines = self.buildSummaryHeader('donors')
+        lines.append('.ps -2\n')
         lines.append('.TS\n')
         lines.append('box, expand, tab(`);\n')
         lines.append('cI cI cI cI cI cI cI.\n')
@@ -399,10 +400,10 @@ if __name__ == '__main__':
     samdb = dbservices.connect(sys.argv)
     pr = PrintingServices(dummy, samdb)
     #pr.printBuyerReport(samdb, 'preview')
-    #pr.printDonorReport(samdb, 'preview')
+    pr.printDonorReport(samdb, 'print')
     #pr.printItemReport(samdb, 'preview')
-    #pr.doCSV(samdb, 'Buyers')
-    #pr.doCSV(samdb, 'Donors')
+    pr.doCSV(samdb, 'Buyers')
+    pr.doCSV(samdb, 'Donors')
     pr.doCSV(samdb, 'Items')
 
 
