@@ -107,6 +107,7 @@ def populate(samdb, da, dd, db, di, dp):
         db.addBuyer(samdb, '000', 'Smith', 'Harold', '113 Stanford', \
                     'Hollywood, CA 23523', '923-123-3241')
         print 'ADDED BUYER SMITH'
+
     except MySQLdb.Error, e:
         print "Error %d: %s" % (e.args[0], e.args[1])
         exit (1)

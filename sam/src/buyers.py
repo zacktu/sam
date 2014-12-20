@@ -21,20 +21,22 @@ class Buyers(object):
             buyer_first       char(20) NOT NULL, \
             buyer_street      char(40) NULL, \
             buyer_city        char(40) NULL, \
-            buyer_telno       char(12) NOT NULL \
+            buyer_telno       char(12) NOT NULL, \
+            buyer_paid        char(3)  NOT NULL \
             )"
         samdb.createTable("Buyers", rows, "buyer_number")
 
     def addBuyer(self, samdb, buyer_number, buyer_last, buyer_first,\
             buyer_street, buyer_city, buyer_telno):
         fields = "buyer_number, buyer_last, buyer_first, buyer_street, \
-                  buyer_city, buyer_telno"
+                  buyer_city, buyer_telno, buyer_paid"
         values = "'" + buyer_number + "'" + ',' \
                + "'" + buyer_last + "'" + ',' \
                + "'" + buyer_first + "'" + "," \
                + "'" + buyer_street + "'" + ',' \
                + "'" + buyer_city + "'" + ',' \
-               + "'" + buyer_telno + "'"
+               + "'" + buyer_telno + "'" + ',' \
+               + "'no'"
         samdb.insertRow("Buyers", fields, values)
         
     def fetchBuyer(self, samdb, buyerNumber):
@@ -51,6 +53,11 @@ class Buyers(object):
                         buyer_street = '"  + street + "' , \
                         buyer_city = '" + city + "' , \
                         buyer_telno = '" + telno + "' \
+                    WHERE buyer_number = '" + buyerNumber + "' ; "
+        samdb.executeQuery(query)
+
+    def updateBuyerPaid(self, samdb, buyerNumber):
+        query = "UPDATE Buyers SET buyer_paid = 'yes' \
                     WHERE buyer_number = '" + buyerNumber + "' ; "
         samdb.executeQuery(query)
 
@@ -87,6 +94,16 @@ class Buyers(object):
         query = 'SELECT buyer_number FROM Buyers ORDER BY buyer_number'
         allBuyers = samdb.fetchRows(query)
         return allBuyers
+
+    def hasBuyerPaid(self, samdb, buyerNumber):
+        query = "Select buyer_paid FROM Buyers \
+                WHERE buyer_number = '" + buyerNumber + "'"
+        print('HASBUYERPAID query = ', query)
+        rows = samdb.fetchRows(query)
+        if rows[0][0] == 'yes':
+            return True
+        else:
+            return False
 
 if __name__ == '__main__':
     samdb = dbservices.Samdb()
