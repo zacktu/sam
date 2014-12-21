@@ -57,7 +57,7 @@ class ItemDeleteForm(wx.Panel):
                     self.itemDescriptionList.pop(indexToDelete)
                     self.itemDescriptionChoice.SetItems \
                                 (self.itemDescriptionList)
-                    self.con.DisplayItems(self.samdb)
+                    self.con.displayItems(self.samdb)
                     return
             except MySQLdb.Error, e:
                 dialogs.DisplayErrorDialog(e.args[1])
@@ -88,7 +88,7 @@ class ItemDeleteForm(wx.Panel):
                 self.itemNumberList.remove(itemNumber)
                 self.itemNumberChoice.SetItems(self.itemNumberList)
                 #self.itemNumberChoice.SetItems(self.itemNumberList)
-                self.con.DisplayItems(self.samdb)
+                self.con.displayItems(self.samdb)
         else:
             return
 

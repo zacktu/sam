@@ -158,7 +158,7 @@ class BuyerEntryForm(wx.Panel):
                 print("Warning: ", e)
                            
         self.ClearAll()
-        self.con.DisplayBuyers(self.samdb)
+        self.con.displayBuyers(self.samdb)
 
     def PopulateForm(self, samdb, buyerNumber):
         self.buyerNumber = buyerNumber

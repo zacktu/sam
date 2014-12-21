@@ -59,7 +59,7 @@ class PurchaseDeleteForm(wx.Panel):
             self.purchasedItemDescriptionList.pop(indexToDelete)
             self.purchasedItemDescriptionChoice.SetItems \
                         (self.purchasedItemDescriptionList)
-            self.con.DisplayAllPurchases(self.samdb)
+            self.con.displayAllPurchases(self.samdb)
         except MySQLdb.Error, e:
             dialogs.DisplayErrorDialog(e.args[1])
             return
@@ -89,7 +89,7 @@ class PurchaseDeleteForm(wx.Panel):
                 self.purchasedItemNumberList.remove(purchasedItemNumber)
                 self.purchasedItemNumberChoice.SetItems \
                             (self.purchasedItemNumberList)
-                self.con.DisplayAllPurchases(self.samdb)
+                self.con.displayAllPurchases(self.samdb)
         else:
             return
 

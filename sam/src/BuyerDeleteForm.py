@@ -46,7 +46,7 @@ class BuyerDeleteForm(wx.Panel):
                     self.buyerNumberChoice.SetItems(self.buyerNumberList)
                     self.DeleteBuyerNumberInBuyerNameList(buyerNumber)
                     self.buyerNameChoice.SetItems(self.buyerNameList)
-                    self.con.DisplayBuyers(self.samdb)
+                    self.con.displayBuyers(self.samdb)
                     return
             except MySQLdb.Error, e:
                 dialogs.DisplayErrorDialog(e.args[1])
@@ -77,7 +77,7 @@ class BuyerDeleteForm(wx.Panel):
                     self.buyerNumberList.remove(buyerNumber)
                     self.buyerNumberChoice.SetItems(self.buyerNumberList)
                     self.buyerNumberChoice.SetItems(self.buyerNumberList)
-                    self.con.DisplayBuyers(self.samdb)
+                    self.con.displayBuyers(self.samdb)
             except MySQLdb.Error, e:
                 dialogs.DisplayErrorDialog(e.args[1])
                 return

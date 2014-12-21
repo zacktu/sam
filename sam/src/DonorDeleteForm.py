@@ -45,7 +45,7 @@ class DonorDeleteForm(wx.Panel):
                     self.donorNumberChoice.SetItems(self.donorNumberList)
                     self.DeleteDonorNumberInDonorNameList(donorNumber)
                     self.donorNameChoice.SetItems(self.donorNameList)
-                    self.con.DisplayDonors(self.samdb)
+                    self.con.displayDonors(self.samdb)
                     return
             except MySQLdb.Error, e:
                 dialogs.DisplayErrorDialog(e.args[1])
@@ -74,7 +74,7 @@ class DonorDeleteForm(wx.Panel):
                 self.donorNumberList.remove(donorNumber)
                 self.donorNumberChoice.SetItems(self.donorNumberList)
                 self.donorNumberChoice.SetItems(self.donorNumberList)
-                self.con.DisplayDonors(self.samdb)
+                self.con.displayDonors(self.samdb)
         else:
             return
 

@@ -183,7 +183,7 @@ class PurchaseEntryForm(wx.Panel):
                 self.parent.BuildPurchasedItemChooser(self.samdb)
             # Write all fields for the affected item number.
             self.ClearAll()
-            self.con.DisplayAllPurchases(self.samdb)
+            self.con.displayAllPurchases(self.samdb)
         
         except MySQLdb.Error, e:
             dialogs.DisplayErrorDialog(e.args[1])

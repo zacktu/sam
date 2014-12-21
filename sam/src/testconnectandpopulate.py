@@ -182,16 +182,16 @@ def populate(samdb, da, dd, db, di, dp):
     cnsole = console.Console()
 
     print ("\nNOW SHOW THE AUCTION INFORMATION ON THE CONSOLE")
-    cnsole.DisplayAuctionData(samdb)
+    cnsole.displayAuctionData(samdb)
 
     print ("\nNOW SHOW THE BUYERS TABLE ON THE CONSOLE")
-    cnsole.DisplayBuyers(samdb)
+    cnsole.displayBuyers(samdb)
     
     print ("\nNOW SHOW THE DONORS TABLE ON THE CONSOLE")
-    cnsole.DisplayDonors(samdb)
+    cnsole.displayDonors(samdb)
     
     print ("\nNOW SHOW THE ITEMS TABLE ON THE CONSOLE")
-    cnsole.DisplayItems(samdb)
+    cnsole.displayItems(samdb)
     
     print ("\nPURCHASE SOME ITEMS")
     dp.PurchaseItem(samdb, '000', '000', '1250')
@@ -204,24 +204,24 @@ def populate(samdb, da, dd, db, di, dp):
     dp.PurchaseItem(samdb, '008', '003', '125')
     
     print ("\nNOW LOOK AT THE ITEMS TABLE AGAIN")
-    cnsole.DisplayItems(samdb)
+    cnsole.displayItems(samdb)
     
     '''
     print ("\nNOW SHOW SOME PURCHASES ON THE CONSOLE")
     print ("\nPurchases for buyer 000:")
-    cnsole.DisplayPurchases(samdb, '000')
+    cnsole.displayPurchases(samdb, '000')
     print ("\nPurchases for buyer 001:")    
-    cnsole.DisplayPurchases(samdb, '001')
+    cnsole.displayPurchases(samdb, '001')
     print ("\nPurchases for buyer 002:")   
-    cnsole.DisplayPurchases(samdb, '002')
+    cnsole.displayPurchases(samdb, '002')
     print ("\nPurchases for buyer 003:")    
-    cnsole.DisplayPurchases(samdb, '003')
+    cnsole.displayPurchases(samdb, '003')
     print ("\nPurchases for buyer 004:")    
-    cnsole.DisplayPurchases(samdb, '004')
+    cnsole.displayPurchases(samdb, '004')
     '''
 
     print ("\nDRIVER: NOW SHOW ALL PURCHASES BY ALL BUYERS ON THE CONSOLE")
-    cnsole.DisplayAllPurchases(samdb)
+    cnsole.displayAllPurchases(samdb)
 
 if __name__ == '__main__':
     testConnectAndPopulate()

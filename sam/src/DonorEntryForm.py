@@ -161,7 +161,7 @@ class DonorEntryForm(wx.Panel):
                 print("Warning: ", e)
                            
         self.ClearAll()
-        self.con.DisplayDonors(self.samdb)
+        self.con.displayDonors(self.samdb)
 
     def PopulateForm(self, samdb, donorNumber):
         self.donorNumber = donorNumber

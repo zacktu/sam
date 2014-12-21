@@ -59,12 +59,12 @@ class PrintAllCartsOrReceiptsPanel(wx.Panel):
         mainSizer.SetSizeHints(parent)
         
     def OnPreviewButton(self, event):
-        self.con.DisplayAllPurchases(self.samdb)
+        self.con.displayAllPurchases(self.samdb)
         ps = printingservices.PrintingServices(self.parent, self.samdb)
         ps.previewAllCartsOrReceipts(self.whatToPrint)
         
     def OnPrintButton(self, event):
-        self.con.DisplayAllPurchases(self.samdb)
+        self.con.displayAllPurchases(self.samdb)
         ps = printingservices.PrintingServices(self.parent, self.samdb)
         ps.printAllCartsOrReceipts(self.whatToprint)
         

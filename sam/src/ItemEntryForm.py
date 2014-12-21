@@ -183,7 +183,7 @@ class ItemEntryForm(wx.Panel):
             exit()        
 
         self.ClearAll()
-        self.con.DisplayItems(self.samdb)
+        self.con.displayItems(self.samdb)
        
     def PopulateForm(self, samdb, itemNumber):
         try:

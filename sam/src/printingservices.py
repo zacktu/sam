@@ -45,7 +45,9 @@ class PrintingServices():
         self.previewPortrait(self.fname)
         
     def printOneCartOrReceipt(self, buyerNum, whatToPrint):
+        print('Entering printOneCartOrReceipt with whatToPrint = ', whatToPrint)
         lines = self.buildOneCartOrReceipt(buyerNum, whatToPrint)
+        self.buyers.updateBuyerPaid(self.samdb, buyerNum)
         self.writeFile(self.fname, lines)
         self.printPortrait(self.fname)
         

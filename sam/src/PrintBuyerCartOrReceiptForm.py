@@ -45,7 +45,7 @@ class PrintBuyerCartOrReceiptForm(wx.Panel):
     def OnBuyerNumberChoice(self, event):
         self.buyerNumber = event.GetString()
         try:
-            self.con.DisplayPurchases(self.samdb, self.buyerNumber)
+            self.con.displayPurchases(self.samdb, self.buyerNumber)
             PrintOrPreviewDialog.PrintOrPreviewDialog(self, -1, \
                                 'Preview or Print?',
                                 self.message + self.buyerNumber + '?',
@@ -64,7 +64,7 @@ class PrintBuyerCartOrReceiptForm(wx.Panel):
         buyerString = event.GetString()
         self.buyerNumber = buyerString[:3]
         try:
-            self.con.DisplayPurchases(self.samdb, self.buyerNumber)
+            self.con.displayPurchases(self.samdb, self.buyerNumber)
             PrintOrPreviewDialog.PrintOrPreviewDialog(self, -1, \
                                 'Preview or Print?',
                                 'Preview or print cart for buyer ' + \
