@@ -47,9 +47,12 @@ class PrintingServices():
     def printOneCartOrReceipt(self, buyerNum, whatToPrint):
         print('Entering printOneCartOrReceipt with whatToPrint = ', whatToPrint)
         lines = self.buildOneCartOrReceipt(buyerNum, whatToPrint)
-        self.buyers.updateBuyerPaid(self.samdb, buyerNum)
         self.writeFile(self.fname, lines)
-        self.printPortrait(self.fname)
+        if whatToPrint == 'receipts':
+            self.buyers.updateBuyerPaid(self.samdb, buyerNum)
+            self.printPortraitWithOverlay(self.fname)
+        else:
+            self.printPortrait(self.fname)
         
     def previewAllCartsOrReceipts(self, whatToPrint):
         lines = self.buildAllCartsOrReceipts(whatToPrint)
@@ -340,6 +343,9 @@ class PrintingServices():
     def printPortrait(self, fname):
         command = 'groffer -l ' + fname + ' 2>/dev/null'
         subprocess.Popen(command, shell=True)
+
+    def printPortraitWithOverlay(self, fname):
+        print('Entering printPortraitWithOverlay')
 
     def previewLandscape(self, fname):
         pdfname = fname +'.pdf'
