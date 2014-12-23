@@ -45,7 +45,6 @@ class PrintingServices():
         self.previewPortrait(self.fname)
         
     def printOneCartOrReceipt(self, buyerNum, whatToPrint):
-        print('Entering printOneCartOrReceipt with whatToPrint = ', whatToPrint)
         lines = self.buildOneCartOrReceipt(buyerNum, whatToPrint)
         self.writeFile(self.fname, lines)
         if whatToPrint == 'receipts':
@@ -345,7 +344,6 @@ class PrintingServices():
         subprocess.Popen(command, shell=True)
 
     def printPortraitWithOverlay(self, fname):
-        print('Entering printPortraitWithOverlay')
         pdfname = fname +'.pdf'
         overlayfname = fname + '.olay'
         command = 'groff -t ' + fname \
