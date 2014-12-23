@@ -346,6 +346,15 @@ class PrintingServices():
 
     def printPortraitWithOverlay(self, fname):
         print('Entering printPortraitWithOverlay')
+        pdfname = fname +'.pdf'
+        overlayfname = fname + '.olay'
+        command = 'groff -t ' + fname \
+                      + ' | ps2pdf - ' + pdfname + ' ; ' \
+                      + ' pdftk ' + pdfname \
+                      + ' background ../otherfiles/images/paid.pdf ' \
+                      + ' output ' + overlayfname + ' ; ' \
+                      + ' lpr ' + overlayfname
+        subprocess.Popen(command, shell=True)
 
     def previewLandscape(self, fname):
         pdfname = fname +'.pdf'
