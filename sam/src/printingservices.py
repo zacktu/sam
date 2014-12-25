@@ -78,16 +78,6 @@ class PrintingServices():
     def buildAllCartsOrReceipts(self, whatToPrint):
         firstTime = True
         allBuyers = self.buyers.getAllBuyers(self.samdb)
-        '''
-        for buyer in allBuyers:
-            moreLines = self.buildOneCartOrReceipt(buyer[0], whatToPrint)
-            if firstTime:
-                lines = moreLines
-                firstTime = False
-            else:
-                lines = lines + ['.pn 1\n'] + ['.bp\n'] + moreLines
-        return lines
-        '''
         for buyer in allBuyers:
             #lines = []
             print("BUILDALLCARTSRRECEIPTS")
