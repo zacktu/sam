@@ -98,7 +98,6 @@ class Buyers(object):
     def hasBuyerPaid(self, samdb, buyerNumber):
         query = "Select buyer_paid FROM Buyers \
                 WHERE buyer_number = '" + buyerNumber + "'"
-        print('HASBUYERPAID query = ', query)
         rows = samdb.fetchRows(query)
         if rows[0][0] == 'yes':
             return True

@@ -103,8 +103,10 @@ class PrintingServices():
         lines = self.buildSummaryHeader(whatToPrint)
         allBuyers = self.buyers.getAllBuyers(self.samdb)
         for buyer in allBuyers:
-            lines = lines + self.buildSummaryOfBuyers(buyer[0])
-            lines = lines + self.buildCartOrReceiptTable(buyer[0])
+            if ((whatToPrint == 'carts') or
+                    (self.buyers.hasBuyerPaid(self.samdb, buyer[0]))):
+                lines = lines + self.buildSummaryOfBuyers(buyer[0])
+                lines = lines + self.buildCartOrReceiptTable(buyer[0])
         return lines
     
     def buildSummaryHeader(self, whatToPrint):
