@@ -63,7 +63,7 @@ class PrintingServices():
         self.writeFile(self.fname, lines)
         self.previewPortrait(self.fname)
         
-    def printAllCartsOrReceipts(self, whatToprint):
+    def printAllCartsOrReceipts(self, whatToPrint):
         lines = self.buildAllCartsOrReceipts(whatToPrint)
         self.writeFile(self.fname, lines)
         self.printPortrait(self.fname)
@@ -78,6 +78,7 @@ class PrintingServices():
     def buildAllCartsOrReceipts(self, whatToPrint):
         firstTime = True
         allBuyers = self.buyers.getAllBuyers(self.samdb)
+        '''
         for buyer in allBuyers:
             moreLines = self.buildOneCartOrReceipt(buyer[0], whatToPrint)
             if firstTime:
@@ -85,6 +86,22 @@ class PrintingServices():
                 firstTime = False
             else:
                 lines = lines + ['.pn 1\n'] + ['.bp\n'] + moreLines
+        return lines
+        '''
+        for buyer in allBuyers:
+            #lines = []
+            print("BUILDALLCARTSRRECEIPTS")
+            print('whatToPrint = ', whatToPrint)
+            print('buyer[0] = ', buyer[0])
+            if ((whatToPrint == 'carts') or
+                    (self.buyers.hasBuyerPaid(self.samdb, buyer[0]))):
+                print("SO WE PREVIEW OR PRINT THIS BUYER")
+                moreLines = self.buildOneCartOrReceipt(buyer[0], whatToPrint)
+                if firstTime:
+                    lines = moreLines
+                    firstTime = False
+                else:
+                    lines = lines + ['.pn 1\n'] + ['.bp\n'] + moreLines
         return lines
         
     def previewSummaryOfPurchases(self, whatToPrint):

@@ -66,7 +66,7 @@ class PrintAllCartsOrReceiptsPanel(wx.Panel):
     def OnPrintButton(self, event):
         self.con.displayAllPurchases(self.samdb)
         ps = printingservices.PrintingServices(self.parent, self.samdb)
-        ps.printAllCartsOrReceipts(self.whatToprint)
+        ps.printAllCartsOrReceipts(self.whatToPrint)
         
 
 

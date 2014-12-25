@@ -67,8 +67,7 @@ class PrintBuyerCartOrReceiptForm(wx.Panel):
             self.con.displayPurchases(self.samdb, self.buyerNumber)
             PrintOrPreviewDialog.PrintOrPreviewDialog(self, -1, \
                                 'Preview or Print?',
-                                'Preview or print cart for buyer ' + \
-                                buyerString + '?',
+                                self.message + self.buyerNumber + '?',
                                 self.buyerNumber, self.samdb, self.whatToPrint)
         except MySQLdb.Error, e:
             dialogs.displayErrorDialog(e.args[1])
