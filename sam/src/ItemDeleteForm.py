@@ -36,7 +36,7 @@ class ItemDeleteForm(wx.Panel):
     def OnItemNumberChoice(self, event):
         indexToDelete = event.GetSelection()
         itemNumber = event.GetString()
-        if dialogs.DisplayYesNoDialog('Delete item number ' + \
+        if dialogs.displayYesNoDialog('Delete item number ' + \
                                       itemNumber + '?'):
             try:
                 buyerNumber = self.items.checkItemHasBuyer \
@@ -44,7 +44,7 @@ class ItemDeleteForm(wx.Panel):
                 # If the item hasn't been purchased,
                 # then the buyerNumber is None
                 if buyerNumber is not None:
-                    dialogs.DisplayErrorDialog \
+                    dialogs.displayErrorDialog \
                         ('This item has been purchased by ' \
                         + 'buyer number ' + buyerNumber + '.')
                     return
@@ -60,7 +60,7 @@ class ItemDeleteForm(wx.Panel):
                     self.con.displayItems(self.samdb)
                     return
             except MySQLdb.Error, e:
-                dialogs.DisplayErrorDialog(e.args[1])
+                dialogs.displayErrorDialog(e.args[1])
                 return
             except MySQLdb.Warning, e:
                 print("Warning ", e)
@@ -71,13 +71,13 @@ class ItemDeleteForm(wx.Panel):
         indexToDelete = event.GetSelection()
         itemString = event.GetString()
         itemNumber = itemString[:3]
-        if dialogs.DisplayYesNoDialog('Delete item number ' + \
+        if dialogs.displayYesNoDialog('Delete item number ' + \
                                       itemNumber + '?'):
             # Positive buyer number implies that item has been purchased
             buyerNumber = self.items.checkItemHasBuyer \
                             (itemNumber, self.samdb)
             if buyerNumber is not None:
-                dialogs.DisplayErrorDialog \
+                dialogs.displayErrorDialog \
                     ('This item has been purchased by ' \
                     + 'buyer number ' + buyerNumber + '.')
                 return
@@ -117,7 +117,7 @@ class ItemDeleteForm(wx.Panel):
             self.Bind(wx.EVT_CHOICE, self.OnItemDescriptionChoice, \
                   self.itemDescriptionChoice)
         except MySQLdb.Error, e:
-            dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.displayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning ", e)       

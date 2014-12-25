@@ -106,35 +106,35 @@ class BuyerEntryForm(wx.Panel):
         buyerNumber = self.buyerNumberTC.GetValue()
         if len(buyerNumber) != 3 or \
                     regularexpression.CheckBuyerNumber(buyerNumber) is None:
-            dialogs.DisplayErrorDialog(
+            dialogs.displayErrorDialog(
                     "The buyer number must be a three-digit decimal number.")
             return
         
         lastName = self.lastNameTC.GetValue()
         if not (len(lastName) > 0):
-            dialogs.DisplayErrorDialog \
+            dialogs.displayErrorDialog \
                     ("The buyer's last name must not be null.")
             return
         
         firstName = self.firstNameTC.GetValue()
         if not (len(firstName) > 0):
-            dialogs.DisplayErrorDialog \
+            dialogs.displayErrorDialog \
                     ("The buyer's first name must not be null.")
             return
         
         street = self.streetTC.GetValue()
         if not (len(street) > 0):
-            dialogs.DisplayErrorDialog("The street name must not be null.")
+            dialogs.displayErrorDialog("The street name must not be null.")
             return
         
         city = self.cityStateZipTC.GetValue()
         if not (len(city) > 0):
-            dialogs.DisplayErrorDialog("The city name and state must not be null.")
+            dialogs.displayErrorDialog("The city name and state must not be null.")
             return
         
         telno = self.telnoTC.GetValue()
         if len(telno) != 12 or regularexpression.CheckTelno(telno) is None:
-            dialogs.DisplayErrorDialog(
+            dialogs.displayErrorDialog(
                     "The telephone number must be in the format XXX-XXX-XXXX.")
             return
         
@@ -143,7 +143,7 @@ class BuyerEntryForm(wx.Panel):
                 self.buyers.addBuyer(self.samdb, buyerNumber, lastName, \
                             firstName, street, city, telno)
             except MySQLdb.Error, e:
-                dialogs.DisplayErrorDialog(e.args[1])
+                dialogs.displayErrorDialog(e.args[1])
                 return
             except MySQLdb.Warning, e:
                 print("Warning: ", e)
@@ -152,7 +152,7 @@ class BuyerEntryForm(wx.Panel):
                 self.buyers.updateBuyer(self.samdb, buyerNumber, lastName, \
                             firstName, street, city, telno)
             except MySQLdb.Error, e:
-                dialogs.DisplayErrorDialog(e.args[1])
+                dialogs.displayErrorDialog(e.args[1])
                 return
             except MySQLdb.Warning, e:
                 print("Warning: ", e)
@@ -165,7 +165,7 @@ class BuyerEntryForm(wx.Panel):
         try:
             row = self.buyers.fetchBuyer(samdb, buyerNumber)
         except MySQLdb.Error, e:
-            dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.displayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning: ", e)

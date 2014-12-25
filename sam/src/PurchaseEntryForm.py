@@ -90,14 +90,14 @@ class PurchaseEntryForm(wx.Panel):
             itemNumber = self.itemNumberTC.GetValue()
             if len(itemNumber) != 3 or \
                     regularexpression.CheckItemNumber(itemNumber) is None:
-                dialogs.DisplayErrorDialog(
+                dialogs.displayErrorDialog(
                     "The Item number must be a three-digit decimal number.")
                 return
                 
             ## Can't add or change the item number to a value 
             ## not in the database.
             if not self.items.isValidItemNumber(self.samdb, itemNumber):
-                dialogs.DisplayErrorDialog ('Item number ' + \
+                dialogs.displayErrorDialog ('Item number ' + \
                                 itemNumber + ' is not registered.')
                 if self.function == 'edit':
                     self.itemNumberTC.SetValue(self.oldItemNumber)
@@ -107,13 +107,13 @@ class PurchaseEntryForm(wx.Panel):
             if len(buyerNumber) != 3 or \
                         regularexpression.CheckBuyerNumber(buyerNumber) \
                             is None:
-                dialogs.DisplayErrorDialog \
+                dialogs.displayErrorDialog \
                     ("The buyer number must be a three-digit decimal number.")
                 return
      
             # Can't change buyer number to a value thats not in the database.
             if not self.buyers.isValidBuyerNumber(self.samdb, buyerNumber):
-                dialogs.DisplayErrorDialog ('Buyer number ' + \
+                dialogs.displayErrorDialog ('Buyer number ' + \
                                 buyerNumber + ' is not registered.')
                 if self.function == 'edit':
                     self.buyerNumberTC.SetValue(self.oldBuyerNumber)
@@ -124,7 +124,7 @@ class PurchaseEntryForm(wx.Panel):
                 otherBuyerNumber = self.items.checkItemHasBuyer \
                                 (itemNumber, self.samdb)
                 if otherBuyerNumber is not None:
-                    dialogs.DisplayErrorDialog ('Item number ' + itemNumber + \
+                    dialogs.displayErrorDialog ('Item number ' + itemNumber + \
                                 ' has already been purchased by buyer ' + \
                                 otherBuyerNumber)
                     self.itemNumberTC.Clear()
@@ -137,7 +137,7 @@ class PurchaseEntryForm(wx.Panel):
             winningBid = self.winningBidTC.GetValue()
             if len(winningBid) == 0 or \
                         regularexpression.CheckMoney(winningBid) == False:
-                dialogs.DisplayErrorDialog \
+                dialogs.displayErrorDialog \
                     ("The winning bid must be a decimal number "\
                      + "greater than zero.")
                 return
@@ -159,12 +159,12 @@ class PurchaseEntryForm(wx.Panel):
                     ## then it's okay to change to new item number
                     if self.purchases.HasBeenPurchased \
                                 (self.samdb, itemNumber):
-                        dialogs.DisplayErrorDialog \
+                        dialogs.displayErrorDialog \
                             ('Item number ' + itemNumber + \
                              ' has already been purchased.')
                         self.itemNumberTC = self.oldItemNumber
                         return
-                if not dialogs.DisplayYesNoDialog('Change purchase to '
+                if not dialogs.displayYesNoDialog('Change purchase to '
                         + '\n   Item number  ' + itemNumber
                         + '\n   Buyer number ' + buyerNumber
                         + '\n   Winning bid  ' + '$' + winningBid):
@@ -186,7 +186,7 @@ class PurchaseEntryForm(wx.Panel):
             self.con.displayAllPurchases(self.samdb)
         
         except MySQLdb.Error, e:
-            dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.displayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning: ", e)
@@ -195,7 +195,7 @@ class PurchaseEntryForm(wx.Panel):
         try:
             row = self.purchases.FetchPurchase(samdb, itemNumber)
         except MySQLdb.Error, e:
-            dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.displayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning: ", e)

@@ -51,7 +51,7 @@ class PrintBuyerCartOrReceiptForm(wx.Panel):
                                 self.message + self.buyerNumber + '?',
                                 self.buyerNumber, self.samdb, self.whatToPrint)
         except MySQLdb.Error, e:
-            dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.displayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning ", e)
@@ -71,7 +71,7 @@ class PrintBuyerCartOrReceiptForm(wx.Panel):
                                 buyerString + '?',
                                 self.buyerNumber, self.samdb, self.whatToPrint)
         except MySQLdb.Error, e:
-            dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.displayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning ", e)   
@@ -100,7 +100,7 @@ class PrintBuyerCartOrReceiptForm(wx.Panel):
             self.Bind(wx.EVT_CHOICE, self.OnBuyerNameChoice, \
                                      self.buyerNameChoice)
         except MySQLdb.Error, e:
-            dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.displayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning ", e)

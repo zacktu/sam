@@ -44,7 +44,7 @@ class PurchaseDeleteForm(wx.Panel):
                         (self.samdb, purchasedItemNumber)
             buyerNumber = row[0]
             winningBid = str(row[1])
-            if not dialogs.DisplayYesNoDialog('Delete purchase:'
+            if not dialogs.displayYesNoDialog('Delete purchase:'
                     + '\n   Item number  ' + purchasedItemNumber
                     + '\n   Buyer number ' + buyerNumber
                     + '\n   Winning bid  ' + '$' + winningBid):
@@ -61,7 +61,7 @@ class PurchaseDeleteForm(wx.Panel):
                         (self.purchasedItemDescriptionList)
             self.con.displayAllPurchases(self.samdb)
         except MySQLdb.Error, e:
-            dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.displayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning ", e)
@@ -70,14 +70,14 @@ class PurchaseDeleteForm(wx.Panel):
         indexToDelete = event.GetSelection()
         purchasedItemString = event.GetString()
         purchasedItemNumber = purchasedItemString[:3]
-        if dialogs.DisplayYesNoDialog('Delete purchase for item number ' + \
+        if dialogs.displayYesNoDialog('Delete purchase for item number ' + \
                                       purchasedItemNumber + '?'):
             # Positive buyer number implies that item has been purchased
             buyerNumber = self.items.checkItemHasBuyer \
                             (purchasedItemNumber, self.samdb)
             print 'IN ONPURCHASEDITEMDESCRIPTIONLIST buyerNumber = ', buyerNumber
             if buyerNumber is None:
-                dialogs.DisplayErrorDialog \
+                dialogs.displayErrorDialog \
                     ('This item has not been purchased.')
                 return
             else:
@@ -121,7 +121,7 @@ class PurchaseDeleteForm(wx.Panel):
             self.Bind(wx.EVT_CHOICE, self.OnPurchasedItemDescriptionChoice, \
                   self.purchasedItemDescriptionChoice)
         except MySQLdb.Error, e:
-            dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.displayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning ", e)       

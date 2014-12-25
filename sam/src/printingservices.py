@@ -20,6 +20,7 @@ import buyers
 import auction
 import donors
 import items
+import dialogs
 
 ##### the next imports are for TEST SCAFFOLDING
 import sys
@@ -48,11 +49,15 @@ class PrintingServices():
         lines = self.buildOneCartOrReceipt(buyerNum, whatToPrint)
         self.writeFile(self.fname, lines)
         if whatToPrint == 'receipts':
-            self.buyers.updateBuyerPaid(self.samdb, buyerNum)
-            self.printPortraitWithOverlay(self.fname)
+            if self.buyers.hasBuyerBoughtAnything(self.samdb, buyerNum):
+                self.buyers.updateBuyerPaid(self.samdb, buyerNum)
+                self.printPortraitWithOverlay(self.fname)
+            else:
+                dialogs.displayErrorDialog \
+                        ("Buyer " + buyerNum + "'s cart is empty.")
         else:
             self.printPortrait(self.fname)
-        
+
     def previewAllCartsOrReceipts(self, whatToPrint):
         lines = self.buildAllCartsOrReceipts(whatToPrint)
         self.writeFile(self.fname, lines)
@@ -410,15 +415,28 @@ class PrintingServices():
         return fname if not os.path.exists(fname) \
             else rand_fname(suffix, length)
 
+    def checkBuyerPurchases(self, samdb, buyerNumber):
+        return self.buyers.hasBuyerBoughtAnything(samdb, buyerNumber)
+
 if __name__ == '__main__':
     dummy = buyers.Buyers()
     samdb = dbservices.connect(sys.argv)
     pr = PrintingServices(dummy, samdb)
     #pr.printBuyerReport(samdb, 'preview')
-    pr.printDonorReport(samdb, 'print')
+    #pr.printDonorReport(samdb, 'print')
     #pr.printItemReport(samdb, 'preview')
-    pr.doCSV(samdb, 'Buyers')
-    pr.doCSV(samdb, 'Donors')
-    pr.doCSV(samdb, 'Items')
+    #pr.doCSV(samdb, 'Buyers')
+    #pr.doCSV(samdb, 'Donors')
+    #pr.doCSV(samdb, 'Items')
+    '''
+    if (pr.checkBuyerPurchases(samdb, '003')):
+        print('Buyer 003 has bought something')
+    else:
+        print('Buyer 003 hasnt bought anything')
+    if (pr.checkBuyerPurchases(samdb, '009')):
+        print ('Buyer 009 has bought something')
+    else:
+        print('Buyer 009 hasnt bought anything')
+    '''
 
 

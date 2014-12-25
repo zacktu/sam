@@ -114,29 +114,29 @@ class DonorEntryForm(wx.Panel):
         donorNumber = self.donorNumberTC.GetValue()
         if len(donorNumber) != 3 or \
                     regularexpression.CheckDonorNumber(donorNumber) is None:
-            dialogs.DisplayErrorDialog(
+            dialogs.displayErrorDialog(
                     "The donor number must be a three-digit decimal number.")
             return
         name = self.nameTC.GetValue()
         if not (len(name) > 0):
-            dialogs.DisplayErrorDialog("The donor name must not be null.")
+            dialogs.displayErrorDialog("The donor name must not be null.")
             return
         street = self.streetTC.GetValue()
         if not (len(street) > 0):
-            dialogs.DisplayErrorDialog("The street name must not be null.")
+            dialogs.displayErrorDialog("The street name must not be null.")
             return
         city = self.cityStateZipTC.GetValue()
         if not (len(city) > 0):
-            dialogs.DisplayErrorDialog(
+            dialogs.displayErrorDialog(
                 "The city name and state must not be null.")
             return
         contact = self.contactTC.GetValue()
         if not (len(contact) > 0):
-            dialogs.DisplayErrorDialog("The contact name must not be null.")
+            dialogs.displayErrorDialog("The contact name must not be null.")
             return
         telno = self.telnoTC.GetValue()
         if len(telno) != 12 or regularexpression.CheckTelno(telno) is None:
-            dialogs.DisplayErrorDialog(
+            dialogs.displayErrorDialog(
                     "The telephone number must be in the format XXX-XXX-XXXX.")
             return
         email = self.emailTC.GetValue()
@@ -146,7 +146,7 @@ class DonorEntryForm(wx.Panel):
                 self.donors.addDonor(self.samdb, donorNumber, name, street,
                             city, contact, telno, email)
             except MySQLdb.Error, e:
-                dialogs.DisplayErrorDialog(e.args[1])
+                dialogs.displayErrorDialog(e.args[1])
                 return
             except MySQLdb.Warning, e:
                 print("Warning: ", e)
@@ -155,7 +155,7 @@ class DonorEntryForm(wx.Panel):
                 self.donors.updateDonor(self.samdb, donorNumber, name, street,
                                city, contact, telno, email)
             except MySQLdb.Error, e:
-                dialogs.DisplayErrorDialog(e.args[1])
+                dialogs.displayErrorDialog(e.args[1])
                 return
             except MySQLdb.Warning, e:
                 print("Warning: ", e)
@@ -168,7 +168,7 @@ class DonorEntryForm(wx.Panel):
         try:
             row = self.donors.fetchDonor(samdb, donorNumber)
         except MySQLdb.Error, e:
-            dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.displayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning: ", e)

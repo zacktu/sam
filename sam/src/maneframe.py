@@ -49,9 +49,9 @@ class ManeFrame(wx.Frame):
                     manetoolbook.manetoolbook(self, -1, samdb)
                 except MySQLdb.Error, e:
                     connected = False
-                    dialogs.DisplayErrorDialog("Error %d: %s" % (e.args[0], \
+                    dialogs.displayErrorDialog("Error %d: %s" % (e.args[0], \
                                                                  e.args[1]))
-                    if not dialogs.DisplayYesNoDialog("Want to try again?"):
+                    if not dialogs.displayYesNoDialog("Want to try again?"):
                         exit()    
             else:
                 exit()

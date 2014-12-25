@@ -105,6 +105,16 @@ class Buyers(object):
         else:
             return False
 
+    def hasBuyerBoughtAnything(self, samdb, buyerNumber):
+        query = "Select COUNT(*) FROM Items \
+                WHERE item_purchasedby = '" + buyerNumber + "'"
+        rows = samdb.fetchRows(query)
+        count = rows[0][0]
+        if count > 0:
+            return True
+        else:
+            return False
+
 if __name__ == '__main__':
     samdb = dbservices.Samdb()
     samdb.createDatabase()

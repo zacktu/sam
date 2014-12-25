@@ -100,7 +100,7 @@ class EditPanel(wx.Panel):
         try:
             rows = samdb.fetchRows(query)
         except MySQLdb.Error, e:
-            dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.displayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning: ", e)
@@ -126,7 +126,7 @@ class EditPanel(wx.Panel):
         try:
             rows = samdb.fetchRows(query)
         except MySQLdb.Error, e:
-            dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.displayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning: ", e)
@@ -149,7 +149,7 @@ class EditPanel(wx.Panel):
         try:
             rows = samdb.fetchRows(query)
         except MySQLdb.Error, e:
-            dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.displayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning: ", e)
@@ -178,7 +178,7 @@ class EditPanel(wx.Panel):
         try:
             rows = samdb.fetchRows(query)
         except MySQLdb.Error, e:
-            dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.displayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning: ", e)

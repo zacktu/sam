@@ -30,14 +30,14 @@ class DonorDeleteForm(wx.Panel):
     def OnDonorNumberChoice(self, event):
         indexToDelete = event.GetSelection()
         donorNumber = event.GetString()
-        if dialogs.DisplayYesNoDialog('Delete donor number ' + \
+        if dialogs.displayYesNoDialog('Delete donor number ' + \
                                       donorNumber + '?'):
             try:
                 donatedItems = self.donors.getDonorsItems \
                                 (donorNumber, self.samdb)
                 if len(donatedItems) > 0:
                     errorMessage = self.BuildErrorMessage(donorNumber, donatedItems)
-                    dialogs.DisplayErrorDialog(errorMessage)
+                    dialogs.displayErrorDialog(errorMessage)
                     return
                 else:
                     self.donors.deleteDonor(self.samdb, donorNumber)
@@ -48,7 +48,7 @@ class DonorDeleteForm(wx.Panel):
                     self.con.displayDonors(self.samdb)
                     return
             except MySQLdb.Error, e:
-                dialogs.DisplayErrorDialog(e.args[1])
+                dialogs.displayErrorDialog(e.args[1])
                 return
             except MySQLdb.Warning, e:
                 print("Warning ", e)
@@ -59,13 +59,13 @@ class DonorDeleteForm(wx.Panel):
         indexToDelete = event.GetSelection()
         donorString = event.GetString()
         donorNumber = donorString[:3]
-        if dialogs.DisplayYesNoDialog('Delete donor number ' + \
+        if dialogs.displayYesNoDialog('Delete donor number ' + \
                                       donorNumber + '?'):
             donatedItems = self.donors.getDonorsItems \
                             (donorNumber, self.samdb)
             if len(donatedItems) > 0:
                 errorMessage = self.BuildErrorMessage(donorNumber, donatedItems)
-                dialogs.DisplayErrorDialog(errorMessage)
+                dialogs.displayErrorDialog(errorMessage)
                 return
             else:
                 self.donors.deleteDonor(self.samdb, donorNumber)
@@ -103,7 +103,7 @@ class DonorDeleteForm(wx.Panel):
             self.Bind(wx.EVT_CHOICE, self.OnDonorNameChoice, \
                                      self.donorNameChoice)
         except MySQLdb.Error, e:
-            dialogs.DisplayErrorDialog(e.args[1])
+            dialogs.displayErrorDialog(e.args[1])
             return
         except MySQLdb.Warning, e:
             print("Warning ", e)
