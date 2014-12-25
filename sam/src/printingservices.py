@@ -79,13 +79,8 @@ class PrintingServices():
         firstTime = True
         allBuyers = self.buyers.getAllBuyers(self.samdb)
         for buyer in allBuyers:
-            #lines = []
-            print("BUILDALLCARTSRRECEIPTS")
-            print('whatToPrint = ', whatToPrint)
-            print('buyer[0] = ', buyer[0])
             if ((whatToPrint == 'carts') or
                     (self.buyers.hasBuyerPaid(self.samdb, buyer[0]))):
-                print("SO WE PREVIEW OR PRINT THIS BUYER")
                 moreLines = self.buildOneCartOrReceipt(buyer[0], whatToPrint)
                 if firstTime:
                     lines = moreLines
