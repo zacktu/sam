@@ -115,17 +115,12 @@ class Buyers(object):
             return False
 
     def thereAreNoReceipts(self, samdb):
-        print('Entering thereAreNoReceipts')
-        query = "Select COUNT(*) FROM Buyers WHERE buyer_paid = 'yes'"
-        print('QUERY IS ', query)
+        query = "Select COUNT(*) FROM Buyers WHERE buyer_paid = 'yes' ;"
         rows = samdb.fetchRows(query)
         count = rows[0][0]
-        print('count = ', count)
         if count == 0:
-            print('will return True')
             return True
         else:
-            print('will return False')
             return False
 
 if __name__ == '__main__':

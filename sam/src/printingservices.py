@@ -59,26 +59,20 @@ class PrintingServices():
             self.printPortrait(self.fname)
 
     def previewAllCartsOrReceipts(self, whatToPrint):
-        print('Entering previewAllCartsOrReceipts')
-        print('Request is for ', whatToPrint)
         if ((whatToPrint == 'carts')
                 and (self.items.areAllCartsEmpty(self.samdb))):
-            print('ALL CARTS ARE EMPTY SO DONT DO ANYTHING')
+            dialogs.displayErrorDialog \
+                    ("All shopping carts are empty.")
+            return
         elif ((whatToPrint == 'receipts')
                 and (self.buyers.thereAreNoReceipts(self.samdb))):
-            print('NO RECEIPTS SO DONT DO ANYTHING')
+            dialogs.displayErrorDialog \
+                    ("No buyer has been given a receipt.")
+            return
         else:
-            print('NORMAL CASE')
-        '''
-        print('thereAreNoReceipts returns ',
-            self.buyers.thereAreNoReceipts(self.samdb))
-        print('areAllCartsEmpty returns ',
-            self.items.areAllCartsEmpty(self.samdb))
-
-        lines = self.buildAllCartsOrReceipts(whatToPrint)
-        self.writeFile(self.fname, lines)
-        self.previewPortrait(self.fname)
-        '''
+            lines = self.buildAllCartsOrReceipts(whatToPrint)
+            self.writeFile(self.fname, lines)
+            self.previewPortrait(self.fname)
         
     def printAllCartsOrReceipts(self, whatToPrint):
         print('Entering printAllCartsOrReceipts')
