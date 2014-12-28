@@ -101,6 +101,19 @@ class Items(object):
         allItems = samdb.fetchRows(query)
         return allItems
 
+    def areAllCartsEmpty(self, samdb):
+        print('Entering areAllCartsEmpty')
+        query = "Select COUNT(*) FROM Items WHERE item_purchasedby IS NOT NULL"
+        rows = samdb.fetchRows(query)
+        count = rows[0][0]
+        print('count = ', count)
+        if count == 0:
+            print('will return True')
+            return True
+        else:
+            print('will return False')
+            return False
+
 if __name__ == '__main__':
     samdb = dbservices.Samdb()
     samdb.createDatabase()
