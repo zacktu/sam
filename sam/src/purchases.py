@@ -4,7 +4,12 @@ Created on Jan 3, 2010
 @author: bob
 '''
 
+import buyers
+import dialogs
+
 class Purchases(object):
+    def __init__(self):
+        self.buyers = buyers.Buyers()
         
     def PurchaseItem(self, samdb, itemNumber, buyerNumber, salesPrice):
         query = "UPDATE Items SET item_purchasedby = '" + buyerNumber + \
@@ -28,8 +33,25 @@ class Purchases(object):
             return False
     
     def DeletePurchase(self, samdb, itemNumber):
-        query = 'UPDATE Items SET item_purchasedby = NULL, \
-                item_salesprice = NULL \
+        # Who bought this item?
+        query = 'SELECT item_purchasedby FROM Items \
+                 WHERE item_number = ' + itemNumber + ' ; '
+        row = samdb.fetchRow(query)
+        buyerNumber = row[0]
+
+        # Delete the buyer for this item
+        query = 'UPDATE Items SET item_purchasedby = NULL,' \
+                'item_salesprice = NULL \
                 WHERE item_number = ' + itemNumber + ';'
         samdb.executeQuery(query)
+
+        if self.buyers.hasBuyerPaid(samdb, buyerNumber):
+            self.buyers.cancelBuyerReceipt(samdb, buyerNumber)
+            dialogs.displayErrorDialog(
+                'Buyer ' + buyerNumber
+                + ' has already paid for item number '
+                + itemNumber + '.\n '
+                + 'Please print a new shopping cart,\n'
+                + 'refund the proper amount,\n '
+                + 'and print a new receipt.')
 

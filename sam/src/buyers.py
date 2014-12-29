@@ -98,8 +98,8 @@ class Buyers(object):
     def hasBuyerPaid(self, samdb, buyerNumber):
         query = "Select buyer_paid FROM Buyers \
                 WHERE buyer_number = '" + buyerNumber + "'"
-        rows = samdb.fetchRows(query)
-        if rows[0][0] == 'yes':
+        rows = samdb.fetchRow(query)
+        if rows[0] == 'yes':
             return True
         else:
             return False
@@ -122,6 +122,11 @@ class Buyers(object):
             return True
         else:
             return False
+
+    def cancelBuyerReceipt(self, samdb, buyerNumber):
+        query = "UPDATE Buyers SET buyer_paid = 'no' \
+                    WHERE buyer_number = '" + buyerNumber + "' ; "
+        samdb.executeQuery(query);
 
 if __name__ == '__main__':
     samdb = dbservices.Samdb()
