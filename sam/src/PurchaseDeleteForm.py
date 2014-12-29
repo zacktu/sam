@@ -40,7 +40,7 @@ class PurchaseDeleteForm(wx.Panel):
         purchasedItemNumber = event.GetString()
 
         try:
-            row = self.purchases.FetchPurchase \
+            row = self.purchases.fetchPurchase \
                         (self.samdb, purchasedItemNumber)
             buyerNumber = row[0]
             winningBid = str(row[1])
@@ -49,7 +49,7 @@ class PurchaseDeleteForm(wx.Panel):
                     + '\n   Buyer number ' + buyerNumber
                     + '\n   Winning bid  ' + '$' + winningBid):
                 return
-            self.purchases.DeletePurchase(self.samdb, purchasedItemNumber)
+            self.purchases.deletePurchase(self.samdb, purchasedItemNumber)
             self.purchasedItemNumberList.pop(indexToDelete)
             self.purchasedItemNumberChoice.SetItems \
                     (self.purchasedItemNumberList)
@@ -81,7 +81,7 @@ class PurchaseDeleteForm(wx.Panel):
                     ('This item has not been purchased.')
                 return
             else:
-                self.purchases.DeletePurchase    \
+                self.purchases.deletePurchase    \
                             (self.samdb, purchasedItemNumber)
                 self.purchasedItemDescriptionList.pop(indexToDelete)
                 self.purchasedItemDescriptionChoice.SetItems \

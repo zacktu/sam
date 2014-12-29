@@ -145,7 +145,7 @@ class PurchaseEntryForm(wx.Panel):
             ''' Now that all the data are valid, we can do the most
                 straightforward task, which is to purchase the item. '''
             if self.function == 'add':
-                self.purchases.PurchaseItem(self.samdb, itemNumber, \
+                self.purchases.purchaseItem(self.samdb, itemNumber, \
                             buyerNumber, winningBid)
                 self.ClearAll()
                 return
@@ -157,7 +157,7 @@ class PurchaseEntryForm(wx.Panel):
                 if not itemNumber == self.oldItemNumber:
                     ## if new item number is registered and not purchased, 
                     ## then it's okay to change to new item number
-                    if self.purchases.HasBeenPurchased \
+                    if self.purchases.hasBeenPurchased \
                                 (self.samdb, itemNumber):
                         dialogs.displayErrorDialog \
                             ('Item number ' + itemNumber + \
@@ -173,12 +173,12 @@ class PurchaseEntryForm(wx.Panel):
                     
             if self.function == 'edit' and \
                         itemNumber == self.oldItemNumber:
-                self.purchases.PurchaseItem(self.samdb, itemNumber, \
+                self.purchases.purchaseItem(self.samdb, itemNumber, \
                             buyerNumber, winningBid)
             else:
                 ### Item number changes so delete, add, and update chooser
-                self.purchases.DeletePurchase(self.samdb, self.oldItemNumber)
-                self.purchases.PurchaseItem(self.samdb, itemNumber, \
+                self.purchases.deletePurchase(self.samdb, self.oldItemNumber)
+                self.purchases.purchaseItem(self.samdb, itemNumber, \
                             buyerNumber, winningBid)
                 self.parent.BuildPurchasedItemChooser(self.samdb)
             # Write all fields for the affected item number.
@@ -193,7 +193,7 @@ class PurchaseEntryForm(wx.Panel):
        
     def PopulateForm(self, samdb, itemNumber):
         try:
-            row = self.purchases.FetchPurchase(samdb, itemNumber)
+            row = self.purchases.fetchPurchase(samdb, itemNumber)
         except MySQLdb.Error, e:
             dialogs.displayErrorDialog(e.args[1])
             return

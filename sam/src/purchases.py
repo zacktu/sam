@@ -11,13 +11,13 @@ class Purchases(object):
     def __init__(self):
         self.buyers = buyers.Buyers()
         
-    def PurchaseItem(self, samdb, itemNumber, buyerNumber, salesPrice):
+    def purchaseItem(self, samdb, itemNumber, buyerNumber, salesPrice):
         query = "UPDATE Items SET item_purchasedby = '" + buyerNumber + \
                 "', item_salesprice = '" + salesPrice + \
                 "' WHERE item_number = '" + itemNumber + "';"
         samdb.executeQuery(query)
               
-    def FetchPurchase(self, samdb, itemNumber):
+    def fetchPurchase(self, samdb, itemNumber):
         query = 'SELECT item_purchasedby, item_salesprice FROM Items \
                 WHERE item_number = ' + itemNumber + ';'
         ## temporary
@@ -25,14 +25,14 @@ class Purchases(object):
         return row
         ### return samdb.fetchRow(query)S
         
-    def HasBeenPurchased(self, samdb, itemNumber):
-        row = self.FetchPurchase(samdb, itemNumber)
+    def hasBeenPurchased(self, samdb, itemNumber):
+        row = self.fetchPurchase(samdb, itemNumber)
         if not row[0] == None:
             return True
         else:
             return False
     
-    def DeletePurchase(self, samdb, itemNumber):
+    def deletePurchase(self, samdb, itemNumber):
         # Who bought this item?
         query = 'SELECT item_purchasedby FROM Items \
                  WHERE item_number = ' + itemNumber + ' ; '
