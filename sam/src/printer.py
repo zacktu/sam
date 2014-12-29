@@ -83,13 +83,10 @@ class Printer(object):
 
     ''' Display all purchases for a single buyer '''
     def displayPurchases(self, samdb, buyerno):
-        #print '\nBuyer number', buyerno
         query = "SELECT item_description, item_salesprice FROM Items " \
                 + "WHERE item_purchasedby = '" + buyerno + "';"
-        #print 'QUERY IN CONSOLE.DISPLAYPURCHASES IS ', query
         rows = self.getRows(samdb, query)
         if len(rows) > 0:
-            #print 'ROWS FROM THE DATABASE', rows
             print ("{0:50} {1:6}".format('description', 'price'))
             print ("{0} {1}".format('-'*50, '-'*6))
             sum = 0

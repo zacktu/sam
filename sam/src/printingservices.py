@@ -75,16 +75,10 @@ class PrintingServices():
             self.previewPortrait(self.fname)
         
     def printAllCartsOrReceipts(self, whatToPrint):
-        print('Entering printAllCartsOrReceipts')
-        print('Request is for ', whatToPrint)
-        print('WILL NOT PRINT ALL RECEIPTS')
-        '''
-        #lines = self.buildAllCartsOrReceipts(whatToPrint)
         lines = self.buildAllCartsOrReceipts(whatToPrint)
         self.writeFile(self.fname, lines)
         self.printPortrait(self.fname)
-        '''
-        
+
     def buildOneCartOrReceipt(self, buyerNum, whatToPrint):
         lines = self.buildCartOrReceiptHeader(buyerNum, whatToPrint)
         lines = lines + self.buildCartOrReceiptTable(buyerNum)
@@ -107,15 +101,11 @@ class PrintingServices():
         return lines
         
     def previewSummaryOfPurchases(self, whatToPrint):
-        print('Entering previewSummaryOfPurchases')
-        print('areAllCartsEmpty is ', self.items.areAllCartsEmpty(self.samdb))
         lines = self.buildSummaryOfPurchases(whatToPrint)
         self.writeFile(self.fname, lines)
         self.previewPortrait(self.fname)
         
     def printSummaryOfPurchases(self, whatToPrint):
-        print('Entering printSummaryOfPurchases')
-        print('areAllCartsEmpty is ', self.items.areAllCartsEmpty(self.samdb))
         lines = self.buildSummaryOfPurchases(whatToPrint)
         self.writeFile(self.fname, lines)
         self.printPortrait(self.fname)
