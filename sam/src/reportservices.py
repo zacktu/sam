@@ -30,7 +30,6 @@ class ReportServices():
 
     def __init__(self, samdb):
     #def __init__(self, parent, samdb):
-        print('Entering ReportServices init')
         #self.parent = parent
         self.samdb = samdb
         self.auction = auction.Auction()
@@ -39,7 +38,7 @@ class ReportServices():
         self.items = items.Items()
 
 
-    def printDonorReport(self, samdb, printOrPreview):
+    def printOrPreviewDonorReport(self, samdb, printOrPreview):
         fname = prs.rand_fname('xxx', 8)
         lines = self.buildDonorReport(samdb)
         lines.insert(0, '.ll 9i\n')
@@ -52,12 +51,12 @@ class ReportServices():
             prs.writeFile(fname, lines)
             prs.previewLandscape(fname)
         else:
-            print('printingservices.printDonorReport: invalid parameter '
+            print('printingservices.printOrPreviewDonorReport: invalid parameter '
                   + 'printOrPreview = ' + printOrPreview)
             print('Bugout!')
             sys.exit()
 
-    def printBuyerReport(self, samdb, printOrPreview):
+    def printOrPreviewBuyerReport(self, samdb, printOrPreview):
         fname = prs.rand_fname('xxx', 8)
         lines = self.buildBuyerReport(samdb)
         #landscape lines are 9i wide
@@ -71,12 +70,12 @@ class ReportServices():
             prs.writeFile(fname, lines)
             prs.previewLandscape(fname)
         else:
-            print('printingservices.printBuyerReport: invalid parameter '
+            print('printingservices.printOrPreviewBuyerReport: invalid parameter '
                   + 'printOrPreview = ' + printOrPreview)
             print('Bugout!')
             sys.exit()
 
-    def printItemReport(self, samdb, printOrPreview):
+    def printOrPreviewItemReport(self, samdb, printOrPreview):
         fname = prs.rand_fname('xxx', 8)
         lines = self.buildItemReport(samdb)
         #landscape lines are 9i wide
@@ -90,7 +89,7 @@ class ReportServices():
             prs.writeFile(fname, lines)
             prs.previewLandscape(fname)
         else:
-            print('printingservices.printItemReport: invalid parameter '
+            print('printingservices.printOrPreviewItemReport: invalid parameter '
                   + 'printOrPreview = ' + printOrPreview)
             print('Bugout!')
             sys.exit()
@@ -181,16 +180,21 @@ class ReportServices():
                 csvFile.writerow(fullRow)
 
 if __name__ == '__main__':
-    dummy = buyers.Buyers()
     samdb = dbservices.connect(sys.argv)
+    if len(sys.argv) == 4:
+        printPreviewOrCSV = sys.argv[2]
+        tableName = sys.argv[3]
+    elif len(sys.argv) == 8:
+        printPreviewOrCSV = sys.argv[6]
+        tableName = sys.argv[7]
     prs = printingservices.PrintingServices(samdb)
     rs = ReportServices(samdb)
-    rs.printBuyerReport(samdb, 'preview')
-    #rs.printBuyerReport(samdb, 'print')
-    rs.printDonorReport(samdb, 'preview')
-    #rs.printDonorReport(samdb, 'print')
-    rs.printItemReport(samdb, 'preview')
-    #rs.printItemReport(samdb, 'print')
-    rs.doCSV(samdb, 'Buyers')
-    rs.doCSV(samdb, 'Donors')
-    rs.doCSV(samdb, 'Items')
+    #CONFIRM VALIDITY OF THE PARAMETERS -- BOTH TABLENAME AND PRITPREVIEWORCSV
+    if printPreviewOrCSV == 'csv':
+        rs.doCSV(samdb, tableName)
+    elif tableName == 'Buyers':
+        rs.printOrPreviewBuyerReport(samdb, printPreviewOrCSV)
+    elif tableName == 'Donors':
+        rs.printOrPreviewDonorReport(samdb, printPreviewOrCSV)
+    elif tableName == 'Items':
+        rs.printOrPreviewItemReport(samdb, printPreviewOrCSV)
