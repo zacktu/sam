@@ -231,119 +231,6 @@ class PrintingServices():
         lines.append('.TE\n')
         return lines
 
-    '''
-    def buildDonorReport(self, samdb):
-        lines = self.buildSummaryHeader('donors')
-        lines.append('.ps -2\n')
-        lines.append('.TS\n')
-        lines.append('box, expand, tab(`);\n')
-        lines.append('cI cI cI cI cI cI cI.\n')
-        lines.append('Donor`Name`Street`City`Contact`Telephone`Email\n')
-        lines.append('_\n')
-        lines.append('.T&\n')
-        lines.append('n l l l l c l.\n')
-        allDonors = self.donors.getAllDonors(self.samdb)
-        for donor in allDonors:
-            donorInfo = self.donors.fetchDonor(self.samdb, donor[0])
-            lines.append(donor[0] + '`' + donorInfo[0] + '`' + donorInfo[1]
-                         + '`' + donorInfo[2] + '`' + donorInfo[3]
-                         + '`' + donorInfo[4] + '`' + donorInfo[5] + '\n')
-        lines.append('.TE\n')
-        return lines
-
-    def buildBuyerReport(self, samdb):
-        lines = self.buildSummaryHeader('buyers')
-        lines.append('.TS\n')
-        lines.append('box, expand, tab(`);\n')
-        lines.append('cI cI cI cI cI cI.\n')
-        lines.append('Buyer`Last`First`Street`City`Telephone\n')
-        lines.append('_\n')
-        lines.append('.T&\n')
-        lines.append('n l l l l c.\n')
-        allBuyers = self.buyers.getAllBuyers(self.samdb)
-        for buyer in allBuyers:
-            buyerInfo = self.buyers.fetchBuyer(self.samdb, buyer[0])
-            lines.append(buyer[0] + '`' + buyerInfo[0] + '`' + buyerInfo[1]
-                         + '`' + buyerInfo[2] + '`' + buyerInfo[3] + '`'
-                         + buyerInfo[4] + '\n')
-        lines.append('.TE\n')
-        return lines
-
-    def buildItemReport(self, samdb):
-        lines = self.buildSummaryHeader('items')
-        lines.append('.TS\n')
-        lines.append('box, expand, tab(`);\n')
-        lines.append('cI cI cI cI cI cI cI cI.\n')
-        lines.append(
-            'Item`Description`Donor`Retail`Min Bid`Increment`Buyer`Price\n')
-        lines.append('_\n')
-        lines.append('.T&\n')
-        lines.append('n l n n n n n n.\n')
-        allItems = self.items.getAllItems(self.samdb)
-        for item in allItems:
-            itemInfo = self.items.fetchItem(self.samdb, item[0])
-            lines.append(item[0] + '`' + itemInfo[0] + '`' + itemInfo[1] \
-                           + '`' + str(itemInfo[2]) + '`' + str(itemInfo[3]) \
-                           + '`' + str(itemInfo[4]) + '`' + str(itemInfo[5]) \
-                           + '`' + str(itemInfo[6]) + '\n')
-        lines.append('.TE\n')
-        return lines
-
-    def printDonorReport(self, samdb, printOrPreview):
-        lines = self.buildDonorReport(samdb)
-        #landscape lines are 9i wide
-        lines.insert(0, '.ll 9i\n')
-        if (printOrPreview == 'print'):
-            #page offset determined by experimentation
-            lines.insert(1, '.po 1.75i\n')  #needed for centering printed file
-            self.writeFile(self.fname, lines)
-            self.printLandscape(self.fname)
-        elif (printOrPreview == 'preview'):
-            self.writeFile(self.fname, lines)
-            self.previewLandscape(self.fname)
-        else:
-            print('printingservices.printDonorReport: invalid parameter '
-                  + 'printOrPreview = ' + printOrPreview)
-            print('Bugout!')
-            sys.exit()
-
-    def printBuyerReport(self, samdb, printOrPreview):
-        lines = self.buildBuyerReport(samdb)
-        #landscape lines are 9i wide
-        lines.insert(0, '.ll 9i\n')
-        if (printOrPreview == 'print'):
-            #page offset determined by experimentation
-            lines.insert(1, '.po 1.75i\n')  #needed for centering printed file
-            self.writeFile(self.fname, lines)
-            self.printLandscape(self.fname)
-        elif (printOrPreview == 'preview'):
-            self.writeFile(self.fname, lines)
-            self.previewLandscape(self.fname)
-        else:
-            print('printingservices.printBuyerReport: invalid parameter '
-                  + 'printOrPreview = ' + printOrPreview)
-            print('Bugout!')
-            sys.exit()
-
-    def printItemReport(self, samdb, printOrPreview):
-            lines = self.buildItemReport(samdb)
-            #landscape lines are 9i wide
-            lines.insert(0, '.ll 9i\n')
-            if (printOrPreview == 'print'):
-                #page offset determined by experimentation
-                lines.insert(1, '.po 1.75i\n')  #needed for centering printed file
-                self.writeFile(self.fname, lines)
-                self.printLandscape(self.fname)
-            elif (printOrPreview == 'preview'):
-                self.writeFile(self.fname, lines)
-                self.previewLandscape(self.fname)
-            else:
-                print('printingservices.printItemReport: invalid parameter '
-                      + 'printOrPreview = ' + printOrPreview)
-                print('Bugout!')
-                sys.exit()
-    '''
-
     def writeFile(self, fname, lines):
         try:
             fout = open(fname, 'w')
@@ -387,35 +274,6 @@ class PrintingServices():
         command = 'groffer -P-l -l ' + fname + ' 2>/dev/null '
         subprocess.Popen(command, shell=True)
 
-    '''
-    def doCSV(self, samdb, whichTable):
-        columnHeaders = samdb.getColumnHeaders(whichTable)
-        csvFile = csv.writer(
-            open('/home/bob/Desktop/csv/' + whichTable + '.csv', "wb"))
-        csvFile.writerow(columnHeaders)
-        if whichTable == 'Buyers':
-            allBuyers = self.buyers.getAllBuyers(self.samdb)
-            for buyer in allBuyers:
-                buyerRow = self.buyers.fetchBuyer(self.samdb, buyer[0])
-                fullRow = list(buyerRow)
-                fullRow.insert(0, buyer[0])
-                csvFile.writerow(fullRow)
-        elif whichTable == 'Donors':
-            allDonors = self.donors.getAllDonors(self.samdb)
-            for donor in allDonors:
-                donorRow = self.donors.fetchDonor(self.samdb, donor[0])
-                fullRow = list(donorRow)
-                fullRow.insert(0, donor[0])
-                csvFile.writerow(fullRow)
-        elif whichTable == 'Items':
-            allItems = self.items.getAllItems(self.samdb)
-            for item in allItems:
-                itemRow = self.items.fetchItem(self.samdb, item[0])
-                fullRow = list(itemRow)
-                fullRow.insert(0, item[0])
-                csvFile.writerow(fullRow)
-    '''
-
     def OnExit(self, evt):
         self.Close()
 
@@ -440,22 +298,13 @@ class PrintingServices():
 if __name__ == '__main__':
     dummy = buyers.Buyers()
     samdb = dbservices.connect(sys.argv)
-    pr = PrintingServices(dummy, samdb)
-    #pr.printBuyerReport(samdb, 'preview')
-    #pr.printDonorReport(samdb, 'print')
-    #pr.printItemReport(samdb, 'preview')
-    #pr.doCSV(samdb, 'Buyers')
-    #pr.doCSV(samdb, 'Donors')
-    #pr.doCSV(samdb, 'Items')
-    '''
-    if (pr.checkBuyerPurchases(samdb, '003')):
-        print('Buyer 003 has bought something')
-    else:
-        print('Buyer 003 hasnt bought anything')
-    if (pr.checkBuyerPurchases(samdb, '009')):
-        print ('Buyer 009 has bought something')
-    else:
-        print('Buyer 009 hasnt bought anything')
-    '''
+    prs = PrintingServices(dummy, samdb)
+    #prs.printBuyerReport(samdb, 'preview')
+    #prs.printDonorReport(samdb, 'print')
+    #prs.printItemReport(samdb, 'preview')
+    #prs.doCSV(samdb, 'Buyers')
+    #prs.doCSV(samdb, 'Donors')
+    #prs.doCSV(samdb, 'Items')
+
 
 
