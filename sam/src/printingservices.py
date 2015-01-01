@@ -231,6 +231,7 @@ class PrintingServices():
         lines.append('.TE\n')
         return lines
 
+    '''
     def buildDonorReport(self, samdb):
         lines = self.buildSummaryHeader('donors')
         lines.append('.ps -2\n')
@@ -341,6 +342,7 @@ class PrintingServices():
                       + 'printOrPreview = ' + printOrPreview)
                 print('Bugout!')
                 sys.exit()
+    '''
 
     def writeFile(self, fname, lines):
         try:
@@ -385,6 +387,7 @@ class PrintingServices():
         command = 'groffer -P-l -l ' + fname + ' 2>/dev/null '
         subprocess.Popen(command, shell=True)
 
+    '''
     def doCSV(self, samdb, whichTable):
         columnHeaders = samdb.getColumnHeaders(whichTable)
         csvFile = csv.writer(
@@ -411,6 +414,7 @@ class PrintingServices():
                 fullRow = list(itemRow)
                 fullRow.insert(0, item[0])
                 csvFile.writerow(fullRow)
+    '''
 
     def OnExit(self, evt):
         self.Close()
