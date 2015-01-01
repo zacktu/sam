@@ -298,7 +298,7 @@ if __name__ == '__main__':
     samdb = dbservices.connect(sys.argv)
     prs = PrintingServices(samdb)
     #prs.printBuyerReport(samdb, 'preview')
-    #prs.printDonorReport(samdb, 'print')
+    #prs.donorReport(samdb, 'print')
     #prs.printItemReport(samdb, 'preview')
     #prs.doCSV(samdb, 'Buyers')
     #prs.doCSV(samdb, 'Donors')
