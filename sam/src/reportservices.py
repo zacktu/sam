@@ -183,7 +183,7 @@ class ReportServices():
 if __name__ == '__main__':
     dummy = buyers.Buyers()
     samdb = dbservices.connect(sys.argv)
-    prs = printingservices.PrintingServices(dummy, samdb)
+    prs = printingservices.PrintingServices(samdb)
     rs = ReportServices(samdb)
     #rs.printBuyerReport(samdb, 'preview')
     #rs.printBuyerReport(samdb, 'print')

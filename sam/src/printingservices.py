@@ -30,8 +30,7 @@ import dbservices
 
 class PrintingServices():
 
-    def __init__(self, parent, samdb):
-        self.parent = parent
+    def __init__(self, samdb):
         self.samdb = samdb
         self.auction = auction.Auction()
         self.buyers = buyers.Buyers()
@@ -296,9 +295,8 @@ class PrintingServices():
         return self.buyers.hasBuyerBoughtAnything(samdb, buyerNumber)
 
 if __name__ == '__main__':
-    dummy = buyers.Buyers()
     samdb = dbservices.connect(sys.argv)
-    prs = PrintingServices(dummy, samdb)
+    prs = PrintingServices(samdb)
     #prs.printBuyerReport(samdb, 'preview')
     #prs.printDonorReport(samdb, 'print')
     #prs.printItemReport(samdb, 'preview')

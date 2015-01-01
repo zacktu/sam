@@ -59,10 +59,10 @@ class PrintCartOrReceiptSummaryPanel(wx.Panel):
         
     def OnPreviewButton(self, event):
         self.con.displayAllPurchases(self.samdb)
-        ps = printingservices.PrintingServices(self.parent, self.samdb)
+        ps = printingservices.PrintingServices(self.samdb)
         ps.previewSummaryOfPurchases(self.whatToPrint)
         
     def OnPrintButton(self, event):
         self.con.displayAllPurchases(self.samdb)
-        ps = printingservices.PrintingServices(self.parent, self.samdb)
+        ps = printingservices.PrintingServices(self.samdb)
         ps.printSummaryOfPurchases(self.whatToPrint)

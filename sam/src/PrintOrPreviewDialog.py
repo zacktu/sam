@@ -40,12 +40,12 @@ class PrintOrPreviewDialog(wx.Dialog):
         self.Destroy()
 
     def OnPreview(self, event):
-        ps = printingservices.PrintingServices(self.parent, self.samdb)
+        ps = printingservices.PrintingServices(self.samdb)
         ps.previewOneCartOrReceipt(self.buyerNum, self.whatToPrint)
         self.Close(True)
 
     def OnPrint(self, event):
-        ps = printingservices.PrintingServices(self.parent, self.samdb)
+        ps = printingservices.PrintingServices(self.samdb)
         ps.printOneCartOrReceipt(self.buyerNum, self.whatToPrint)
         self.Close(True)
 
