@@ -11,7 +11,7 @@ def displayErrorDialog(message):
     dlg = wx.MessageDialog(None, message, 'Error', wx.OK | wx.ICON_ERROR)
     dlg.ShowModal()
     
-def displaySuccessDialog(message):
+def displayInfoDialog(message):
     dlg = wx.MessageDialog(None, message, '', wx.OK | wx.ICON_INFORMATION)
     dlg.ShowModal()
     

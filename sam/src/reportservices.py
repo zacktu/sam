@@ -12,6 +12,7 @@ from the Buyers table.
 
 import os
 import sys
+import wx
 import MySQLdb
 import subprocess
 from random import sample
@@ -152,10 +153,22 @@ class ReportServices():
         return lines
 
     def doCSV(self, samdb, whichTable):
-        fname = prs.rand_fname('xxx', 8)
+        try:
+            dialog = wx.FileDialog(None,
+                                   message='Select the file location',
+                                   defaultDir='/home/bob/Desktop/csv',
+                                   defaultFile=whichTable,
+                                   wildcard='.csv',
+                                   style=wx.SAVE)
+            if dialog.ShowModal() == wx.ID_OK:
+                fname = dialog.GetPath() + '.csv'
+            dialog.Destroy()
+            csvFile = csv.writer(
+                open(fname, "wb"))
+        except IOError:
+            dialogs.ErrorDialog('Unable to create the CSV file.')
+            return
         columnHeaders = samdb.getColumnHeaders(whichTable)
-        csvFile = csv.writer(
-            open('/home/bob/Desktop/csv/' + whichTable + '.csv', "wb"))
         csvFile.writerow(columnHeaders)
         if whichTable == 'Buyers':
             allBuyers = self.buyers.getAllBuyers(self.samdb)
@@ -180,6 +193,7 @@ class ReportServices():
                 csvFile.writerow(fullRow)
 
 if __name__ == '__main__':
+    app = wx.PySimpleApp()
     samdb = dbservices.connect(sys.argv)
     if len(sys.argv) == 4:
         printPreviewOrCSV = sys.argv[2]

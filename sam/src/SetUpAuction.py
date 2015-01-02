@@ -173,7 +173,7 @@ class SetUpAuction(wx.Frame):
         print hostName, portNumber, userName, password, dbName, title, subtitle, date
         createauction.createAuction(hostName, portNumber, userName, password, \
                                     dbName, title, subtitle, date)
-        dialogs.displaySuccessDialog("The auction was created successfully.")
+        dialogs.displayInfoDialog("The auction was created successfully.")
         sys.exit()
         
     def OnExitButton(self, event):
