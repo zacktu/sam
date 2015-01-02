@@ -187,14 +187,18 @@ if __name__ == '__main__':
     elif len(sys.argv) == 8:
         printPreviewOrCSV = sys.argv[6]
         tableName = sys.argv[7]
-    prs = printingservices.PrintingServices(samdb)
-    rs = ReportServices(samdb)
-    #CONFIRM VALIDITY OF THE PARAMETERS -- BOTH TABLENAME AND PRITPREVIEWORCSV
-    if printPreviewOrCSV == 'csv':
-        rs.doCSV(samdb, tableName)
-    elif tableName == 'Buyers':
-        rs.printOrPreviewBuyerReport(samdb, printPreviewOrCSV)
-    elif tableName == 'Donors':
-        rs.printOrPreviewDonorReport(samdb, printPreviewOrCSV)
-    elif tableName == 'Items':
-        rs.printOrPreviewItemReport(samdb, printPreviewOrCSV)
+    if ((not printPreviewOrCSV in ('preview', 'print', 'csv'))
+            or (not tableName in ('Donors', 'Items', 'Buyers'))):
+        print('Usage: reportservices.py dbname [host port dbuser dbpassword] '
+                + 'action tablename')
+    else:
+        prs = printingservices.PrintingServices(samdb)
+        rs = ReportServices(samdb)
+        if printPreviewOrCSV == 'csv':
+            rs.doCSV(samdb, tableName)
+        elif tableName == 'Buyers':
+            rs.printOrPreviewBuyerReport(samdb, printPreviewOrCSV)
+        elif tableName == 'Donors':
+            rs.printOrPreviewDonorReport(samdb, printPreviewOrCSV)
+        elif tableName == 'Items':
+            rs.printOrPreviewItemReport(samdb, printPreviewOrCSV)
