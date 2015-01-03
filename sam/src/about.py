@@ -17,19 +17,20 @@ class MyAboutDialog(wx.Dialog):
     text = '''
 <html>
 <!--
-<body bgcolor="#0047FF" color="#FFFFFF">
+<body bgcolor="#0047FF" font color="#FFFFFF">
 -->
-<body>
+<body bgcolor="#0047FF">
     <center>
     </br>
+    <font color="#FFFFFF">
     <p>
-        <b>Silent Auction Manager</b> is an application that assists
+        <b>SAM: the Silent Auction Manager</b> is an application that assists
         in setting up and managing a silent auction.
     </p>
 
     <p>
-        <b>Donors</b> have contributed <b>Items</b>
-        to the auction.  <b>Buyers</b> bid on
+        <b><i>Donors</i></b> have contributed <b><i>Items</i></b>
+        to the auction.  <b><i>Buyers</i></b> bid on
         and purchase them.
     </p>
 
@@ -41,6 +42,7 @@ class MyAboutDialog(wx.Dialog):
     <p>
         <font size="-1">Please see <i>license.txt</i> for licensing information.</font>
     </p>
+    </font>
 
     <p>
         <wxp module="wx" class="Button">
@@ -54,7 +56,7 @@ class MyAboutDialog(wx.Dialog):
 '''
     def __init__(self, parent):
         wx.Dialog.__init__(self, parent, -1,
-            'About Silent Auction Manager',)
+            'About SAM',)
         html = wx.html.HtmlWindow(self, -1, size=(420, -1))
         html.SetPage(self.text)
         btn = html.FindWindowById(wx.ID_OK)

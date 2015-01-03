@@ -23,7 +23,7 @@ class ManeFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OnExit, exitItem)
 
         aboutMenu = wx.Menu()
-        aboutItem = aboutMenu.Append(-1, "About the program")
+        aboutItem = aboutMenu.Append(-1, "About SAM")
         self.Bind(wx.EVT_MENU, self.OnAboutDialog, aboutItem)
 
         menuBar = wx.MenuBar()
