@@ -34,11 +34,11 @@ class MySplashScreen(wx.SplashScreen):
         # following order.
         wx.SplashScreen.__init__(self, aBitmap, splashStyle,
                                  splashDuration, parent)
-        self.Bind(wx.EVT_CLOSE, self.OnExitSplash)
+        self.Bind(wx.EVT_CLOSE, self.onExitSplash)
         wx.Yield()
 #----------------------------------------------------------------------#
 
-    def OnExitSplash(self, evt):
+    def onExitSplash(self, evt):
         self.Hide()
         MyFrame = maneframe.ManeFrame()
         app.SetTopWindow(MyFrame)
@@ -47,7 +47,7 @@ class MySplashScreen(wx.SplashScreen):
         evt.Skip()  # Make sure the default handler runs too...
 #----------------------------------------------------------------------#
 
-class MyApp(wx.App):
+class myApp(wx.App):
     def OnInit(self):
         MySplash = MySplashScreen()
         MySplash.Show()
@@ -55,6 +55,6 @@ class MyApp(wx.App):
         return True
 #----------------------------------------------------------------------#
 
-#app = MyApp(redirect=True, filename = "demo.log")
-app = MyApp()
+#app = myApp(redirect=True, filename = "demo.log")
+app = myApp()
 app.MainLoop()

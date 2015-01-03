@@ -53,7 +53,7 @@ class MyApp(wx.App):
         return True
 #----------------------------------------------------------------------#
 
-#app = MyApp(redirect=True, filename = "demo.log")
+#app = myApp(redirect=True, filename = "demo.log")
 app = MyApp()
 app.MainLoop()
 
