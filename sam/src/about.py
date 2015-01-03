@@ -16,7 +16,10 @@ import wx.lib.wxpTag
 class MyAboutDialog(wx.Dialog):
     text = '''
 <html>
-<body bgcolor="#AC76DE">
+<!--
+<body bgcolor="#0047FF" color="#FFFFFF">
+-->
+<body>
     <center>
     </br>
     <p>
@@ -49,21 +52,10 @@ class MyAboutDialog(wx.Dialog):
 </body>
 </html>
 '''
-    # TODO: Replace this with your own code -- example from Mouse vs. Python
     def __init__(self, parent):
         wx.Dialog.__init__(self, parent, -1,
-                           'Beginning to adapt the wxPython demo',)
+            'About Silent Auction Manager',)
         html = wx.html.HtmlWindow(self, -1, size=(420, -1))
-        if "gtk2" in wx.PlatformInfo:
-            html.SetStandardFonts()
-        py_version = sys.version.split()[0]
-        '''
-        txt = self.text % (wx.VERSION_STRING,
-                           ", ".join(wx.PlatformInfo[1:]),
-                           py_version
-                           )
-        html.SetPage(txt)
-        '''
         html.SetPage(self.text)
         btn = html.FindWindowById(wx.ID_OK)
         ir = html.GetInternalRepresentation()
