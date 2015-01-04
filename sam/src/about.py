@@ -22,7 +22,8 @@ class MyAboutDialog(wx.Dialog):
 <body bgcolor="#0047FF">
     <center>
     </br>
-    <font color="#FFFFFF">
+    </br>
+    <font color="#FFFFFF" size="2">
     <p>
         <b>SAM: the Silent Auction Manager</b> is an application that assists
         in setting up and managing a silent auction.
@@ -46,7 +47,7 @@ class MyAboutDialog(wx.Dialog):
 
     <p>
         <wxp module="wx" class="Button">
-            <param name="label" value="Okay">
+            <param name="label" value="OK">
             <param name="id"    value="ID_OK">
         </wxp>
     </p>
