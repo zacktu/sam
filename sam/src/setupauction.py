@@ -14,6 +14,7 @@ Author Bob Cannon
 
 '''
 
+import os
 import createauction
 import dialogs
 import sys
@@ -96,7 +97,7 @@ class SetUpAuction(wx.Frame):
             flag=wx.ALL | wx.ALIGN_RIGHT, border=5)
         selectionSizer.Add(self.passwordTC, pos=(row, 3), \
             flag=wx.ALL | wx.LEFT | wx.EXPAND, border=5)
-#        
+
         # Third row of selectionSizer
         row += 1
         selectionSizer.Add(dbNameLabel, pos=(row, 0), \
@@ -140,7 +141,8 @@ class SetUpAuction(wx.Frame):
 
         # Place mainSizer into the panel and you're finished
         self.panel.SetSizer(mainSizer)
-        self.SetSizeHints(250, 200, 800, 500)
+        #self.SetSizeHints(250, 200, 800, 500)
+        self.SetSizeHints(500, 200, 800, 500)
         mainSizer.Fit(self)
         
     def OnOKButton(self, event):
@@ -170,10 +172,49 @@ class SetUpAuction(wx.Frame):
         
         date = self.dateTC.GetValue()
         
-        print hostName, portNumber, userName, password, dbName, title, subtitle, date
+        print hostName, portNumber, userName, password, dbName, \
+              title, subtitle, date
         createauction.createAuction(hostName, portNumber, userName, password, \
                                     dbName, title, subtitle, date)
         dialogs.displayInfoDialog("The auction was created successfully.")
+
+        print('The database has been created -- now the profile')
+        profile = {'dbName': dbName,
+                   'hostName': hostName,
+                   'portNumber': portNumber,
+                   'userName': userName,
+                   'password': password,
+                   'title': title,
+                   'subtitle': subtitle,
+                   'date': date}
+        print('PROFILE CONTENTS: ', \
+            profile.get('dbName'), profile.get('hostName'), \
+            profile.get('portNumber'), \
+            profile['userName'], profile['password'], profile['title'], \
+            profile['subtitle'], profile['date'])
+        print('TRYING AGAIN: ')
+        print(profile)
+        homeDirectory = os.getenv('HOME')
+        print('HOMEDIRECTORY = ', homeDirectory)
+        path = homeDirectory + '/.sam'
+        print('PATH = ' + path)
+        try:
+            if not os.path.exists(path):
+                os.makedirs(path)
+            with open(os.path.join(path, 'profile'), 'w') as myFile:
+                myFile.write(str(profile))
+        except IOError as e:
+            print('Can''t do this')
+            print(e)
+        print('DICTIONARY WRITTEN -- NOW READ IT')
+        try:
+            s = open(path + '/profile', 'r').read()
+            myDict = eval(s)
+            print('DBNAME IS ' + myDict['dbName'])
+            print('TITLE IS ' + myDict['title'])
+        except IOError as e:
+            print('ANOTHER IOERROR')
+            print(e)
         sys.exit()
         
     def OnExitButton(self, event):

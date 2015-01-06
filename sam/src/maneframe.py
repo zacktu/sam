@@ -20,11 +20,11 @@ class ManeFrame(wx.Frame):
 
         fileMenu = wx.Menu()
         exitItem = fileMenu.Append(-1, "Exit the program")
-        self.Bind(wx.EVT_MENU, self.OnExit, exitItem)
+        self.Bind(wx.EVT_MENU, self.onExit, exitItem)
 
         aboutMenu = wx.Menu()
         aboutItem = aboutMenu.Append(-1, "About SAM")
-        self.Bind(wx.EVT_MENU, self.OnAboutDialog, aboutItem)
+        self.Bind(wx.EVT_MENU, self.onAboutDialog, aboutItem)
 
         menuBar = wx.MenuBar()
         menuBar.Append(fileMenu, "File")
@@ -56,10 +56,10 @@ class ManeFrame(wx.Frame):
             else:
                 exit()
         
-    def OnExit(self, event):
+    def onExit(self, event):
         self.Close()
         
-    def OnAboutDialog(self, event):
+    def onAboutDialog(self, event):
         from about import MyAboutDialog
         about = MyAboutDialog(self)
         about.ShowModal()
