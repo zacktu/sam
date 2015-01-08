@@ -42,7 +42,6 @@ class ConnectDialog(wx.Dialog):
     #def __init__(self, data):
     #def __init__(self, data):
     def __init__(self):
-        print('LENGTH OF SYS.ARGV IS ', len(sys.argv))
         wx.Dialog.__init__(self, None, -1, "Connect to Samdb")
 
         # Create the text controls
@@ -53,19 +52,35 @@ class ConnectDialog(wx.Dialog):
         passwd_l = wx.StaticText(self, -1, "Password:")
         dbname_l = wx.StaticText(self, -1, 'Database Name:')
 
-
-        # Get profile from user's home directory
-        path = os.getenv('HOME') + '/.sam/profile'
-        try:
-            if not os.path.exists(path):
-                print('There is no path to the profile -- needs work')
-                sys.exit()
-            else:
-                fp = open(path, 'r').read()
-                self.profile = eval(fp)
-        except IOError as e:
-            print('IOERROR')
-            print(e)
+        if len(sys.argv) == 2:
+            self.profile = {
+               'dbName': sys.argv[1],
+               'hostName': 'localhost',
+               'portNumber': '3306',
+               'userName': 'bob',
+               'password': 'bobspw'}
+        elif len(sys.argv) == 6:
+            self.profile = {
+               'dbName': sys.argv[1],
+               'hostName': sys.argv[2],
+               'portNumber': sys.argv[3],
+               'userName': sys.argv[4],
+               'password': sys.argv[5]}
+        elif len(sys.argv) == 1:
+            # Get profile from user's home directory
+            path = os.getenv('HOME') + '/.sam/profile'
+            try:
+                if not os.path.exists(path):
+                    print('There is no path to the profile -- needs work')
+                    sys.exit()
+                else:
+                    fp = open(path, 'r').read()
+                    self.profile = eval(fp)
+            except IOError as e:
+                print('IOERROR')
+                print(e)
+        else:
+            print('THIS AIN''T RIGHT!!!!!')
 
         host_t  = wx.TextCtrl \
             (self, validator=DataXferValidator(self.profile, "hostName"))
@@ -89,7 +104,7 @@ class ConnectDialog(wx.Dialog):
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(about, 0, wx.ALL, 5)
         sizer.Add(wx.StaticLine(self), 0, wx.EXPAND|wx.ALL, 5)
-        
+
         fgs = wx.FlexGridSizer(5, 2, 5, 5)
         fgs.Add(host_l, 0, wx.ALIGN_RIGHT)
         fgs.Add(host_t, 0, wx.EXPAND)
