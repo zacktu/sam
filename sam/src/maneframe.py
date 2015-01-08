@@ -24,7 +24,7 @@ class ManeFrame(wx.Frame):
 
         aboutMenu = wx.Menu()
         aboutItem = aboutMenu.Append(-1, "About SAM")
-        self.Bind(wx.EVT_MENU, self.onAboutDialog, aboutItem)
+        self.Bind(wx.EVT_MENU, self.OnAboutDialog, aboutItem)
 
         menuBar = wx.MenuBar()
         menuBar.Append(fileMenu, "File")
@@ -34,17 +34,17 @@ class ManeFrame(wx.Frame):
         # Connect to the database
         connected = False
         while not connected:
-            data = {}
-            dlg = connectdialog.ConnectDialog(data)
+            dlg = connectdialog.ConnectDialog()
             result = dlg.ShowModal()
             dlg.Destroy()
             if result == wx.ID_OK:
                 try:
-                    samdb = dbservices.Samdb(dbname = data['dbname'], \
-                                        hostname = data["host"], \
-                                        portnumber = int(data['port']), \
-                                        username = data["user"], \
-                                        password = data["passwd"])
+                    profile = dlg.getProfile()
+                    samdb = dbservices.Samdb(dbname = profile['dbname'], \
+                                        hostname = profile["host"], \
+                                        portnumber = int(profile['port']), \
+                                        username = profile["user"], \
+                                        password = profile["passwd"])
                     connected = True
                     manetoolbook.manetoolbook(self, -1, samdb)
                 except MySQLdb.Error, e:
@@ -59,7 +59,7 @@ class ManeFrame(wx.Frame):
     def onExit(self, event):
         self.Close()
         
-    def onAboutDialog(self, event):
+    def OnAboutDialog(self, event):
         from about import MyAboutDialog
         about = MyAboutDialog(self)
         about.ShowModal()

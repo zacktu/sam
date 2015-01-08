@@ -14,31 +14,32 @@ password for connecting to Samdb."""
 class DataXferValidator(wx.PyValidator):
     def __init__(self, data, key):
         wx.PyValidator.__init__(self)
-        self.data = data
+        self.profile = data
         self.key = key
 
     def Clone(self):
         """
         Note that every validator must implement the Clone() method.
         """
-        return DataXferValidator(self.data, self.key)
+        return DataXferValidator(self.profile, self.key)
 
     def Validate(self, win):
         return True
 
     def TransferToWindow(self):
         textCtrl = self.GetWindow()
-        textCtrl.SetValue(self.data.get(self.key, ""))
+        textCtrl.SetValue(self.profile.get(self.key, ""))
         return True 
 
     def TransferFromWindow(self):
         textCtrl = self.GetWindow()
-        self.data[self.key] = textCtrl.GetValue()
+        self.profile[self.key] = textCtrl.GetValue()
         return True
 
 class ConnectDialog(wx.Dialog):
     #def __init__(self, data):
-    def __init__(self, data):
+    #def __init__(self, data):
+    def __init__(self):
         wx.Dialog.__init__(self, None, -1, "Connect to Samdb")
 
         # Create the text controls
@@ -48,19 +49,25 @@ class ConnectDialog(wx.Dialog):
         user_l = wx.StaticText(self, -1, "User:")
         passwd_l = wx.StaticText(self, -1, "Password:")
         dbname_l = wx.StaticText(self, -1, 'Database Name:')
-        
-        data["host"] = "localhost"
-        data['port'] = '3306'
-        data["user"] = "bob"
-        data["passwd"] = 'bobspw'
-        data['dbname'] = 'test07'
-        host_t  = wx.TextCtrl(self, validator=DataXferValidator(data, "host"))
-        port_t  = wx.TextCtrl(self, validator=DataXferValidator(data, "port"))
-        user_t = wx.TextCtrl(self, validator=DataXferValidator(data, "user"))
-        passwd_t = wx.TextCtrl(self, style=wx.TE_PASSWORD, \
-                               validator=DataXferValidator(data, "passwd"))
-        dbname_t = wx.TextCtrl(self, \
-                               validator=DataXferValidator(data, "dbname"))
+
+        #### temporary
+        self.profile = {}
+        self.profile["host"] = "localhost"
+        self.profile['port'] = '3306'
+        self.profile["user"] = "bob"
+        self.profile["passwd"] = 'bobspw'
+        self.profile['dbname'] = 'test07'
+        host_t  = wx.TextCtrl\
+            (self, validator=DataXferValidator(self.profile, "host"))
+        port_t  = wx.TextCtrl\
+            (self, validator=DataXferValidator(self.profile, "port"))
+        user_t = wx.TextCtrl\
+            (self, validator=DataXferValidator(self.profile, "user"))
+        passwd_t = wx.TextCtrl\
+            (self, style=wx.TE_PASSWORD, \
+             validator=DataXferValidator(self.profile, "passwd"))
+        dbname_t = wx.TextCtrl\
+            (self, validator=DataXferValidator(self.profile, "dbname"))
 
         # Use standard button IDs
         okayButton   = wx.Button(self, wx.ID_OK)
@@ -95,7 +102,9 @@ class ConnectDialog(wx.Dialog):
 
         self.SetSizer(sizer)
         sizer.Fit(self)
-        
+
+    def getProfile(self):
+        return self.profile
 
 if __name__ == '__main__':
     app = wx.PySimpleApp()
