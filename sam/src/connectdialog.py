@@ -42,6 +42,7 @@ class ConnectDialog(wx.Dialog):
     #def __init__(self, data):
     #def __init__(self, data):
     def __init__(self):
+        print('LENGTH OF SYS.ARGV IS ', len(sys.argv))
         wx.Dialog.__init__(self, None, -1, "Connect to Samdb")
 
         # Create the text controls
