@@ -4,6 +4,8 @@ the Samdb database.  At the moment it defaults to bob@localhost with a null
 password.  This is adapted from validator2.py from chapter 9 of Rappin.  
 '''
 
+import os
+import sys
 import wx
 
 about_txt = """\
@@ -50,24 +52,31 @@ class ConnectDialog(wx.Dialog):
         passwd_l = wx.StaticText(self, -1, "Password:")
         dbname_l = wx.StaticText(self, -1, 'Database Name:')
 
-        #### temporary
-        self.profile = {}
-        self.profile["host"] = "localhost"
-        self.profile['port'] = '3306'
-        self.profile["user"] = "bob"
-        self.profile["passwd"] = 'bobspw'
-        self.profile['dbname'] = 'test07'
-        host_t  = wx.TextCtrl\
-            (self, validator=DataXferValidator(self.profile, "host"))
+
+        # Get profile from user's home directory
+        path = os.getenv('HOME') + '/.sam/profile'
+        try:
+            if not os.path.exists(path):
+                print('There is no path to the profile -- needs work')
+                sys.exit()
+            else:
+                fp = open(path, 'r').read()
+                self.profile = eval(fp)
+        except IOError as e:
+            print('IOERROR')
+            print(e)
+
+        host_t  = wx.TextCtrl \
+            (self, validator=DataXferValidator(self.profile, "hostName"))
         port_t  = wx.TextCtrl\
-            (self, validator=DataXferValidator(self.profile, "port"))
+            (self, validator=DataXferValidator(self.profile, "portNumber"))
         user_t = wx.TextCtrl\
-            (self, validator=DataXferValidator(self.profile, "user"))
+            (self, validator=DataXferValidator(self.profile, "userName"))
         passwd_t = wx.TextCtrl\
             (self, style=wx.TE_PASSWORD, \
-             validator=DataXferValidator(self.profile, "passwd"))
+             validator=DataXferValidator(self.profile, "password"))
         dbname_t = wx.TextCtrl\
-            (self, validator=DataXferValidator(self.profile, "dbname"))
+            (self, validator=DataXferValidator(self.profile, "dbName"))
 
         # Use standard button IDs
         okayButton   = wx.Button(self, wx.ID_OK)
@@ -108,17 +117,15 @@ class ConnectDialog(wx.Dialog):
 
 if __name__ == '__main__':
     app = wx.PySimpleApp()
-
-    data = { "host" : "localhost" , "port" : '3306', "user" : "bob" , \
-                "passwd" : '', 'dbname' : 'Samdb'}
-    dlg = ConnectDialog(data)
+    dlg = ConnectDialog()
     dlg.ShowModal()
+    profile = dlg.getProfile()
     dlg.Destroy()
 
-    print "HOST IS ", data["host"]
-    print "USER IS", data['user']
-    print 'PORT IS', data['port']
-    print "PASSWORD IS ", data['passwd']
-    print 'DATABASE NAME IS ', data['dbname']
+    print "HOST IS ", profile["host"]
+    print "USER IS", profile['user']
+    print 'PORT IS', profile['port']
+    print "PASSWORD IS ", profile['passwd']
+    print 'DATABASE NAME IS ', profile['dbname']
 
     app.MainLoop()

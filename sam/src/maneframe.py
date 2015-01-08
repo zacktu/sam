@@ -40,11 +40,12 @@ class ManeFrame(wx.Frame):
             if result == wx.ID_OK:
                 try:
                     profile = dlg.getProfile()
-                    samdb = dbservices.Samdb(dbname = profile['dbname'], \
-                                        hostname = profile["host"], \
-                                        portnumber = int(profile['port']), \
-                                        username = profile["user"], \
-                                        password = profile["passwd"])
+                    samdb = dbservices.Samdb(
+                                dbname = profile['dbName'], \
+                                hostname = profile["hostName"], \
+                                portnumber = int(profile['portNumber']), \
+                                username = profile["userName"], \
+                                password = profile["password"])
                     connected = True
                     manetoolbook.manetoolbook(self, -1, samdb)
                 except MySQLdb.Error, e:
