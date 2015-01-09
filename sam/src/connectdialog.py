@@ -7,7 +7,8 @@ password.  This is adapted from validator2.py from chapter 9 of Rappin.
 import os
 import sys
 import wx
-import profile
+import dialogs
+import profileservices
 
 about_txt = """\
 Enter the hostname, username, and user
@@ -40,8 +41,7 @@ class DataXferValidator(wx.PyValidator):
         return True
 
 class ConnectDialog(wx.Dialog):
-    #def __init__(self, data):
-    #def __init__(self, data):
+
     def __init__(self):
         wx.Dialog.__init__(self, None, -1, "Connect to Samdb")
 
@@ -68,24 +68,13 @@ class ConnectDialog(wx.Dialog):
                'userName': sys.argv[4],
                'password': sys.argv[5]}
         elif len(sys.argv) == 1:
-            #profile = profile.getProfile()
-            print('CONNECTDIALOG IS GETTING THE PROFILE')
-
-            # Get profile from user's home directory
-            path = os.getenv('HOME') + '/.sam/profile'
-            try:
-                if not os.path.exists(path):
-                    print('There is no path to the profile -- needs work')
-                    sys.exit()
-                else:
-                    fp = open(path, 'r').read()
-                    self.profile = eval(fp)
-            except IOError as e:
-                print('IOERROR')
-                print(e)
+            self.profile = profileservices.getProfile()
         else:
-            print('THIS AIN''T RIGHT!!!!!')
+            dialogs.displayErrorDialog(
+                'Can''t get your profile.\nPlease see the auction manager')
+            sys.exit()
 
+        # So we have the profile.  Now show it and allow temporary changes.
         host_t  = wx.TextCtrl \
             (self, validator=DataXferValidator(self.profile, "hostName"))
         port_t  = wx.TextCtrl\
@@ -137,15 +126,15 @@ class ConnectDialog(wx.Dialog):
 
 if __name__ == '__main__':
     app = wx.PySimpleApp()
-    dlg = ConnectDialog()
-    dlg.ShowModal()
-    profile = dlg.getProfile()
-    dlg.Destroy()
+    connectDialog = ConnectDialog()
+    connectDialog.ShowModal()
+    profile = profileservices.getProfile()
+    connectDialog.Destroy()
 
-    print "HOST IS ", profile["host"]
-    print "USER IS", profile['user']
-    print 'PORT IS', profile['port']
-    print "PASSWORD IS ", profile['passwd']
-    print 'DATABASE NAME IS ', profile['dbname']
+    print "HOST IS ", profileservices["host"]
+    print "USER IS", profileservices['user']
+    print 'PORT IS', profileservices['port']
+    print "PASSWORD IS ", profileservices['passwd']
+    print 'DATABASE NAME IS ', profileservices['dbname']
 
     app.MainLoop()

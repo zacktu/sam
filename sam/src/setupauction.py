@@ -17,7 +17,7 @@ Author Bob Cannon
 import os
 import createauction
 import dialogs
-import profile
+import profileservices
 import sys
 import wx
 
@@ -180,9 +180,7 @@ class SetUpAuction(wx.Frame):
         dialogs.displayInfoDialog("The auction was created successfully.")
 
         # Now write the profile to the user's directory
-
-        p = profile.Profile()
-        p.createProfile(dbName, hostName, portNumber,
+        profileservices.createProfile(dbName, hostName, portNumber,
                         userName, password, title, subtitle, date)
         sys.exit()
 

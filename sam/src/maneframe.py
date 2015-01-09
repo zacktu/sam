@@ -34,12 +34,12 @@ class ManeFrame(wx.Frame):
         # Connect to the database
         connected = False
         while not connected:
-            dlg = connectdialog.ConnectDialog()
-            result = dlg.ShowModal()
-            dlg.Destroy()
+            connectDialog = connectdialog.ConnectDialog()
+            result = connectDialog.ShowModal()
+            connectDialog.Destroy()
             if result == wx.ID_OK:
                 try:
-                    profile = dlg.getProfile()
+                    profile = connectDialog.getProfile()
                     samdb = dbservices.Samdb(
                                 dbname = profile['dbName'], \
                                 hostname = profile["hostName"], \
