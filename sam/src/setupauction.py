@@ -17,6 +17,7 @@ Author Bob Cannon
 import os
 import createauction
 import dialogs
+import profile
 import sys
 import wx
 
@@ -163,7 +164,7 @@ class SetUpAuction(wx.Frame):
         
         dbName = self.dbNameTC.GetValue()
         if not (len(dbName) > 0):
-            dialogs.displayErrorDialog("The dataabase name must not be null.")
+            dialogs.displayErrorDialog("The database name must not be null.")
             return
         
         title = self.titleTC.GetValue()
@@ -178,45 +179,13 @@ class SetUpAuction(wx.Frame):
                                     dbName, title, subtitle, date)
         dialogs.displayInfoDialog("The auction was created successfully.")
 
-        print('The database has been created -- now the profile')
-        profile = {'dbName': dbName,
-                   'hostName': hostName,
-                   'portNumber': portNumber,
-                   'userName': userName,
-                   'password': password,
-                   'title': title,
-                   'subtitle': subtitle,
-                   'date': date}
-        print('PROFILE CONTENTS: ', \
-            profile.get('dbName'), profile.get('hostName'), \
-            profile.get('portNumber'), \
-            profile['userName'], profile['password'], profile['title'], \
-            profile['subtitle'], profile['date'])
-        print('TRYING AGAIN: ')
-        print(profile)
-        homeDirectory = os.getenv('HOME')
-        print('HOMEDIRECTORY = ', homeDirectory)
-        path = homeDirectory + '/.sam'
-        print('PATH = ' + path)
-        try:
-            if not os.path.exists(path):
-                os.makedirs(path)
-            with open(os.path.join(path, 'profile'), 'w') as myFile:
-                myFile.write(str(profile))
-        except IOError as e:
-            print('Can''t do this')
-            print(e)
-        print('DICTIONARY WRITTEN -- NOW READ IT')
-        try:
-            s = open(path + '/profile', 'r').read()
-            myDict = eval(s)
-            print('DBNAME IS ' + myDict['dbName'])
-            print('TITLE IS ' + myDict['title'])
-        except IOError as e:
-            print('ANOTHER IOERROR')
-            print(e)
+        # Now write the profile to the user's directory
+
+        p = profile.Profile()
+        p.createProfile(dbName, hostName, portNumber,
+                        userName, password, title, subtitle, date)
         sys.exit()
-        
+
     def OnExitButton(self, event):
         if dialogs.displayYesNoDialog('Are you sure you want to exit?'):
             sys.exit()

@@ -7,6 +7,7 @@ password.  This is adapted from validator2.py from chapter 9 of Rappin.
 import os
 import sys
 import wx
+import profile
 
 about_txt = """\
 Enter the hostname, username, and user
@@ -67,6 +68,9 @@ class ConnectDialog(wx.Dialog):
                'userName': sys.argv[4],
                'password': sys.argv[5]}
         elif len(sys.argv) == 1:
+            #profile = profile.getProfile()
+            print('CONNECTDIALOG IS GETTING THE PROFILE')
+
             # Get profile from user's home directory
             path = os.getenv('HOME') + '/.sam/profile'
             try:
