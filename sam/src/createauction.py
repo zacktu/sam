@@ -73,12 +73,12 @@ def doEverything(samdb, dbnam, title, subtitle, date):
             from a GUI.  For the moment, default data are entered
             into the table.  '''
         da = auction.Auction()
-        da.CreateAuctionTable(samdb)
+        da.createAuctionTable(samdb)
         print "Auction table created."
         print 'ENTERING AUCTION DATA'
-        da.AddAuctionTitle(samdb, title)
-        da.AddAuctionSubtitle(samdb, subtitle)
-        da.AddAuctionDate(samdb, date)
+        da.addAuctionTitle(samdb, title)
+        da.addAuctionSubtitle(samdb, subtitle)
+        da.addAuctionDate(samdb, date)
         print 'ADDED AUCTION DATA'
     except MySQLdb.Error, e:
         print "createAuction.doEverything: Error %d: %s" % \

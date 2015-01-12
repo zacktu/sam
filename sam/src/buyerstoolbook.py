@@ -1,7 +1,7 @@
 
 import  wx
 import addpanel
-import DeletePanel
+import deletepanel
 import editpanel
 
 actions = ['buyeradd', 'buyeredit', 'buyerdelete']
@@ -32,7 +32,7 @@ class BuyersToolbook(wx.Toolbook):
         self.editPanel = editpanel.EditPanel(self, self.samdb, 'Buyer')
         self.AddPage(self.editPanel, '', imageId=imageIdGenerator.next())
      
-        self.deletePanel = DeletePanel.DeletePanel(self, self.samdb, 'Buyer')
+        self.deletePanel = deletepanel.DeletePanel(self, self.samdb, 'Buyer')
         self.AddPage(self.deletePanel, '', imageId = imageIdGenerator.next())
         
         self.Bind(wx.EVT_TOOLBOOK_PAGE_CHANGED, self.OnPageChanged)

@@ -126,9 +126,9 @@ class PrintingServices():
         lines.append('.ft B\n')
         lines.append('.ce 4\n')
         try:
-            lines.append(self.auction.GetAuctionTitle(self.samdb) + '\n')
-            lines.append(self.auction.GetAuctionSubtitle(self.samdb) + '\n')
-            lines.append(self.auction.GetAuctionDate(self.samdb) + '\n')
+            lines.append(self.auction.getAuctionTitle(self.samdb) + '\n')
+            lines.append(self.auction.getAuctionSubtitle(self.samdb) + '\n')
+            lines.append(self.auction.getAuctionDate(self.samdb) + '\n')
             if whatToPrint == 'carts':
                 lines.append('\nShopping Cart Summary\n')
             elif whatToPrint == 'receipts':
@@ -173,15 +173,15 @@ class PrintingServices():
         lines.append('.sp 1.5i\n')
         lines.append('.ce\n')
         try:
-            lines.append(self.auction.GetAuctionTitle(self.samdb) + '\n')
+            lines.append(self.auction.getAuctionTitle(self.samdb) + '\n')
             lines.append('.sp\n')
             lines.append('.ce\n')
             lines.append('.ps -2\n')
-            lines.append(self.auction.GetAuctionSubtitle(self.samdb) + '\n')
+            lines.append(self.auction.getAuctionSubtitle(self.samdb) + '\n')
             lines.append('.ps -2\n')
             lines.append('.sp\n')
             lines.append('.ce\n')
-            lines.append(self.auction.GetAuctionDate(self.samdb) + '\n')
+            lines.append(self.auction.getAuctionDate(self.samdb) + '\n')
         except MySQLdb.Error, e:
             print "PrintingServices.buildCartOrReceiptHeader: Error %d: %s" \
                     % (e.args[0], e.args[1])
