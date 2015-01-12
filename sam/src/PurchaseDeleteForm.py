@@ -10,7 +10,7 @@ import dialogs
 import items
 import purchases
 import console
-import ChooserLists
+import chooserlists
 
 class PurchaseDeleteForm(wx.Panel):
     def __init__(self, parent, samdb):
@@ -20,7 +20,7 @@ class PurchaseDeleteForm(wx.Panel):
         self.parent = parent
         self.items = items.Items()
         self.purchases = purchases.Purchases()
-        self.chooserLists = ChooserLists.ChooserLists()
+        self.chooserLists = chooserlists.ChooserLists()
         self.con = console.Console()
         
         mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -96,7 +96,7 @@ class PurchaseDeleteForm(wx.Panel):
     def BuildChooser(self, samdb):
         try:
             self.purchasedItemNumberList = \
-                            self.chooserLists.BuildChooserNumberList \
+                            self.chooserLists.buildChooserNumberList \
                                 ('purchase', samdb)
             wx.StaticText(self.chooserPanel, -1, \
                                 "Select an item number:", (15,5))
@@ -109,7 +109,7 @@ class PurchaseDeleteForm(wx.Panel):
                   self.purchasedItemNumberChoice)
 
             self.purchasedItemDescriptionList = \
-                        self.chooserLists.BuildChooserNumberAndInfoList \
+                        self.chooserLists.buildChooserNumberAndInfoList \
                                 ('purchase', samdb)
             wx.StaticText(self.chooserPanel, -1, \
                                 "Select an item description:", (15,40))

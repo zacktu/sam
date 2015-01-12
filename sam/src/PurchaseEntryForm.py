@@ -180,7 +180,7 @@ class PurchaseEntryForm(wx.Panel):
                 self.purchases.deletePurchase(self.samdb, self.oldItemNumber)
                 self.purchases.purchaseItem(self.samdb, itemNumber, \
                             buyerNumber, winningBid)
-                self.parent.BuildPurchasedItemChooser(self.samdb)
+                self.parent.buildPurchasedItemChooser(self.samdb)
             # Write all fields for the affected item number.
             self.ClearAll()
             self.con.displayAllPurchases(self.samdb)

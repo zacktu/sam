@@ -9,7 +9,7 @@ import MySQLdb
 import dialogs
 import items
 import console
-import ChooserLists
+import chooserlists
 
 class ItemDeleteForm(wx.Panel):
     def __init__(self, parent, samdb):
@@ -18,7 +18,7 @@ class ItemDeleteForm(wx.Panel):
         self.samdb = samdb
         self.parent = parent
         self.items = items.Items()
-        self.chooserLists = ChooserLists.ChooserLists()
+        self.chooserLists = chooserlists.ChooserLists()
         self.con = console.Console()
         
         mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -94,7 +94,7 @@ class ItemDeleteForm(wx.Panel):
 
     def BuildChooser(self, samdb):
         try:
-            self.itemNumberList = self.chooserLists.BuildChooserNumberList \
+            self.itemNumberList = self.chooserLists.buildChooserNumberList \
                                 ('item', samdb)
             wx.StaticText(self.chooserPanel, -1, \
                                 "Select an item number:", (15,5))
@@ -106,7 +106,7 @@ class ItemDeleteForm(wx.Panel):
                   self.itemNumberChoice)
 
             self.itemDescriptionList = \
-                        self.chooserLists.BuildChooserNumberAndInfoList \
+                        self.chooserLists.buildChooserNumberAndInfoList \
                                 ('item', samdb)
             wx.StaticText(self.chooserPanel, -1, \
                                 "Select an item description:", (15,40))

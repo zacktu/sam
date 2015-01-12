@@ -4,7 +4,7 @@ import MySQLdb
 import dialogs
 import buyers
 import console
-import ChooserLists
+import chooserlists
 import printingservices
 import PrintOrPreviewDialog
 
@@ -19,7 +19,7 @@ class PrintBuyerCartOrReceiptForm(wx.Panel):
         self.samdb = samdb
         self.parent = parent
         self.buyers = buyers.Buyers()
-        self.chooserLists = ChooserLists.ChooserLists()
+        self.chooserLists = chooserlists.ChooserLists()
         self.whatToPrint = whatToPrint
         self.con = console.Console()
         
@@ -77,7 +77,7 @@ class PrintBuyerCartOrReceiptForm(wx.Panel):
         
     def BuildChooser(self, samdb):
         try:
-            self.buyerNumberList = self.chooserLists.BuildChooserNumberList \
+            self.buyerNumberList = self.chooserLists.buildChooserNumberList \
                             ('buyer', samdb)
             wx.StaticText(self.chooserPanel, -1, \
                           "Select a buyer number:", (15,5))
@@ -89,7 +89,7 @@ class PrintBuyerCartOrReceiptForm(wx.Panel):
                                      self.buyerNumberChoice)
     
             self.buyerNameList = \
-                self.chooserLists.BuildChooserNumberAndInfoList('buyer', samdb)
+                self.chooserLists.buildChooserNumberAndInfoList('buyer', samdb)
             wx.StaticText(self.chooserPanel, -1, \
                           "Select a buyer name:", (15,40))
             self.buyerNameChoice = wx.Choice(self.chooserPanel, \

@@ -1,8 +1,8 @@
 
 import  wx
-import AddPanel
+import addpanel
 import DeletePanel
-import EditPanel
+import editpanel
 
 actions = ['donoradd', 'donoredit', 'donordelete']
 
@@ -27,10 +27,10 @@ class DonorsToolbook(wx.Toolbook):
         imageIdGenerator = GetNextImageID(il.GetImageCount())
         
         #self.dap = DonorAddPanel.DonorAddPanel(self, self.samdb)
-        self.addPanel = AddPanel.AddPanel(self, self.samdb, 'Donor')
+        self.addPanel = addpanel.AddPanel(self, self.samdb, 'Donor')
         self.AddPage(self.addPanel, "", imageId=imageIdGenerator.next())
         
-        self.editPanel = EditPanel.EditPanel(self, self.samdb, 'Donor')
+        self.editPanel = editpanel.EditPanel(self, self.samdb, 'Donor')
         self.AddPage(self.editPanel, '', imageId=imageIdGenerator.next())
         
         self.deletePanel = DeletePanel.DeletePanel(self, self.samdb, 'Donor')
@@ -48,7 +48,7 @@ class DonorsToolbook(wx.Toolbook):
         if new == DELETECODE:
             self.deletePanel.deleteForm.BuildChooser(self.samdb)
         if new == EDITCODE:
-            self.editPanel.BuildDonorChooser(self.samdb)
+            self.editPanel.buildDonorChooser(self.samdb)
             self.editPanel.entryForm.ClearAll()
         event.Skip()
         

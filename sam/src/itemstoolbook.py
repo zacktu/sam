@@ -1,8 +1,8 @@
 
 import  wx
-import AddPanel
+import addpanel
 import DeletePanel
-import EditPanel
+import editpanel
 
 actions = ['itemadd', 'itemedit', 'itemdelete']
 
@@ -34,10 +34,10 @@ class ItemsToolbook(wx.Toolbook):
         self.AssignImageList(il)
         imageIdGenerator = getNextImageID(il.GetImageCount())
         
-        self.addPanel = AddPanel.AddPanel(self, self.samdb, 'Item')
+        self.addPanel = addpanel.AddPanel(self, self.samdb, 'Item')
         self.AddPage(self.addPanel, "", imageId=imageIdGenerator.next())
         
-        self.editPanel = EditPanel.EditPanel(self, self.samdb, 'Item')
+        self.editPanel = editpanel.EditPanel(self, self.samdb, 'Item')
         self.AddPage(self.editPanel, '', imageId=imageIdGenerator.next())
         
         self.deletePanel = DeletePanel.DeletePanel(self, self.samdb, 'Item')
@@ -55,6 +55,6 @@ class ItemsToolbook(wx.Toolbook):
         if new == DELETECODE:
             self.deletePanel.deleteForm.BuildChooser(self.samdb)
         if new == EDITCODE:
-            self.editPanel.BuildItemChooser(self.samdb)
+            self.editPanel.buildItemChooser(self.samdb)
             self.editPanel.entryForm.ClearAll()
         event.Skip()

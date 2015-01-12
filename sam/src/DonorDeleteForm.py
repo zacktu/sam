@@ -4,7 +4,7 @@ import MySQLdb
 import dialogs
 import donors
 import console
-import ChooserLists
+import chooserlists
 
 class DonorDeleteForm(wx.Panel):
     def __init__(self, parent, samdb):
@@ -13,7 +13,7 @@ class DonorDeleteForm(wx.Panel):
         self.samdb = samdb
         self.parent = parent
         self.donors = donors.Donors()
-        self.chooserLists = ChooserLists.ChooserLists()
+        self.chooserLists = chooserlists.ChooserLists()
         self.con = console.Console()
         
         mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -80,7 +80,7 @@ class DonorDeleteForm(wx.Panel):
 
     def BuildChooser(self, samdb):
         try:
-            self.donorNumberList = self.chooserLists.BuildChooserNumberList \
+            self.donorNumberList = self.chooserLists.buildChooserNumberList \
                                     ('donor', samdb)
             wx.StaticText(self.chooserPanel, -1, \
                           "Select a donor number:", (15,5))
@@ -92,7 +92,7 @@ class DonorDeleteForm(wx.Panel):
                                      self.donorNumberChoice)
 
             self.donorNameList = \
-                self.chooserLists.BuildChooserNumberAndInfoList \
+                self.chooserLists.buildChooserNumberAndInfoList \
                                 ('donor', samdb)
             wx.StaticText(self.chooserPanel, -1, \
                           "Select a donor name:", (15,40))

@@ -202,7 +202,11 @@ def populate(samdb, da, dd, db, di, dp):
     dp.purchaseItem(samdb, '005', '003', '150')
     dp.purchaseItem(samdb, '007', '002', '65')
     dp.purchaseItem(samdb, '008', '003', '125')
-    
+
+    print("\nNOW TWO BUYERS PAY FORM ITEMS IN THEIR CART")
+    db.updateBuyerPaid(samdb,  '002')
+    db.updateBuyerPaid(samdb,  '003')
+
     print ("\nNOW LOOK AT THE ITEMS TABLE AGAIN")
     cnsole.displayItems(samdb)
     

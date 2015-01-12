@@ -1,8 +1,8 @@
 
 import  wx
-import AddPanel
+import addpanel
 import DeletePanel
-import EditPanel
+import editpanel
 
 actions = ['purchaseadd', 'purchaseedit', 'purchasedelete']
 
@@ -26,10 +26,10 @@ class PurchasesToolbook(wx.Toolbook):
         self.AssignImageList(il)
         imageIdGenerator = getNextImageID(il.GetImageCount())
         
-        self.addPanel = AddPanel.AddPanel(self, self.samdb, 'Purchase')
+        self.addPanel = addpanel.AddPanel(self, self.samdb, 'Purchase')
         self.AddPage(self.addPanel, "", imageId=imageIdGenerator.next())
         
-        self.editPanel = EditPanel.EditPanel(self, self.samdb, 'Purchase')
+        self.editPanel = editpanel.EditPanel(self, self.samdb, 'Purchase')
         self.AddPage(self.editPanel, '', imageId=imageIdGenerator.next())
      
         self.deletePanel = DeletePanel.DeletePanel(self, self.samdb, 'Purchase')
@@ -45,7 +45,7 @@ class PurchasesToolbook(wx.Toolbook):
         ## 0 ==> Add Purchase; 1 ==> Edit Purchase; 2 ==> Purchase Purchase
         new = event.GetSelection()
         if new == EDITCODE:
-            self.editPanel.BuildPurchasedItemChooser(self.samdb)
+            self.editPanel.buildPurchasedItemChooser(self.samdb)
             self.editPanel.entryForm.ClearAll()
         if new == DELETECODE:
             self.deletePanel.deleteForm.BuildChooser(self.samdb)

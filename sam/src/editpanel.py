@@ -29,37 +29,37 @@ class EditPanel(wx.Panel):
         
         self.chooserPanel = wx.Panel(self, -1)
         if player == 'Donor':
-            donorList = self.BuildDonorList(samdb)
+            donorList = self.buildDonorList(samdb)
             wx.StaticText(self.chooserPanel, -1, \
                             "Select a donor number:", (15,5))
             choice = wx.Choice(self.chooserPanel, -1, (175, 0), \
                                wx.DefaultSize, donorList, \
                                wx.CB_DROPDOWN | wx.CB_READONLY | wx.CB_SORT)
-            self.Bind(wx.EVT_CHOICE, self.OnChoice, choice)
+            self.Bind(wx.EVT_CHOICE, self.onChoice, choice)
         elif player == 'Item':
-            itemList = self.BuildItemList(samdb)
+            itemList = self.buildItemList(samdb)
             wx.StaticText(self.chooserPanel, -1, \
                           "Select an item number:", (15,5))
             choice = wx.Choice(self.chooserPanel, -1, (175, 0), \
                                wx.DefaultSize, itemList, \
                                wx.CB_DROPDOWN | wx.CB_READONLY | wx.CB_SORT)
-            self.Bind(wx.EVT_CHOICE, self.OnChoice, choice)
+            self.Bind(wx.EVT_CHOICE, self.onChoice, choice)
         elif player == 'Buyer':
-            buyerList = self.BuildBuyerList(samdb)
+            buyerList = self.buildBuyerList(samdb)
             wx.StaticText(self.chooserPanel, -1, \
                           "Select a buyer number:", (15,5))
             choice = wx.Choice(self.chooserPanel, -1, (175, 0), \
                                wx.DefaultSize, buyerList, \
                                wx.CB_DROPDOWN | wx.CB_READONLY | wx.CB_SORT)
-            self.Bind(wx.EVT_CHOICE, self.OnChoice, choice)
+            self.Bind(wx.EVT_CHOICE, self.onChoice, choice)
         elif player == 'Purchase':
-            purchasedItemList = self.BuildPurchasedItemList(samdb)
+            purchasedItemList = self.buildPurchasedItemList(samdb)
             wx.StaticText(self.chooserPanel, -1, \
                           "Select an item number:", (15,5))
             choice = wx.Choice(self.chooserPanel, -1, (175, 0), \
                                wx.DefaultSize, purchasedItemList, \
                                wx.CB_DROPDOWN | wx.CB_READONLY | wx.CB_SORT)
-            self.Bind(wx.EVT_CHOICE, self.OnChoice, choice)
+            self.Bind(wx.EVT_CHOICE, self.onChoice, choice)
             
         mainSizer.Add(self.chooserPanel)
         
@@ -88,14 +88,14 @@ class EditPanel(wx.Panel):
         
         '''  D O N O R S  '''
 
-    def BuildDonorChooser(self, samdb):
-        donorList = self.BuildDonorList(samdb)
+    def buildDonorChooser(self, samdb):
+        donorList = self.buildDonorList(samdb)
         choice = wx.Choice(self.chooserPanel, -1, (175, 0), wx.DefaultSize, \
                                donorList, \
                                wx.CB_DROPDOWN | wx.CB_READONLY | wx.CB_SORT)
-        self.Bind(wx.EVT_CHOICE, self.OnChoice, choice)
+        self.Bind(wx.EVT_CHOICE, self.onChoice, choice)
 
-    def BuildDonorList(self, samdb):
+    def buildDonorList(self, samdb):
         query = "SELECT donor_Number FROM Donors ORDER BY donor_number;"
         try:
             rows = samdb.fetchRows(query)
@@ -109,19 +109,19 @@ class EditPanel(wx.Panel):
             donorList.append(row[0])
         return donorList
         
-    def ClearDonorForm(self):
+    def clearDonorForm(self):
         self.donorForm.ClearAll()
         
     ''' I T E M S '''
  
-    def BuildItemChooser(self, samdb):
-        itemList = self.BuildItemList(samdb)
+    def buildItemChooser(self, samdb):
+        itemList = self.buildItemList(samdb)
         choice = wx.Choice(self.chooserPanel, -1, (175, 0), wx.DefaultSize, \
                                itemList, \
                                wx.CB_DROPDOWN | wx.CB_READONLY | wx.CB_SORT)
-        self.Bind(wx.EVT_CHOICE, self.OnChoice, choice)
+        self.Bind(wx.EVT_CHOICE, self.onChoice, choice)
         
-    def BuildItemList(self, samdb):
+    def buildItemList(self, samdb):
         query = "SELECT item_Number FROM Items ORDER BY item_number;"
         try:
             rows = samdb.fetchRows(query)
@@ -137,14 +137,14 @@ class EditPanel(wx.Panel):
         
     ''' BUYERS '''
         
-    def BuildBuyerChooser(self, samdb):
-        buyerList = self.BuildBuyerList(samdb)
+    def buildBuyerChooser(self, samdb):
+        buyerList = self.buildBuyerList(samdb)
         choice = wx.Choice(self.chooserPanel, -1, (175, 0), wx.DefaultSize, \
                                buyerList, \
                                wx.CB_DROPDOWN | wx.CB_READONLY | wx.CB_SORT)
-        self.Bind(wx.EVT_CHOICE, self.OnChoice, choice)
+        self.Bind(wx.EVT_CHOICE, self.onChoice, choice)
 
-    def BuildBuyerList(self, samdb):
+    def buildBuyerList(self, samdb):
         query = "SELECT buyer_Number FROM Buyers ORDER BY buyer_number;"
         try:
             rows = samdb.fetchRows(query)
@@ -163,14 +163,14 @@ class EditPanel(wx.Panel):
         
     ''' PURCHASES '''
     
-    def BuildPurchasedItemChooser(self, samdb):
-        purchasedItemList = self.BuildPurchasedItemList(samdb)
+    def buildPurchasedItemChooser(self, samdb):
+        purchasedItemList = self.buildPurchasedItemList(samdb)
         choice = wx.Choice(self.chooserPanel, -1, (175, 0), wx.DefaultSize, \
                                purchasedItemList, \
                                wx.CB_DROPDOWN | wx.CB_READONLY | wx.CB_SORT)
-        self.Bind(wx.EVT_CHOICE, self.OnChoice, choice)
+        self.Bind(wx.EVT_CHOICE, self.onChoice, choice)
         
-    def BuildPurchasedItemList(self, samdb):
+    def buildPurchasedItemList(self, samdb):
         query = "SELECT item_Number FROM Items \
             WHERE item_purchasedby IS NOT NULL \
             AND item_salesprice IS NOT NULL \
@@ -191,7 +191,7 @@ class EditPanel(wx.Panel):
     User chooses the donor for whom changes will be made.  Will populate the same
     form that is used for adding donors.
     '''
-    def OnChoice(self, event):
+    def onChoice(self, event):
         dbKey = event.GetString()
         self.entryForm.PopulateForm(self.samdb, dbKey)
 

@@ -1,8 +1,8 @@
 
 import  wx
-import AddPanel
+import addpanel
 import DeletePanel
-import EditPanel
+import editpanel
 
 actions = ['buyeradd', 'buyeredit', 'buyerdelete']
 
@@ -26,10 +26,10 @@ class BuyersToolbook(wx.Toolbook):
         self.AssignImageList(il)
         imageIdGenerator = getNextImageID(il.GetImageCount())
         
-        self.addPanel = AddPanel.AddPanel(self, self.samdb, 'Buyer')
+        self.addPanel = addpanel.AddPanel(self, self.samdb, 'Buyer')
         self.AddPage(self.addPanel, "", imageId=imageIdGenerator.next())
         
-        self.editPanel = EditPanel.EditPanel(self, self.samdb, 'Buyer')
+        self.editPanel = editpanel.EditPanel(self, self.samdb, 'Buyer')
         self.AddPage(self.editPanel, '', imageId=imageIdGenerator.next())
      
         self.deletePanel = DeletePanel.DeletePanel(self, self.samdb, 'Buyer')
@@ -45,7 +45,7 @@ class BuyersToolbook(wx.Toolbook):
         ## 0 ==> Add Buyer; 1 ==> Edit Buyer; 2 ==> Buyer Buyer
         new = event.GetSelection()
         if new == EDITCODE:
-            self.editPanel.BuildBuyerChooser(self.samdb)
+            self.editPanel.buildBuyerChooser(self.samdb)
             self.editPanel.entryForm.ClearAll()
         if new == DELETECODE:
             self.deletePanel.deleteForm.BuildChooser(self.samdb)

@@ -12,7 +12,7 @@ class ChooserLists(object):
     def __init__(self):
         return
         
-    def BuildChooserNumberList(self, player, samdb):
+    def buildChooserNumberList(self, player, samdb):
         if player == 'donor':
             query = "SELECT donor_number FROM Donors ORDER BY donor_number;"
         elif player == 'item':
@@ -25,7 +25,7 @@ class ChooserLists(object):
                         AND item_salesprice IS NOT NULL \
                         ORDER BY item_number;"
         else:
-            print "Chooser.BuildChooserNumberList received bad player name"
+            print "Chooser.buildChooserNumberList received bad player name"
             return
         rows = samdb.fetchRows(query)
         listToReturn = []
@@ -33,7 +33,7 @@ class ChooserLists(object):
             listToReturn.append(row[0])
         return listToReturn
     
-    def BuildChooserNumberAndInfoList(self, player, samdb):
+    def buildChooserNumberAndInfoList(self, player, samdb):
         if player == 'donor':
             query = "SELECT donor_number, donor_name FROM Donors \
                         ORDER BY donor_name;"
@@ -49,7 +49,7 @@ class ChooserLists(object):
                         AND item_salesprice IS NOT NULL \
                         ORDER BY item_description;"  
         else:
-            print "Choosers.BuildChooserNumberList received bad player name"
+            print "Choosers.buildChooserNumberList received bad player name"
             return
         rows = samdb.fetchRows(query)
         listToReturn = []
