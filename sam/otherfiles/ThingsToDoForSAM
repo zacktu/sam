@@ -1,0 +1,18 @@
+
+
+Things to do for SAM:
+
+1.		DONE Print all the stuff in Console with separate programs launched by python.
+2.		SORT OF DONE investigate concerns about ./tmpfile.  In an multiuser environment probably need unique name for each instance.   BUT NOW IT IS BLOCKING.  DID THIS HAPPEN BEFORE?
+3.		Make an Exit button.
+4.		Make nice printing for summaries, thank you letters, amount sold, etc.
+5.      This works for printing landscape: groff -ms -t -f H -Tps -l -P-l tmp-c2GLU05sxxx
+        but I can't get it to work for preview with -X instead of -l.
+        but I can get it to work by writing a file instead of using X and then
+        using gs on the file produced by groff, i.e.,
+        groff <<<parms & file>>> > outfile; gs outfile.
+6.      Specific commands are:
+            groff -ms -t -f H -Tps -rPO=1.25i -rLL=9i -P-l myfile > junk; gs junk    (console preview)
+            groff -ms -t -f H -Tps -l -rPO=1.75i -rLL=9i -P-l myfile		     (laser printer)
+        where myfile is a file formatted for groff by sam.  Don't understand PO
+
