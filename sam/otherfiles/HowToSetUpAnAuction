@@ -55,11 +55,12 @@ the separation character.
 
 Here is how to get the column names from a table:
 
-select column_name, column_type from information_schema.columns where table_schema = DATABASE() and table_name = "Buyers";
+select column_name, column_type from information_schema.columns
+where table_schema = DATABASE() and table_name = "Buyers";
 
 <><><><><><>
 
-To set up an X server and client on windows:
+To set up an X server and client in order to run silentauctionmanager:
 
 Let mars be the server and venus the client:
 
