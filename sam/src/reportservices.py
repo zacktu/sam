@@ -194,6 +194,10 @@ class ReportServices():
 
 if __name__ == '__main__':
     app = wx.PySimpleApp()
+    if len(sys.argv) == 1:
+        print('Usage: reportservices.py dbname [host port dbuser dbpassword] '
+                + 'action tablename')
+        sys.exit()
     samdb = dbservices.connect(sys.argv)
     if len(sys.argv) == 4:
         printPreviewOrCSV = sys.argv[2]
