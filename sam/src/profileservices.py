@@ -12,6 +12,7 @@ Author Bob Cannon
 '''
 
 import os
+import sys
 import wx
 import dialogs
 
