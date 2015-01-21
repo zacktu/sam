@@ -27,7 +27,7 @@ as well just bugout.
 @author: bob
 '''
 
-# TODO-me figure out how to do logging -- first in this module
+# TODO-me figure out how to do logging -- tracking this is important
 
 import sys
 import warnings
