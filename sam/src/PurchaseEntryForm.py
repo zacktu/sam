@@ -7,6 +7,8 @@ import items
 import purchases
 import console
 
+# TODO-me check whether buyer has already paid
+
 class PurchaseEntryForm(wx.Panel):
     def __init__(self, parent, samdb, function):
         super(PurchaseEntryForm, self).__init__(parent)

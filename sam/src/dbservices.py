@@ -27,6 +27,8 @@ as well just bugout.
 @author: bob
 '''
 
+# TODO-me figure out how to do logging -- first in this module
+
 import sys
 import warnings
 import MySQLdb
