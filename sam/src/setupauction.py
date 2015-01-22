@@ -21,8 +21,6 @@ import profileservices
 import sys
 import wx
 
-# TODO-me need to do "join auction" or something similar for non-admin users
-
 ID_EXIT = 98
 ID_OK = 99
 
