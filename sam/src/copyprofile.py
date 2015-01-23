@@ -18,45 +18,48 @@ import profileservices
 import subprocess
 
 def copyProfile():
-    if not (len(sys.argv) == 2):
-        print 'Usage: python copyprofile.py username'
+    if (len(sys.argv) <= 1):
+        print 'Usage: python copyprofile.py username [usernames]'
         sys.exit()
-    userName = sys.argv[1]
+    for count in range (1, len(sys.argv)):
 
-    ## Get path this source profile
-    try:
-        homeDirectory= os.getenv('HOME')
-        sourceProfile = homeDirectory + '/.sam/profile'
-        if not os.path.exists(sourceProfile):
-            print 'Can''t get path to your sam profile.'
+        userName = sys.argv[count]
+
+        ## Get path this source profile
+        try:
+            homeDirectory= os.getenv('HOME')
+            sourceProfile = homeDirectory + '/.sam/profile'
+            if not os.path.exists(sourceProfile):
+                print 'Can''t get path to your sam profile.'
+                sys.exit()
+        except IOError as e:
+            dialogs.displayErrorDialog(
+                'copyProfile: Unable to get path to your home directory.')
             sys.exit()
-    except IOError as e:
-        dialogs.displayErrorDialog(
-            'copyProfile: Unable to get path to your home directory.')
-        sys.exit()
 
-    ## Get path to destination profile
-    try:
-        destinationPath = '/home/' + userName + '/.sam'
-        if not os.path.exists(destinationPath):
-            os.makedirs(destinationPath)
-    except IOError as e:
-        dialogs.displayErrorDialog(
-            'copyProfile: Unable to create the destination directory.')
-        sys.exit()
-    destinationDirectory = '/home/' + userName + '/.sam'
+        ## Get path to destination profile
+        try:
+            destinationPath = '/home/' + userName + '/.sam'
+            if not os.path.exists(destinationPath):
+                os.makedirs(destinationPath)
+        except IOError as e:
+            dialogs.displayErrorDialog(
+                'copyProfile: Unable to create the destination directory.')
+            sys.exit()
+        destinationDirectory = '/home/' + userName + '/.sam'
 
-    ## Copy the file and change owner and group
-    try:
-        command = 'cp -r ' + sourceProfile + ' ' + destinationDirectory + '/.'
-        subprocess.Popen(command, shell=True)
-        command = 'chown -R ' + userName + ' ' + destinationDirectory
-        subprocess.Popen(command, shell=True)
-        command = 'chgrp -R ' + userName + ' ' + destinationDirectory
-        subprocess.Popen(command, shell=True)
-    except OSError as e:
-        dialogs.displayErrorDialog('Unable to execute the system commands.')
-        sys.exit()
+        ## Copy the file and change owner and group
+        try:
+            command = \
+                'cp -r ' + sourceProfile + ' ' + destinationDirectory + '/.'
+            subprocess.Popen(command, shell=True)
+            command = 'chown -R ' + userName + ' ' + destinationDirectory
+            subprocess.Popen(command, shell=True)
+            command = 'chgrp -R ' + userName + ' ' + destinationDirectory
+            subprocess.Popen(command, shell=True)
+        except OSError as e:
+            dialogs.displayErrorDialog('Unable to execute the system commands.')
+            sys.exit()
 
 if __name__ == '__main__':
     copyProfile()
