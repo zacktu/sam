@@ -26,6 +26,7 @@ import dialogs
 import sys
 import MySQLdb
 import dbservices
+import profileservices
 ###### END OF SPECIAL IMPORTS
 
 class PrintingServices():
@@ -293,16 +294,6 @@ class PrintingServices():
 
     def checkBuyerPurchases(self, samdb, buyerNumber):
         return self.buyers.hasBuyerBoughtAnything(samdb, buyerNumber)
-
-if __name__ == '__main__':
-    samdb = dbservices.connect(sys.argv)
-    prs = PrintingServices(samdb)
-    #prs.printOrPreviewBuyerReport(samdb, 'preview')
-    #prs.donorReport(samdb, 'print')
-    #prs.printOrPreviewItemReport(samdb, 'preview')
-    #prs.doCSV(samdb, 'Buyers')
-    #prs.doCSV(samdb, 'Donors')
-    #prs.doCSV(samdb, 'Items')
 
 
 

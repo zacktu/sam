@@ -9,6 +9,7 @@ Created on Jan 3, 2010
 import sys
 import MySQLdb
 import dbservices
+import profileservices
 import auction
 import donors
 import buyers
@@ -23,13 +24,14 @@ import console
     SetUpAuction. '''
 
 def testConnectAndPopulate():
-    if not (len(sys.argv) == 2 or len(sys.argv) == 6):
-        print 'Usage: python testconnectandpopulate.py dbname ' + \
-              '[hostname portnumber username password]'
-        exit()
-    ##samdb = connect(sys.argv)
-    samdb = dbservices.connect(sys.argv)
-    samdb.useDatabase(sys.argv[1])
+
+    profile = profileservices.getProfile()
+    samdb = dbservices.Samdb(profile['dbName'],
+                             profile['hostName'],
+                             int(profile['portNumber']),
+                             profile['userName'],
+                             profile['password'])
+    samdb.useDatabase(profile['dbName'])
     ## Create objects for Auction, Donors, Buyers, Items, and Purchases
     da = auction.Auction()
     dd = donors.Donors()
