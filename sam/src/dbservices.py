@@ -27,7 +27,7 @@ as well just bugout.
 @author: bob
 '''
 
-# TODO-me figure out how to do logging -- tracking this is important
+# TODO-me figure out how to do logging -- first in this module
 
 import sys
 import warnings
@@ -39,9 +39,12 @@ class Samdb(object):
     '''
     classdocs
     '''
-    
+
+    '''
     def __init__(self, dbname, hostname='localhost',  portnumber=3306, \
                 username='bob', password='bobspw'):
+    '''
+    def __init__(self, dbname, hostname, portnumber, username, password):
         #Connect to a database.  The exception will be caught higher up.
         self.db = MySQLdb.connect(host=hostname, port = portnumber, \
                 user=username, passwd=password, db=dbname)

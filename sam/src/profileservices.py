@@ -16,13 +16,6 @@ import sys
 import wx
 import dialogs
 
-'''
-class Profile():
-
-    def __init__(selfself):
-        print('CONSTRUCTOR FOR Profile')
-'''
-
 def createProfile(dbName, hostName, portNumber, \
                   userName, password, title, subtitle, date):
     profile = {
@@ -66,14 +59,14 @@ if __name__ == '__main__':
     createProfile('test11', 'localhost', '3306', 'bob', 'bobspw', \
                     'TITLE FOR TESTING', 'SUBTITLE FOR TESTING', '1 Oct 2015')
     myProfile = getProfile()
-    print('PROFILE CONTENTS IN TEST HARNESS: ', \
-            myProfile.get('dbName'),
-            myProfile.get('hostName'), \
-            myProfile.get('portNumber'), \
-            myProfile['userName'], \
-            myProfile['password'], \
-            myProfile['title'], \
-            myProfile['subtitle'],
-            myProfile['date'])
+    print 'PROFILE CONTENTS IN TEST HARNESS: '
+    print '   ' + myProfile.get('dbName')
+    print '   ' + myProfile.get('hostName')
+    print '   ' + myProfile.get('portNumber')
+    print '   ' + myProfile['userName']
+    print '   ' + myProfile['password']
+    print '   ' + myProfile['title']
+    print '   ' + myProfile['subtitle']
+    print '   ' + myProfile['date']
 
 

@@ -21,6 +21,7 @@ import csv
 from tempfile import gettempdir
 import dbservices
 import printingservices
+import profileservices
 import buyers
 import auction
 import donors
@@ -194,21 +195,20 @@ class ReportServices():
 
 if __name__ == '__main__':
     app = wx.PySimpleApp()
-    if len(sys.argv) == 1:
-        print('Usage: reportservices.py dbname [host port dbuser dbpassword] '
-                + 'action tablename')
+    if not (len(sys.argv) == 4):
+        print('Usage: reportservices.py action tablename')
         sys.exit()
-    samdb = dbservices.connect(sys.argv)
-    if len(sys.argv) == 4:
-        printPreviewOrCSV = sys.argv[2]
-        tableName = sys.argv[3]
-    elif len(sys.argv) == 8:
-        printPreviewOrCSV = sys.argv[6]
-        tableName = sys.argv[7]
+    profile = profileservices.getProfile()
+    samdb = dbservices.Samdb(profile['dbName'],
+                             profile['hostName'],
+                             int(profile['portNumber']),
+                             profile['userName'],
+                             profile['password'])
+    printPreviewOrCSV = sys.argv[2]
+    tableName = sys.argv[3]
     if ((not printPreviewOrCSV in ('preview', 'print', 'csv'))
             or (not tableName in ('Donors', 'Items', 'Buyers'))):
-        print('Usage: reportservices.py dbname [host port dbuser dbpassword] '
-                + 'action tablename')
+        print('Usage: reportservices.py action tablename')
     else:
         prs = printingservices.PrintingServices(samdb)
         rs = ReportServices(samdb)
