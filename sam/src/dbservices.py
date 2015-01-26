@@ -40,10 +40,6 @@ class Samdb(object):
     classdocs
     '''
 
-    '''
-    def __init__(self, dbname, hostname='localhost',  portnumber=3306, \
-                username='bob', password='bobspw'):
-    '''
     def __init__(self, dbname, hostname, portnumber, username, password):
         #Connect to a database.  The exception will be caught higher up.
         self.db = MySQLdb.connect(host=hostname, port = portnumber, \
