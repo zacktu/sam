@@ -195,7 +195,7 @@ class ReportServices():
 
 if __name__ == '__main__':
     app = wx.PySimpleApp()
-    if not (len(sys.argv) == 4):
+    if not (len(sys.argv) == 3):
         print('Usage: reportservices.py action tablename')
         sys.exit()
     profile = profileservices.getProfile()
@@ -204,8 +204,8 @@ if __name__ == '__main__':
                              int(profile['portNumber']),
                              profile['userName'],
                              profile['password'])
-    printPreviewOrCSV = sys.argv[2]
-    tableName = sys.argv[3]
+    printPreviewOrCSV = sys.argv[1]
+    tableName = sys.argv[2]
     if ((not printPreviewOrCSV in ('preview', 'print', 'csv'))
             or (not tableName in ('Donors', 'Items', 'Buyers'))):
         print('Usage: reportservices.py action tablename')

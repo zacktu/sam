@@ -16,6 +16,15 @@ class Purchases(object):
                 "', item_salesprice = '" + salesPrice + \
                 "' WHERE item_number = '" + itemNumber + "';"
         samdb.executeQuery(query)
+
+        if self.buyers.hasBuyerPaid(samdb, buyerNumber):
+            self.buyers.cancelBuyerReceipt(samdb, buyerNumber)
+            dialogs.displayErrorDialog(
+                'Buyer ' + buyerNumber
+                + ' has already paid for other items.\n '
+                + 'Please print a new shopping cart,\n'
+                + 'collect the proper amount,\n '
+                + 'and print a new receipt.')
               
     def fetchPurchase(self, samdb, itemNumber):
         query = 'SELECT item_purchasedby, item_salesprice FROM Items \
