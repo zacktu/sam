@@ -17,6 +17,7 @@
 
 import wx
 import maneframe
+import sys
 
 SPLASHFILEPATH = '../otherfiles/images/SAMsplash.jpg'
 
@@ -26,6 +27,8 @@ class MySplashScreen(wx.SplashScreen):
     """
     def __init__(self, parent=None):
         # This is a recipe to a the screen.
+        # sys.path.append("/opt/sam/src")
+        # print ('SYS.PATH = ', sys.path)
         # Modify the following variables as necessary.
         aBitmap = wx.Image(name=SPLASHFILEPATH).ConvertToBitmap()
         splashStyle = wx.SPLASH_CENTRE_ON_SCREEN | wx.SPLASH_TIMEOUT
