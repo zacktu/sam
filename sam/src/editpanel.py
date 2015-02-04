@@ -5,7 +5,7 @@ A panel for editing donors, items, and buyers.
 '''
 
 import wx
-import DonorEntryForm
+import donorentryform
 import BuyerEntryForm
 import ItemEntryForm
 import PurchaseEntryForm
@@ -64,7 +64,7 @@ class EditPanel(wx.Panel):
         mainSizer.Add(self.chooserPanel)
         
         if player == 'Donor':
-            self.entryForm = DonorEntryForm.DonorEntryForm \
+            self.entryForm = donorentryform.DonorEntryForm \
                         (self, samdb, 'edit')
         elif player == 'Item':
             self.entryForm = ItemEntryForm.ItemEntryForm \
@@ -110,7 +110,7 @@ class EditPanel(wx.Panel):
         return donorList
         
     def clearDonorForm(self):
-        self.donorForm.ClearAll()
+        self.donorForm.clearAll()
         
     ''' I T E M S '''
  

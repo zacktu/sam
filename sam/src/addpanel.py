@@ -6,7 +6,7 @@ A panel for
 
 import wx
 import BuyerEntryForm
-import DonorEntryForm
+import donorentryform
 import ItemEntryForm
 import PurchaseEntryForm
 
@@ -26,7 +26,7 @@ class AddPanel(wx.Panel):
         mainSizer.Add(wx.StaticLine(self), 0, wx.EXPAND|wx.TOP|wx.BOTTOM, 5)
 
         if player == 'Donor':
-            self.entryForm = DonorEntryForm.DonorEntryForm \
+            self.entryForm = donorentryform.DonorEntryForm \
                         (self, samdb, 'add')
         elif player == 'Item':
             self.entryForm = ItemEntryForm.ItemEntryForm(self, samdb, 'add')

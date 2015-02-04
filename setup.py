@@ -7,6 +7,7 @@ setup(
     url='',
     license='',
     author='bob',
-    author_email='',
-    description=''
+    author_email='member@neqn.net',
+    description= ]
+        'SAM, the Silent Auction Manager does what it''s name describes.'
 )

@@ -113,7 +113,7 @@ class ItemEntryForm(wx.Panel):
     def OnSaveButton(self, event):
         itemNumber = self.itemNumberTC.GetValue()
         if len(itemNumber) != 3 or \
-                    regularexpression.CheckItemNumber(itemNumber) is None:
+                    regularexpression.checkItemNumber(itemNumber) is None:
             dialogs.displayErrorDialog(
                     "The Item number must be a three-digit decimal number.")
             return
@@ -124,7 +124,7 @@ class ItemEntryForm(wx.Panel):
             return
         donorNumber = self.donorNumberTC.GetValue()
         if len(donorNumber) != 3 or \
-                    regularexpression.CheckDonorNumber(donorNumber) \
+                    regularexpression.checkDonorNumber(donorNumber) \
                         is None:
             dialogs.displayErrorDialog \
                     ("The Donor number must be a three-digit decimal number.")
@@ -145,17 +145,17 @@ class ItemEntryForm(wx.Panel):
             print("Warning: ", e)
             
         retailPrice = self.retailPriceTC.GetValue()
-        if regularexpression.CheckMoney(retailPrice) == False:
+        if regularexpression.checkMoney(retailPrice) == False:
             dialogs.displayErrorDialog \
                     ("The retail price must be a decimal number.")
             return
         minimumBid = self.minimumBidTC.GetValue()
-        if regularexpression.CheckMoney(minimumBid) == False:
+        if regularexpression.checkMoney(minimumBid) == False:
             dialogs.displayErrorDialog \
                 ("The minimum bid must be a decimal number.")
             return
         increment = self.incrementTC.GetValue()
-        if regularexpression.CheckMoney(increment) == False:
+        if regularexpression.checkMoney(increment) == False:
             dialogs.displayErrorDialog \
                 ("The increment must be a decimal number.")
             return

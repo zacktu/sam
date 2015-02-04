@@ -89,7 +89,7 @@ class PurchaseEntryForm(wx.Panel):
         try:
             itemNumber = self.itemNumberTC.GetValue()
             if len(itemNumber) != 3 or \
-                    regularexpression.CheckItemNumber(itemNumber) is None:
+                    regularexpression.checkItemNumber(itemNumber) is None:
                 dialogs.displayErrorDialog(
                     "The Item number must be a three-digit decimal number.")
                 return
@@ -105,7 +105,7 @@ class PurchaseEntryForm(wx.Panel):
 
             buyerNumber = self.buyerNumberTC.GetValue()
             if len(buyerNumber) != 3 or \
-                        regularexpression.CheckBuyerNumber(buyerNumber) \
+                        regularexpression.checkBuyerNumber(buyerNumber) \
                             is None:
                 dialogs.displayErrorDialog \
                     ("The buyer number must be a three-digit decimal number.")
@@ -136,7 +136,7 @@ class PurchaseEntryForm(wx.Panel):
              
             winningBid = self.winningBidTC.GetValue()
             if len(winningBid) == 0 or \
-                        regularexpression.CheckMoney(winningBid) == False:
+                        regularexpression.checkMoney(winningBid) == False:
                 dialogs.displayErrorDialog \
                     ("The winning bid must be a decimal number "\
                      + "greater than zero.")

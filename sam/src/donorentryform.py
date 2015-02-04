@@ -43,10 +43,10 @@ class DonorEntryForm(wx.Panel):
         self.emailTC   = wx.TextCtrl(self, -1, "")
 
         cancelButton = wx.Button(self, -1, "Cancel")
-        self.Bind(wx.EVT_BUTTON, self.OnCancelButton, cancelButton)
+        self.Bind(wx.EVT_BUTTON, self.onCancelButton, cancelButton)
         
         saveButton = wx.Button(self, -1, "Save")
-        self.Bind(wx.EVT_BUTTON, self.OnSaveButton, saveButton)
+        self.Bind(wx.EVT_BUTTON, self.onSaveButton, saveButton)
 
         # Now do the layout.
 
@@ -106,36 +106,36 @@ class DonorEntryForm(wx.Panel):
         mainSizer.Fit(parent)
         mainSizer.SetSizeHints(parent)
         
-    def OnCancelButton(self, event):
-        self.ClearAll()
+    def onCancelButton(self, event):
+        self.clearAll()
 
         
-    def OnSaveButton(self, event):
+    def onSaveButton(self, event):
         donorNumber = self.donorNumberTC.GetValue()
         if len(donorNumber) != 3 or \
-                    regularexpression.CheckDonorNumber(donorNumber) is None:
+                    regularexpression.checkDonorNumber(donorNumber) is None:
             dialogs.displayErrorDialog(
                     "The donor number must be a three-digit decimal number.")
             return
-        name = self.nameTC.GetValue()
+        name = regularexpression.escapeQuotes(self.nameTC.GetValue())
         if not (len(name) > 0):
             dialogs.displayErrorDialog("The donor name must not be null.")
             return
-        street = self.streetTC.GetValue()
+        street = regularexpression.escapeQuotes(self.streetTC.GetValue())
         if not (len(street) > 0):
             dialogs.displayErrorDialog("The street name must not be null.")
             return
-        city = self.cityStateZipTC.GetValue()
+        city = regularexpression.escapeQuotes(self.cityStateZipTC.GetValue())
         if not (len(city) > 0):
             dialogs.displayErrorDialog(
                 "The city name and state must not be null.")
             return
-        contact = self.contactTC.GetValue()
+        contact = regularexpression.escapeQuotes(self.contactTC.GetValue())
         if not (len(contact) > 0):
             dialogs.displayErrorDialog("The contact name must not be null.")
             return
         telno = self.telnoTC.GetValue()
-        if len(telno) != 12 or regularexpression.CheckTelno(telno) is None:
+        if len(telno) != 12 or regularexpression.checkTelno(telno) is None:
             dialogs.displayErrorDialog(
                     "The telephone number must be in the format XXX-XXX-XXXX.")
             return
@@ -160,10 +160,10 @@ class DonorEntryForm(wx.Panel):
             except MySQLdb.Warning, e:
                 print("Warning: ", e)
                            
-        self.ClearAll()
+        self.clearAll()
         self.con.displayDonors(self.samdb)
 
-    def PopulateForm(self, samdb, donorNumber):
+    def populateForm(self, samdb, donorNumber):
         self.donorNumber = donorNumber
         try:
             row = self.donors.fetchDonor(samdb, donorNumber)
@@ -183,7 +183,7 @@ class DonorEntryForm(wx.Panel):
         self.emailTC.SetValue(row[5])
     
 
-    def ClearAll(self):
+    def clearAll(self):
         self.donorNumberTC.Clear()
         self.nameTC.Clear()
         self.streetTC.Clear()

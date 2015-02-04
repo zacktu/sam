@@ -5,6 +5,9 @@ import regularexpression
 import buyers
 import console
 
+
+# TODO-me   Figure out way to handle quotes in strings
+
 class BuyerEntryForm(wx.Panel):
     def __init__(self, parent, samdb, function):
         super(BuyerEntryForm, self).__init__(parent)
@@ -105,7 +108,7 @@ class BuyerEntryForm(wx.Panel):
     def OnSaveButton(self, event):
         buyerNumber = self.buyerNumberTC.GetValue()
         if len(buyerNumber) != 3 or \
-                    regularexpression.CheckBuyerNumber(buyerNumber) is None:
+                    regularexpression.checkBuyerNumber(buyerNumber) is None:
             dialogs.displayErrorDialog(
                     "The buyer number must be a three-digit decimal number.")
             return
@@ -133,7 +136,7 @@ class BuyerEntryForm(wx.Panel):
             return
         
         telno = self.telnoTC.GetValue()
-        if len(telno) != 12 or regularexpression.CheckTelno(telno) is None:
+        if len(telno) != 12 or regularexpression.checkTelno(telno) is None:
             dialogs.displayErrorDialog(
                     "The telephone number must be in the format XXX-XXX-XXXX.")
             return
