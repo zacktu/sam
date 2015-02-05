@@ -5,9 +5,9 @@ A panel for
 '''
 
 import wx
-import BuyerEntryForm
+import buyerentryform
 import donorentryform
-import ItemEntryForm
+import itementryform
 import PurchaseEntryForm
 
 class AddPanel(wx.Panel):
@@ -29,9 +29,9 @@ class AddPanel(wx.Panel):
             self.entryForm = donorentryform.DonorEntryForm \
                         (self, samdb, 'add')
         elif player == 'Item':
-            self.entryForm = ItemEntryForm.ItemEntryForm(self, samdb, 'add')
+            self.entryForm = itementryform.itementryform(self, samdb, 'add')
         elif player == 'Buyer':
-            self.entryForm = BuyerEntryForm.BuyerEntryForm  \
+            self.entryForm = buyerentryform.buyerentryform  \
                         (self, samdb, 'add')
         elif player == 'Purchase':
             self.entryForm = PurchaseEntryForm.PurchaseEntryForm \

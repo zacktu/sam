@@ -6,9 +6,9 @@ import donors
 import items
 import console
 
-class ItemEntryForm(wx.Panel):
+class itementryform(wx.Panel):
     def __init__(self, parent, samdb, function):
-        super(ItemEntryForm, self).__init__(parent)
+        super(itementryform, self).__init__(parent)
 
         self.samdb = samdb
         self.function = function
@@ -47,10 +47,10 @@ class ItemEntryForm(wx.Panel):
                                         style = wx.TE_RIGHT)
 
         cancelButton = wx.Button(self, -1, "Cancel")
-        self.Bind(wx.EVT_BUTTON, self.OnCancelButton, cancelButton)
+        self.Bind(wx.EVT_BUTTON, self.onCancelButton, cancelButton)
         
         saveButton = wx.Button(self, -1, "Save")
-        self.Bind(wx.EVT_BUTTON, self.OnSaveButton, saveButton)
+        self.Bind(wx.EVT_BUTTON, self.onSaveButton, saveButton)
 
         # Now do the layout.
 
@@ -106,11 +106,11 @@ class ItemEntryForm(wx.Panel):
         mainSizer.Fit(parent)
         mainSizer.SetSizeHints(parent)
         
-    def OnCancelButton(self, event):
-        self.ClearAll()
+    def onCancelButton(self, event):
+        self.clearAll()
 
         
-    def OnSaveButton(self, event):
+    def onSaveButton(self, event):
         itemNumber = self.itemNumberTC.GetValue()
         if len(itemNumber) != 3 or \
                     regularexpression.checkItemNumber(itemNumber) is None:
@@ -183,10 +183,10 @@ class ItemEntryForm(wx.Panel):
             print "IN EDITENTRYFORM DANGLING ELSE"
             exit()        
 
-        self.ClearAll()
+        self.clearAll()
         self.con.displayItems(self.samdb)
        
-    def PopulateForm(self, samdb, itemNumber):
+    def populateForm(self, samdb, itemNumber):
         try:
             row = self.items.fetchItem(samdb, itemNumber)
         except MySQLdb.Error, e:
@@ -204,7 +204,7 @@ class ItemEntryForm(wx.Panel):
         self.minimumBidTC.SetValue(str(row[3]))
         self.incrementTC.SetValue(str(row[4]))
    
-    def ClearAll(self):
+    def clearAll(self):
         self.itemNumberTC.Clear()
         self.itemDescriptionTC.Clear()
         self.donorNumberTC.Clear()

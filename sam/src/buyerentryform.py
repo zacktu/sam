@@ -8,9 +8,9 @@ import console
 
 # TODO-me   Figure out way to handle quotes in strings
 
-class BuyerEntryForm(wx.Panel):
+class buyerentryform(wx.Panel):
     def __init__(self, parent, samdb, function):
-        super(BuyerEntryForm, self).__init__(parent)
+        super(buyerentryform, self).__init__(parent)
 
         self.samdb = samdb
         self.function = function
@@ -43,10 +43,10 @@ class BuyerEntryForm(wx.Panel):
         self.telnoTC   = wx.TextCtrl(self, -1, "", size=(110, -1))
 
         cancelButton = wx.Button(self, -1, "Cancel")
-        self.Bind(wx.EVT_BUTTON, self.OnCancelButton, cancelButton)
+        self.Bind(wx.EVT_BUTTON, self.onCancelButton, cancelButton)
         
         saveButton = wx.Button(self, -1, "Save")
-        self.Bind(wx.EVT_BUTTON, self.OnSaveButton, saveButton)
+        self.Bind(wx.EVT_BUTTON, self.onSaveButton, saveButton)
 
         # Now do the layout.
 
@@ -102,10 +102,10 @@ class BuyerEntryForm(wx.Panel):
         mainSizer.Fit(parent)
         mainSizer.SetSizeHints(parent)
         
-    def OnCancelButton(self, event):
-        self.ClearAll()
+    def onCancelButton(self, event):
+        self.clearAll()
         
-    def OnSaveButton(self, event):
+    def onSaveButton(self, event):
         buyerNumber = self.buyerNumberTC.GetValue()
         if len(buyerNumber) != 3 or \
                     regularexpression.checkBuyerNumber(buyerNumber) is None:
@@ -160,10 +160,10 @@ class BuyerEntryForm(wx.Panel):
             except MySQLdb.Warning, e:
                 print("Warning: ", e)
                            
-        self.ClearAll()
+        self.clearAll()
         self.con.displayBuyers(self.samdb)
 
-    def PopulateForm(self, samdb, buyerNumber):
+    def populateForm(self, samdb, buyerNumber):
         self.buyerNumber = buyerNumber
         try:
             row = self.buyers.fetchBuyer(samdb, buyerNumber)
@@ -181,7 +181,7 @@ class BuyerEntryForm(wx.Panel):
         self.cityStateZipTC.SetValue(row[3])
         self.telnoTC.SetValue(row[4])
 
-    def ClearAll(self):
+    def clearAll(self):
         self.buyerNumberTC.Clear()
         self.lastNameTC.Clear()
         self.firstNameTC.Clear()

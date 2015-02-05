@@ -6,8 +6,8 @@ A panel for editing donors, items, and buyers.
 
 import wx
 import donorentryform
-import BuyerEntryForm
-import ItemEntryForm
+import buyerentryform
+import itementryform
 import PurchaseEntryForm
 import MySQLdb
 import dialogs
@@ -67,10 +67,10 @@ class EditPanel(wx.Panel):
             self.entryForm = donorentryform.DonorEntryForm \
                         (self, samdb, 'edit')
         elif player == 'Item':
-            self.entryForm = ItemEntryForm.ItemEntryForm \
+            self.entryForm = itementryform.itementryform \
                         (self, samdb, 'edit')
         elif player == 'Buyer':
-            self.entryForm = BuyerEntryForm.BuyerEntryForm \
+            self.entryForm = buyerentryform.buyerentryform \
                         (self, samdb, 'edit')
         elif player == 'Purchase':
             self.entryForm = PurchaseEntryForm.PurchaseEntryForm \
@@ -193,5 +193,5 @@ class EditPanel(wx.Panel):
     '''
     def onChoice(self, event):
         dbKey = event.GetString()
-        self.entryForm.PopulateForm(self.samdb, dbKey)
+        self.entryForm.populateForm(self.samdb, dbKey)
 
