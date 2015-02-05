@@ -117,7 +117,8 @@ class ItemEntryForm(wx.Panel):
             dialogs.displayErrorDialog(
                     "The Item number must be a three-digit decimal number.")
             return
-        description = self.itemDescriptionTC.GetValue()
+        description = regularexpression.escapeQuotes(
+            self.itemDescriptionTC.GetValue())
         if not (len(description) > 0):
             dialogs.displayErrorDialog \
                         ("The item description must not be null.")

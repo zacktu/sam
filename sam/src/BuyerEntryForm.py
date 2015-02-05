@@ -113,24 +113,24 @@ class BuyerEntryForm(wx.Panel):
                     "The buyer number must be a three-digit decimal number.")
             return
         
-        lastName = self.lastNameTC.GetValue()
+        lastName = regularexpression.escapeQuotes(self.lastNameTC.GetValue())
         if not (len(lastName) > 0):
             dialogs.displayErrorDialog \
                     ("The buyer's last name must not be null.")
             return
         
-        firstName = self.firstNameTC.GetValue()
+        firstName = regularexpression.escapeQuotes(self.firstNameTC.GetValue())
         if not (len(firstName) > 0):
             dialogs.displayErrorDialog \
                     ("The buyer's first name must not be null.")
             return
         
-        street = self.streetTC.GetValue()
+        street = regularexpression.escapeQuotes(self.streetTC.GetValue())
         if not (len(street) > 0):
             dialogs.displayErrorDialog("The street name must not be null.")
             return
         
-        city = self.cityStateZipTC.GetValue()
+        city = regularexpression.escapeQuotes(self.cityStateZipTC.GetValue())
         if not (len(city) > 0):
             dialogs.displayErrorDialog("The city name and state must not be null.")
             return
