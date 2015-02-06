@@ -5,9 +5,6 @@ import regularexpression
 import buyers
 import console
 
-
-# TODO-me   Figure out way to handle quotes in strings
-
 class buyerentryform(wx.Panel):
     def __init__(self, parent, samdb, function):
         super(buyerentryform, self).__init__(parent)

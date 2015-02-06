@@ -50,8 +50,11 @@ def escapeSingleQuotes(s):
 def escapeDoubleQuotes(s):
     return re.sub(r'([\"])', r'\\\1', s)
 
+# TODO-me Can this be written any better?
+
 def escapeQuotes(s):
-    return re.sub(r"([\'])", r'\\\1', re.sub(r'([\"])', r'\\\1', s))
+    #return re.sub(r"([\'])", r'\\\1', re.sub(r'([\"])', r'\\\1', s))
+    return re.sub(r'([\" \'])', r'\\\1', s)
 
 if __name__ == '__main__':
     print escapeSingleQuotes("Annie's biscuits.  They're delicious I'm sure.")
