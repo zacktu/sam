@@ -5,6 +5,7 @@ import regularexpression
 import donors
 import items
 import console
+import constants
 
 class itementryform(wx.Panel):
     def __init__(self, parent, samdb, function):
@@ -160,11 +161,27 @@ class itementryform(wx.Panel):
             return
 
         increment = self.incrementTC.GetValue()
+        '''
         if regularexpression.checkMoney(increment) == False:
             dialogs.displayErrorDialog \
                 ("The increment must be a decimal number.")
             return
- 
+        '''
+        if constants.REQUIREITEMINCREMENT:
+            if len(increment) == 0:
+                dialogs.displayErrorDialog(
+                    "The increment must not be null.")
+                return
+            elif regularexpression.checkMoney(increment) == False:
+                dialogs.displayErrorDialog \
+                    ("The increment must be a decimal number.")
+                return
+        elif len(increment) > 0:
+            if regularexpression.checkMoney(increment) == False:
+                dialogs.displayErrorDialog \
+                    ("The increment must be a decimal number.")
+                return
+
         if self.function == 'add':
             try:
                 self.items.addItem(self.samdb, itemNumber, description, \
