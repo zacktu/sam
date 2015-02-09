@@ -10,7 +10,7 @@ entry of the named field will be optional.
 
 REQUIREBUYERADDRESS     = False
 REQUIREBUYERTELNO       = True
-REQUIREDONORADDRESS     = True
-REQUIREDONORTELNO       = True
-REQUIREDONOREMAIL       = True
-REQUIREITEMINCREMENT    = True
+REQUIREDONORADDRESS     = False
+REQUIREDONORTELNO       = False
+REQUIREDONOREMAIL       = False
+

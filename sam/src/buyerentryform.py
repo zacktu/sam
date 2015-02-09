@@ -124,55 +124,31 @@ class buyerentryform(wx.Panel):
             return
         
         street = regularexpression.escapeQuotes(self.streetTC.GetValue())
-        '''
-        if not (len(street) > 0):
-            dialogs.displayErrorDialog("The street name must not be null.")
-            return
-        '''
-        print ('LENGTH OF STREET = ', len(street))
-        print ('REQUIREBUYERADDRESS = ', constants.REQUIREBUYERADDRESS)
         if ((len(street) == 0) and (constants.REQUIREBUYERADDRESS)):
             dialogs.displayErrorDialog("The street name must not be null.")
             return
         
         city = regularexpression.escapeQuotes(self.cityStateZipTC.GetValue())
-        '''
-        if not (len(city) > 0):
-            dialogs.displayErrorDialog("The city name and state must not be null.")
-            return
-        '''
-        print ('LENGTH OF city = ', len(city))
-        print ('REQUIREBUYERADDRESS = ', constants.REQUIREBUYERADDRESS)
         if ((len(city) == 0) and (constants.REQUIREBUYERADDRESS)):
             dialogs.displayErrorDialog("The city name must not be null.")
             return
 
         telno = self.telnoTC.GetValue()
-        print ('LENGTH OF TELNO = ', len(telno))
-        print ('REQUIREBUYERTELNO = ', constants.REQUIREBUYERTELNO)
         if constants.REQUIREBUYERTELNO:
             if len(telno) == 0:
                 dialogs.displayErrorDialog(
                     "The telephone number must not be null.")
                 return
-            elif len(telno) != 12 or regularexpression.checkTelno(telno) is None:
-                print 'TRUE TESTING VALIDITY'
+            elif len(telno) != 12 \
+                    or regularexpression.checkTelno(telno) is None:
                 dialogs.displayErrorDialog(
                     "The telephone number must be in the format XXX-XXX-XXXX.")
                 return
         elif len(telno) > 0:
             if len(telno) != 12 or regularexpression.checkTelno(telno) is None:
-                print 'FALSE TESTING VALIDITY'
                 dialogs.displayErrorDialog(
                     "The telephone number must be in the format XXX-XXX-XXXX.")
                 return
-
-        '''
-        if len(telno) != 12 or regularexpression.checkTelno(telno) is None:
-            dialogs.displayErrorDialog(
-                    "The telephone number must be in the format XXX-XXX-XXXX.")
-            return
-        '''
         
         if self.function == 'add':
             try:
@@ -196,7 +172,7 @@ class buyerentryform(wx.Panel):
         self.clearAll()
         self.con.displayBuyers(self.samdb)
 
-    def populateForm(self, samdb, buyerNumber):
+    def populateBuyerForm(self, samdb, buyerNumber):
         self.buyerNumber = buyerNumber
         try:
             row = self.buyers.fetchBuyer(samdb, buyerNumber)

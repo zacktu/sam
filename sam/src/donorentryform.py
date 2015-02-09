@@ -4,6 +4,8 @@ import dialogs
 import regularexpression
 import donors
 import console
+import constants
+import constants
 
 class DonorEntryForm(wx.Panel):
     def __init__(self, parent, samdb, function):
@@ -117,29 +119,48 @@ class DonorEntryForm(wx.Panel):
             dialogs.displayErrorDialog(
                     "The donor number must be a three-digit decimal number.")
             return
+
         name = regularexpression.escapeQuotes(self.nameTC.GetValue())
         if not (len(name) > 0):
             dialogs.displayErrorDialog("The donor name must not be null.")
             return
+
         street = regularexpression.escapeQuotes(self.streetTC.GetValue())
-        if not (len(street) > 0):
+        if ((len(street) == 0) and (constants.REQUIREDONORADDRESS)):
             dialogs.displayErrorDialog("The street name must not be null.")
             return
+
         city = regularexpression.escapeQuotes(self.cityStateZipTC.GetValue())
-        if not (len(city) > 0):
-            dialogs.displayErrorDialog(
-                "The city name and state must not be null.")
+        if ((len(city) == 0) and (constants.REQUIREDONORADDRESS)):
+            dialogs.displayErrorDialog("The city name must not be null.")
             return
+
         contact = regularexpression.escapeQuotes(self.contactTC.GetValue())
         if not (len(contact) > 0):
             dialogs.displayErrorDialog("The contact name must not be null.")
             return
+
         telno = self.telnoTC.GetValue()
-        if len(telno) != 12 or regularexpression.checkTelno(telno) is None:
-            dialogs.displayErrorDialog(
+        if constants.REQUIREDONORTELNO:
+            if len(telno) == 0:
+                dialogs.displayErrorDialog(
+                    "The telephone number must not be null.")
+                return
+            elif len(telno) != 12 \
+                    or regularexpression.checkTelno(telno) is None:
+                dialogs.displayErrorDialog(
                     "The telephone number must be in the format XXX-XXX-XXXX.")
-            return
+                return
+        elif len(telno) > 0:
+            if len(telno) != 12 or regularexpression.checkTelno(telno) is None:
+                dialogs.displayErrorDialog(
+                    "The telephone number must be in the format XXX-XXX-XXXX.")
+                return
+
         email = self.emailTC.GetValue()
+        if ((len(street) == 0) and (constants.REQUIREDONOREMAIL)):
+            dialogs.displayErrorDialog("The e-mail address must not be null.")
+            return
         
         if self.function == 'add':
             try:
@@ -163,7 +184,7 @@ class DonorEntryForm(wx.Panel):
         self.clearAll()
         self.con.displayDonors(self.samdb)
 
-    def populateForm(self, samdb, donorNumber):
+    def populateDonorForm(self, samdb, donorNumber):
         self.donorNumber = donorNumber
         try:
             row = self.donors.fetchDonor(samdb, donorNumber)

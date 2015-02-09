@@ -117,12 +117,14 @@ class itementryform(wx.Panel):
             dialogs.displayErrorDialog(
                     "The Item number must be a three-digit decimal number.")
             return
+
         description = regularexpression.escapeQuotes(
             self.itemDescriptionTC.GetValue())
         if not (len(description) > 0):
             dialogs.displayErrorDialog \
                         ("The item description must not be null.")
             return
+
         donorNumber = self.donorNumberTC.GetValue()
         if len(donorNumber) != 3 or \
                     regularexpression.checkDonorNumber(donorNumber) \
@@ -150,11 +152,13 @@ class itementryform(wx.Panel):
             dialogs.displayErrorDialog \
                     ("The retail price must be a decimal number.")
             return
+
         minimumBid = self.minimumBidTC.GetValue()
         if regularexpression.checkMoney(minimumBid) == False:
             dialogs.displayErrorDialog \
                 ("The minimum bid must be a decimal number.")
             return
+
         increment = self.incrementTC.GetValue()
         if regularexpression.checkMoney(increment) == False:
             dialogs.displayErrorDialog \
@@ -186,7 +190,7 @@ class itementryform(wx.Panel):
         self.clearAll()
         self.con.displayItems(self.samdb)
        
-    def populateForm(self, samdb, itemNumber):
+    def populateItemForm(self, samdb, itemNumber):
         try:
             row = self.items.fetchItem(samdb, itemNumber)
         except MySQLdb.Error, e:
