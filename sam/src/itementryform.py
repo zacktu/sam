@@ -155,18 +155,22 @@ class itementryform(wx.Panel):
             return
 
         minimumBid = self.minimumBidTC.GetValue()
-        if regularexpression.checkMoney(minimumBid) == False:
-            dialogs.displayErrorDialog \
-                ("The minimum bid must be a decimal number.")
-            return
+        if constants.REQUIREITEMMINIMUMBID:
+            if len(minimumBid) == 0:
+                dialogs.displayErrorDialog(
+                    "The minimum bid must not be null.")
+                return
+            elif regularexpression.checkMoney(minimumBid) == False:
+                dialogs.displayErrorDialog \
+                    ("The minimum bid must be a decimal number.")
+                return
+        elif len(minimumBid) > 0:
+            if regularexpression.checkMoney(minimumBid) == False:
+                dialogs.displayErrorDialog \
+                    ("The minimum bid must be a decimal number.")
+                return
 
         increment = self.incrementTC.GetValue()
-        '''
-        if regularexpression.checkMoney(increment) == False:
-            dialogs.displayErrorDialog \
-                ("The increment must be a decimal number.")
-            return
-        '''
         if constants.REQUIREITEMINCREMENT:
             if len(increment) == 0:
                 dialogs.displayErrorDialog(
