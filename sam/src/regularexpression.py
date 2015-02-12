@@ -17,6 +17,7 @@ def checkDonorNumber(s):
 # Item number must be three decimal digits.
 def checkItemNumber(s):
     return re.match(r"\d{3}", s)
+    # return re.match(r"[1-9][\d]*", s) any integer no leading zero
 
 # Buyer number must be three decimal digits.
 def checkBuyerNumber(s):
