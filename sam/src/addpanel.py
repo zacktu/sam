@@ -8,7 +8,7 @@ import wx
 import buyerentryform
 import donorentryform
 import itementryform
-import PurchaseEntryForm
+import purchaseentryform
 
 class AddPanel(wx.Panel):
     def __init__(self, parent, samdb, player):
@@ -34,7 +34,7 @@ class AddPanel(wx.Panel):
             self.entryForm = buyerentryform.buyerentryform  \
                         (self, samdb, 'add')
         elif player == 'Purchase':
-            self.entryForm = PurchaseEntryForm.PurchaseEntryForm \
+            self.entryForm = purchaseentryform.PurchaseEntryForm \
                         (self, samdb, 'add')            
         else:
             'ADDPANEL GOT INVALID PLAYER = ', player

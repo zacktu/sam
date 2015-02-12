@@ -8,7 +8,7 @@ import wx
 import donorentryform
 import buyerentryform
 import itementryform
-import PurchaseEntryForm
+import purchaseentryform
 import MySQLdb
 import dialogs
 
@@ -73,7 +73,7 @@ class EditPanel(wx.Panel):
             self.entryForm = buyerentryform.buyerentryform \
                         (self, samdb, 'edit')
         elif player == 'Purchase':
-            self.entryForm = PurchaseEntryForm.PurchaseEntryForm \
+            self.entryForm = purchaseentryform.PurchaseEntryForm \
                         (self, samdb, 'edit')
        
         mainSizer.Add(self.entryForm)

@@ -34,10 +34,10 @@ class PurchaseEntryForm(wx.Panel):
                                          style=wx.TE_RIGHT)
 
         cancelButton = wx.Button(self, -1, "Cancel")
-        self.Bind(wx.EVT_BUTTON, self.OnCancelButton, cancelButton)
+        self.Bind(wx.EVT_BUTTON, self.onCancelButton, cancelButton)
         
         saveButton = wx.Button(self, -1, "Save")
-        self.Bind(wx.EVT_BUTTON, self.OnSaveButton, saveButton)
+        self.Bind(wx.EVT_BUTTON, self.onSaveButton, saveButton)
 
         # Now do the layout.
 
@@ -81,11 +81,11 @@ class PurchaseEntryForm(wx.Panel):
         mainSizer.Fit(parent)
         mainSizer.SetSizeHints(parent)
         
-    def OnCancelButton(self, event):
+    def onCancelButton(self, event):
         self.ClearAll()
 
         
-    def OnSaveButton(self, event):
+    def onSaveButton(self, event):
         try:
             itemNumber = self.itemNumberTC.GetValue()
             if len(itemNumber) != 3 or \
@@ -191,7 +191,7 @@ class PurchaseEntryForm(wx.Panel):
         except MySQLdb.Warning, e:
             print("Warning: ", e)
        
-    def PopulateForm(self, samdb, itemNumber):
+    def populatePurchaseForm(self, samdb, itemNumber):
         try:
             row = self.purchases.fetchPurchase(samdb, itemNumber)
         except MySQLdb.Error, e:
