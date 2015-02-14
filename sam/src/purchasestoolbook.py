@@ -46,7 +46,7 @@ class PurchasesToolbook(wx.Toolbook):
         new = event.GetSelection()
         if new == EDITCODE:
             self.editPanel.buildPurchasedItemChooser(self.samdb)
-            self.editPanel.entryForm.ClearAll()
+            self.editPanel.entryForm.clearAll()
         if new == DELETECODE:
             self.deletePanel.deleteForm.BuildChooser(self.samdb)
         event.Skip()

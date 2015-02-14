@@ -82,7 +82,7 @@ class PurchaseEntryForm(wx.Panel):
         mainSizer.SetSizeHints(parent)
         
     def onCancelButton(self, event):
-        self.ClearAll()
+        self.clearAll()
 
         
     def onSaveButton(self, event):
@@ -147,7 +147,7 @@ class PurchaseEntryForm(wx.Panel):
             if self.function == 'add':
                 self.purchases.purchaseItem(self.samdb, itemNumber, \
                             buyerNumber, winningBid)
-                self.ClearAll()
+                self.clearAll()
                 return
             
             ## It's a bit trickier for editing because we can't change
@@ -168,7 +168,7 @@ class PurchaseEntryForm(wx.Panel):
                         + '\n   Item number  ' + itemNumber
                         + '\n   Buyer number ' + buyerNumber
                         + '\n   Winning bid  ' + '$' + winningBid):
-                    self.ClearAll()
+                    self.clearAll()
                     return
                     
             if self.function == 'edit' and \
@@ -182,7 +182,7 @@ class PurchaseEntryForm(wx.Panel):
                             buyerNumber, winningBid)
                 self.parent.buildPurchasedItemChooser(self.samdb)
             # Write all fields for the affected item number.
-            self.ClearAll()
+            self.clearAll()
             self.con.displayAllPurchases(self.samdb)
         
         except MySQLdb.Error, e:
@@ -208,7 +208,7 @@ class PurchaseEntryForm(wx.Panel):
         self.oldBuyerNumber = row[0]  # can't change to an invalid buyer #
         self.oldWinningBid = row[1]
    
-    def ClearAll(self):
+    def clearAll(self):
         self.itemNumberTC.Clear()
         self.buyerNumberTC.Clear()
         self.winningBidTC.Clear()

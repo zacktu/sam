@@ -49,7 +49,7 @@ class DonorsToolbook(wx.Toolbook):
             self.deletePanel.deleteForm.BuildChooser(self.samdb)
         if new == EDITCODE:
             self.editPanel.buildDonorChooser(self.samdb)
-            self.editPanel.entryForm.ClearAll()
+            self.editPanel.entryForm.clearAll()
         event.Skip()
         
 
