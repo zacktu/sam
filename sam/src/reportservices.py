@@ -38,20 +38,20 @@ class ReportServices():
         self.buyers = buyers.Buyers()
         self.donors = donors.Donors()
         self.items = items.Items()
-
+        self.prs = printingservices.PrintingServices(samdb)
 
     def printOrPreviewDonorReport(self, samdb, printOrPreview):
-        fname = prs.rand_fname('xxx', 8)
+        fname = self.prs.rand_fname('xxx', 8)
         lines = self.buildDonorReport(samdb)
         lines.insert(0, '.ll 9i\n')
         if (printOrPreview == 'print'):
             #page offset determined by experimentation
             lines.insert(1, '.po 1.75i\n')  #needed for centering printed file
-            prs.writeFile(fname, lines)
-            prs.printLandscape(fname)
+            self.prs.writeFile(fname, lines)
+            self.prs.printLandscape(fname)
         elif (printOrPreview == 'preview'):
-            prs.writeFile(fname, lines)
-            prs.previewLandscape(fname)
+            self.prs.writeFile(fname, lines)
+            self.prs.previewLandscape(fname)
         else:
             print('printingservices.printOrPreviewDonorReport: invalid parameter '
                   + 'printOrPreview = ' + printOrPreview)
@@ -59,18 +59,18 @@ class ReportServices():
             sys.exit()
 
     def printOrPreviewBuyerReport(self, samdb, printOrPreview):
-        fname = prs.rand_fname('xxx', 8)
+        fname = self.prs.rand_fname('xxx', 8)
         lines = self.buildBuyerReport(samdb)
         #landscape lines are 9i wide
         lines.insert(0, '.ll 9i\n')
         if (printOrPreview == 'print'):
             #page offset determined by experimentation
             lines.insert(1, '.po 1.75i\n')  #needed for centering printed file
-            prs.writeFile(fname, lines)
-            prs.printLandscape(fname)
+            self.prs.writeFile(fname, lines)
+            self.prs.printLandscape(fname)
         elif (printOrPreview == 'preview'):
-            prs.writeFile(fname, lines)
-            prs.previewLandscape(fname)
+            self.prs.writeFile(fname, lines)
+            self.prs.previewLandscape(fname)
         else:
             print('printingservices.printOrPreviewBuyerReport: invalid parameter '
                   + 'printOrPreview = ' + printOrPreview)
@@ -78,18 +78,18 @@ class ReportServices():
             sys.exit()
 
     def printOrPreviewItemReport(self, samdb, printOrPreview):
-        fname = prs.rand_fname('xxx', 8)
+        fname = self.prs.rand_fname('xxx', 8)
         lines = self.buildItemReport(samdb)
         #landscape lines are 9i wide
         lines.insert(0, '.ll 9i\n')
         if (printOrPreview == 'print'):
             #page offset determined by experimentation
             lines.insert(1, '.po 1.75i\n')  #needed for centering printed file
-            prs.writeFile(fname, lines)
-            prs.printLandscape(fname)
+            self.prs.writeFile(fname, lines)
+            self.prs.printLandscape(fname)
         elif (printOrPreview == 'preview'):
-            prs.writeFile(fname, lines)
-            prs.previewLandscape(fname)
+            self.prs.writeFile(fname, lines)
+            self.prs.previewLandscape(fname)
         else:
             print('printingservices.printOrPreviewItemReport: invalid parameter '
                   + 'printOrPreview = ' + printOrPreview)
@@ -97,7 +97,7 @@ class ReportServices():
             sys.exit()
 
     def buildDonorReport(self, samdb):
-        lines = prs.buildSummaryHeader('donors')
+        lines = self.prs.buildSummaryHeader('donors')
         lines.append('.ps -2\n')
         lines.append('.TS\n')
         lines.append('box, expand, tab(`);\n')
@@ -116,7 +116,7 @@ class ReportServices():
         return lines
 
     def buildBuyerReport(self, samdb):
-        lines = prs.buildSummaryHeader('buyers')
+        lines = self.prs.buildSummaryHeader('buyers')
         lines.append('.TS\n')
         lines.append('box, expand, tab(`);\n')
         lines.append('cI cI cI cI cI cI.\n')
@@ -134,7 +134,7 @@ class ReportServices():
         return lines
 
     def buildItemReport(self, samdb):
-        lines = prs.buildSummaryHeader('items')
+        lines = self.prs.buildSummaryHeader('items')
         lines.append('.TS\n')
         lines.append('box, expand, tab(`);\n')
         lines.append('cI cI cI cI cI cI cI cI.\n')
@@ -210,7 +210,6 @@ if __name__ == '__main__':
             or (not tableName in ('Donors', 'Items', 'Buyers'))):
         print('Usage: reportservices.py action tablename')
     else:
-        prs = printingservices.PrintingServices(samdb)
         rs = ReportServices(samdb)
         if printPreviewOrCSV == 'csv':
             rs.doCSV(samdb, tableName)
