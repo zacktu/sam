@@ -49,6 +49,7 @@ class ReportServices():
         lines.insert(0, '.ll 9i\n')
         if (printOrPreview == 'print'):
             #page offset determined by experimentation
+            # TODO: Try changing page offset here
             lines.insert(1, '.po 1.75i\n')  #needed for centering printed file
             self.prs.writeFile(fname, lines)
             self.prs.printLandscape(fname)
