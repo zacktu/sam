@@ -159,7 +159,7 @@ class EditPanel(wx.Panel):
         return buyerList       
         
     def ClearForm(self):
-        self.entryForm.ClearAll()
+        self.entryForm.clearAll()
         
     ''' PURCHASES '''
     
