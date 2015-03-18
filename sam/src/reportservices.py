@@ -39,6 +39,7 @@ class ReportServices():
         self.buyers = buyers.Buyers()
         self.donors = donors.Donors()
         self.items = items.Items()
+        # TODO: use printerModel to modify page offset for landscape printing
         self.printerModel = self.getPrinterModel()
         self.prs = printingservices.PrintingServices(samdb)
 
