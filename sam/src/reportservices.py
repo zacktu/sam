@@ -27,6 +27,7 @@ import auction
 import donors
 import items
 import dialogs
+import cups
 
 class ReportServices():
 
@@ -38,6 +39,7 @@ class ReportServices():
         self.buyers = buyers.Buyers()
         self.donors = donors.Donors()
         self.items = items.Items()
+        self.printerModel = self.getPrinterModel()
         self.prs = printingservices.PrintingServices(samdb)
 
     def printOrPreviewDonorReport(self, samdb, printOrPreview):
@@ -192,6 +194,21 @@ class ReportServices():
                 fullRow = list(itemRow)
                 fullRow.insert(0, item[0])
                 csvFile.writerow(fullRow)
+
+    def getPrinterModel(self):
+        try:
+            conn = cups.Connection ()
+            defaultPrinter = conn.getDefault()
+            printers = conn.getPrinters ()
+            printerInfo = printers[defaultPrinter]['printer-info']
+            # Should be something such as 'Brother 2270'
+            return printerInfo[printerInfo.index(' ')+1:]
+        except KeyError:
+            errorMessage = \
+                'Unable to access information about the default printer.\n' \
+                + 'The program must exit.'
+            dialogs.displayErrorDialog(errorMessage)
+            sys.exit()
 
 if __name__ == '__main__':
     app = wx.PySimpleApp()
