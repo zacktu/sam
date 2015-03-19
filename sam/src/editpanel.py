@@ -193,5 +193,6 @@ class EditPanel(wx.Panel):
     '''
     def onChoice(self, event):
         dbKey = event.GetString()
-        self.entryForm.populateForm(self.samdb, dbKey)
+        self.entryForm.populateDonorForm(self.samdb, dbKey)
+
 
