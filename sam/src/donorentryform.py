@@ -184,7 +184,7 @@ class DonorEntryForm(wx.Panel):
         self.clearAll()
         self.con.displayDonors(self.samdb)
 
-    def populateDonorForm(self, samdb, donorNumber):
+    def populateForm(self, samdb, donorNumber):
         self.donorNumber = donorNumber
         try:
             row = self.donors.fetchDonor(samdb, donorNumber)

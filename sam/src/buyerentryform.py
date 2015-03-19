@@ -172,7 +172,7 @@ class buyerentryform(wx.Panel):
         self.clearAll()
         self.con.displayBuyers(self.samdb)
 
-    def populateBuyerForm(self, samdb, buyerNumber):
+    def populateForm(self, samdb, buyerNumber):
         self.buyerNumber = buyerNumber
         try:
             row = self.buyers.fetchBuyer(samdb, buyerNumber)

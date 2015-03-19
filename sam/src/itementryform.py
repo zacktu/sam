@@ -211,7 +211,7 @@ class itementryform(wx.Panel):
         self.clearAll()
         self.con.displayItems(self.samdb)
        
-    def populateItemForm(self, samdb, itemNumber):
+    def populateForm(self, samdb, itemNumber):
         try:
             row = self.items.fetchItem(samdb, itemNumber)
         except MySQLdb.Error, e:

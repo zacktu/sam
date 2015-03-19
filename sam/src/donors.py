@@ -45,8 +45,8 @@ class Donors(object):
                 FROM Donors WHERE donor_number = " + donorNumber + ";"
         return samdb.fetchRow(query)
         
-    def updateDonor(self, samdb, donorNumber, name, street, city, state, \
-                    zip, contact, telno, email):
+    def updateDonor(self, samdb, donorNumber, name, street, city, \
+                    contact, telno, email):
         query = "UPDATE Donors  \
                     SET donor_name = '" + name + "' , \
                         donor_street = '"  + street + "' , \
