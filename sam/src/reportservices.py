@@ -41,6 +41,17 @@ class ReportServices():
         self.items = items.Items()
         # TODO: use printerModel to modify page offset for landscape printing
         self.printerModel = self.getPrinterModel()
+        print 'PRINTERMODEL IS ' + self.printerModel
+        if self.printerModel == '2170':
+            self.pageOffset = 'po 1.1i\n'
+        elif self.printerModel == '2270':
+            self.pageOffset = 'po 1.75i\n'
+        else:
+            dialogText = 'Your printer model is not known.\n' \
+                'The table may not display aesthetically.'
+            dialogs.displayInfoDialog(dialogText)
+            self.pageOffset = 'po 1.0i\n'
+        print 'PAGE OFFSET IS ' + self.pageOffset
         self.prs = printingservices.PrintingServices(samdb)
 
     def printOrPreviewDonorReport(self, samdb, printOrPreview):
@@ -50,7 +61,8 @@ class ReportServices():
         if (printOrPreview == 'print'):
             #page offset determined by experimentation
             # TODO: Try changing page offset here
-            lines.insert(1, '.po 1.75i\n')  #needed for centering printed file
+            #lines.insert(1, '.po 1.75i\n')  #needed for centering printed file
+            lines.insert(1, self.pageOffset)  #needed for centering printed file
             self.prs.writeFile(fname, lines)
             self.prs.printLandscape(fname)
         elif (printOrPreview == 'preview'):
@@ -69,7 +81,8 @@ class ReportServices():
         lines.insert(0, '.ll 9i\n')
         if (printOrPreview == 'print'):
             #page offset determined by experimentation
-            lines.insert(1, '.po 1.75i\n')  #needed for centering printed file
+            #lines.insert(1, '.po 1.75i\n')  #needed for centering printed file
+            lines.insert(1, self.pageOffset)  #needed for centering printed file
             self.prs.writeFile(fname, lines)
             self.prs.printLandscape(fname)
         elif (printOrPreview == 'preview'):
@@ -88,7 +101,8 @@ class ReportServices():
         lines.insert(0, '.ll 9i\n')
         if (printOrPreview == 'print'):
             #page offset determined by experimentation
-            lines.insert(1, '.po 1.75i\n')  #needed for centering printed file
+            #lines.insert(1, '.po 1.75i\n')  #needed for centering printed file
+            lines.insert(1, self.pageOffset)  #needed for centering printed file
             self.prs.writeFile(fname, lines)
             self.prs.printLandscape(fname)
         elif (printOrPreview == 'preview'):
