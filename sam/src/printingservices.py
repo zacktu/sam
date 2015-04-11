@@ -265,13 +265,13 @@ class PrintingServices():
 
     def previewLandscape(self, fname):
         pdfname = fname +'.pdf'
-        command = 'groff -t -P-l -t ' + fname \
+        command = 'groff -ms -t -P-l ' + fname + ' 2>/dev/null ' \
                       + ' | ps2pdf - ' + pdfname + ' ; ' \
                       + 'evince ' + pdfname
         subprocess.Popen(command, shell=True)
 
     def printLandscape(self, fname):
-        command = 'groffer -P-l -l ' + fname + ' 2>/dev/null '
+        command = 'groffer -ms -P-l -l ' + fname + ' 2>/dev/null '
         subprocess.Popen(command, shell=True)
 
     def OnExit(self, evt):

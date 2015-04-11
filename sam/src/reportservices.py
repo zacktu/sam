@@ -51,10 +51,42 @@ class ReportServices():
             self.pageOffset = 'po 1.0i\n'
         self.prs = printingservices.PrintingServices(samdb)
 
+    def buildReportHeader(self, whatToPrint):
+        lines = []
+        lines.append('.nr LL 9i\n')
+        lines.append('.pl 8.5i\n')
+        lines.append('.ds CH\n')
+        #lines.append('.ds CH -\\n[PN]\n') If you want page number in footer
+        lines.append('.sp 0.5i\n')
+        lines.append('.ft B\n')
+        lines.append('.TS\n')
+        lines.append('center, expand;\n')
+        lines.append('c.\n')
+        try:
+            lines.append(self.auction.getAuctionTitle(self.samdb) + '\n')
+            lines.append(self.auction.getAuctionSubtitle(self.samdb) + '\n')
+            lines.append(self.auction.getAuctionDate(self.samdb) + '\n')
+            if whatToPrint == 'donors':
+                lines.append('\nDonors Report\n\n')
+            elif whatToPrint == 'buyers':
+                lines.append('\nBuyers Report\n\n')
+            elif whatToPrint == 'items':
+                lines.append('\nItems Report\n\n')
+        except MySQLdb.Error, e:
+            print "PrintingServices.buildReportHeader: Error %d: %s" \
+                    % (e.args[0], e.args[1])
+            sys.exit (1)
+        except MySQLdb.Warning, e:
+            print("ReportServices.buildReportHeader: Warning: ", e)
+        lines.append('.TE\n')
+        lines.append('.ft R\n')
+        lines.append('.br\n')
+        return lines
+
     def printOrPreviewDonorReport(self, samdb, printOrPreview):
         fname = self.prs.rand_fname('xxx', 8)
         lines = self.buildDonorReport(samdb)
-        lines.insert(0, '.ll 9i\n')
+        #lines.insert(0, '.ll 9i\n')
         if (printOrPreview == 'print'):
             #page offset determined by experimentation
             lines.insert(1, self.pageOffset)  #needed for centering printed file
@@ -108,13 +140,14 @@ class ReportServices():
             sys.exit()
 
     def buildDonorReport(self, samdb):
-        lines = self.prs.buildSummaryHeader('donors')
+        lines = self.buildReportHeader('donors')
         lines.append('.ps -2\n')
-        lines.append('.TS\n')
+        lines.append('.TS H\n')
         lines.append('box, expand, tab(`);\n')
         lines.append('cI cI cI cI cI cI cI.\n')
         lines.append('Donor`Name`Street`City`Contact`Telephone`Email\n')
         lines.append('_\n')
+        lines.append('.TH\n')
         lines.append('.T&\n')
         lines.append('n l l l l c l.\n')
         allDonors = self.donors.getAllDonors(self.samdb)
