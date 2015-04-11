@@ -39,16 +39,6 @@ class ReportServices():
         self.buyers = buyers.Buyers()
         self.donors = donors.Donors()
         self.items = items.Items()
-        self.printerModel = self.getPrinterModel()
-        if self.printerModel == '2170':
-            self.pageOffset = 'po 1.2i\n'
-        elif self.printerModel == '2270':
-            self.pageOffset = 'po 1.75i\n'
-        else:
-            dialogText = 'Your printer model is not known.\n' \
-                'The table may not display aesthetically.'
-            dialogs.displayInfoDialog(dialogText)
-            self.pageOffset = 'po 1.0i\n'
         self.prs = printingservices.PrintingServices(samdb)
 
     def buildReportHeader(self, whatToPrint):
@@ -88,15 +78,14 @@ class ReportServices():
         lines = self.buildDonorReport(samdb)
         #lines.insert(0, '.ll 9i\n')
         if (printOrPreview == 'print'):
-            #page offset determined by experimentation
-            lines.insert(1, self.pageOffset)  #needed for centering printed file
             self.prs.writeFile(fname, lines)
             self.prs.printLandscape(fname)
         elif (printOrPreview == 'preview'):
             self.prs.writeFile(fname, lines)
             self.prs.previewLandscape(fname)
         else:
-            print('printingservices.printOrPreviewDonorReport: invalid parameter '
+            print('printingservices.printOrPreviewDonorReport: '
+                  + 'invalid parameter '
                   + 'printOrPreview = ' + printOrPreview)
             print('Bugout!')
             sys.exit()
@@ -107,15 +96,14 @@ class ReportServices():
         #landscape lines are 9i wide
         lines.insert(0, '.ll 9i\n')
         if (printOrPreview == 'print'):
-            #page offset determined by experimentation
-            lines.insert(1, self.pageOffset)  #needed for centering printed file
             self.prs.writeFile(fname, lines)
             self.prs.printLandscape(fname)
         elif (printOrPreview == 'preview'):
             self.prs.writeFile(fname, lines)
             self.prs.previewLandscape(fname)
         else:
-            print('printingservices.printOrPreviewBuyerReport: invalid parameter '
+            print('printingservices.printOrPreviewBuyerReport: '
+                  + 'invalid parameter '
                   + 'printOrPreview = ' + printOrPreview)
             print('Bugout!')
             sys.exit()
@@ -126,15 +114,14 @@ class ReportServices():
         #landscape lines are 9i wide
         lines.insert(0, '.ll 9i\n')
         if (printOrPreview == 'print'):
-            #page offset determined by experimentation
-            lines.insert(1, self.pageOffset)  #needed for centering printed file
             self.prs.writeFile(fname, lines)
             self.prs.printLandscape(fname)
         elif (printOrPreview == 'preview'):
             self.prs.writeFile(fname, lines)
             self.prs.previewLandscape(fname)
         else:
-            print('printingservices.printOrPreviewItemReport: invalid parameter '
+            print('printingservices.printOrPreviewItemReport: '
+                  + 'invalid parameter '
                   + 'printOrPreview = ' + printOrPreview)
             print('Bugout!')
             sys.exit()
@@ -160,12 +147,13 @@ class ReportServices():
         return lines
 
     def buildBuyerReport(self, samdb):
-        lines = self.prs.buildSummaryHeader('buyers')
-        lines.append('.TS\n')
+        lines = self.buildReportHeader('buyers')
+        lines.append('.TS H\n')
         lines.append('box, expand, tab(`);\n')
         lines.append('cI cI cI cI cI cI.\n')
         lines.append('Buyer`Last`First`Street`City`Telephone\n')
         lines.append('_\n')
+        lines.append('.TH\n')
         lines.append('.T&\n')
         lines.append('n l l l l c.\n')
         allBuyers = self.buyers.getAllBuyers(self.samdb)
@@ -178,13 +166,14 @@ class ReportServices():
         return lines
 
     def buildItemReport(self, samdb):
-        lines = self.prs.buildSummaryHeader('items')
-        lines.append('.TS\n')
+        lines = self.buildReportHeader('items')
+        lines.append('.TS H\n')
         lines.append('box, expand, tab(`);\n')
         lines.append('cI cI cI cI cI cI cI cI.\n')
         lines.append(
             'Item`Description`Donor`Retail`Min Bid`Increment`Buyer`Price\n')
         lines.append('_\n')
+        lines.append('.TH\n')
         lines.append('.T&\n')
         lines.append('n l n n n n n n.\n')
         allItems = self.items.getAllItems(self.samdb)
