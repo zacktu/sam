@@ -243,9 +243,9 @@ class PrintingServices():
 
     def previewPortrait(self, fname):
         pdfname = fname +'.pdf'
-        command = 'groff -t -t ' + fname \
+        command = 'groff -t ' + fname \
                       + ' | ps2pdf - ' + pdfname + ' ; ' \
-                      + 'evince ' + pdfname
+                      + 'evince ' + pdfname + ' 2>/dev/null '
         subprocess.Popen(command, shell=True)
                
     def printPortrait(self, fname):
@@ -267,7 +267,7 @@ class PrintingServices():
         pdfname = fname +'.pdf'
         command = 'groff -ms -t -P-l ' + fname + ' 2>/dev/null ' \
                       + ' | ps2pdf - ' + pdfname + ' ; ' \
-                      + 'evince ' + pdfname
+                      + 'evince ' + pdfname + ' 2>/dev/null '
         subprocess.Popen(command, shell=True)
 
     def printLandscape(self, fname):
